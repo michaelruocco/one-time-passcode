@@ -9,26 +9,14 @@ buildscript {
 }
 
 plugins {
+    id "idea"
     id "java-library"
-    id "jacoco"
     id "com.diffplug.spotless" version "5.8.2"
     id "com.github.ben-manes.versions" version "0.36.0"
     id "pl.allegro.tech.build.axion-release" version "1.12.1"
     id "org.sonarqube" version "3.0"
-    id "maven-publish"
-    id "com.jfrog.bintray" version "1.8.5"
-    id "com.jfrog.artifactory" version "4.18.2"
-    id "nebula.lint" version "16.15.9"
-}
-
-group "com.github.michaelruocco"
-
-ext {
-    slf4jVersion = "1.7.30"
-    lombokVersion = "1.18.16"
-
-    junitVersion = "5.7.0"
-    mockitoVersion = "3.5.13"
+    id "nebula.lint" version "16.16.0"
+    id "com.vanniktech.dependency.graph.generator" version "0.5.0"
 }
 
 scmVersion {
@@ -39,167 +27,118 @@ scmVersion {
 }
 project.version = scmVersion.version
 
-repositories {
-    mavenCentral()
-}
+allprojects {
+    apply plugin: "idea"
+    apply plugin: "jacoco"
+    apply plugin: 'nebula.lint'
 
-gradleLint {
-    rules = ['all-dependency']
-    alwaysRun = false
-}
+    group "com.github.michaelruocco"
+    version = rootProject.version
 
-dependencies {
-    compileOnly "org.projectlombok:lombok:${lombokVersion}"
-    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
-    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
 
-    implementation "org.slf4j:slf4j-api:${slf4jVersion}"
+    jacoco {
+        toolVersion = "0.8.6"
+    }
 
-    testRuntimeOnly "org.slf4j:slf4j-simple:${slf4jVersion}"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
-    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
-    testImplementation "org.assertj:assertj-core:3.18.1"
-    testImplementation "org.mockito:mockito-core:3.6.28"
-}
-
-tasks.withType(Test) {
-    useJUnitPlatform()
-    systemProperty "org.slf4j.simpleLogger.defaultLogLevel", "debug"
-    testLogging {
-        events "failed"
-        exceptionFormat "full"
-        showStandardStreams true
+    gradleLint {
+        rules = ['all-dependency']
+        alwaysRun = false
     }
 }
 
-jacoco {
-    toolVersion = "0.8.6"
+subprojects {
+    apply plugin: "java-library"
+    apply plugin: "com.diffplug.spotless"
+
+    archivesBaseName = "${rootProject.name}-${project.name}"
+
+    sourceCompatibility = 13
+    targetCompatibility = 13
+
+    ext {
+        lombokVersion = "1.18.16"
+        slf4jVersion = "1.7.30"
+
+        junitVersion = "5.7.0"
+        assertjVersion = "3.18.1"
+        mockitoVersion = "3.6.28"
+    }
+
+    dependencies {
+        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+        testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+        testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+        implementation "org.slf4j:slf4j-api:${slf4jVersion}"
+
+        testRuntimeOnly "org.slf4j:slf4j-simple:${slf4jVersion}"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+        testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+        testImplementation "org.assertj:assertj-core:${assertjVersion}"
+        testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+    }
+
+    tasks.withType(Test) {
+        useJUnitPlatform()
+        systemProperty "org.slf4j.simpleLogger.defaultLogLevel", "debug"
+        testLogging {
+            events "failed"
+            exceptionFormat "full"
+            showStandardStreams true
+        }
+    }
+
+    spotless {
+        java {
+            removeUnusedImports()
+            trimTrailingWhitespace()
+            indentWithSpaces(4)
+            endWithNewline()
+
+            replace 'Not enough space after if', 'if(', 'if ('
+            replaceRegex 'Too much space after if', 'if +\\(', 'if ('
+
+            replace 'Not enough space after for', 'for(', 'for ('
+            replaceRegex 'Too much space after for', 'for +\\(', 'for ('
+
+            replace 'Not enough space after while', 'while(', 'while ('
+            replaceRegex 'Too much space after while', 'while +\\(', 'while ('
+        }
+    }
 }
 
-jacocoTestReport {
-    dependsOn test
-    sourceSets sourceSets.main
+task codeCoverageReport(type: JacocoReport) {
     executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
     reports {
         xml.enabled true
         xml.destination file("${buildDir}/reports/jacoco/report.xml")
+        html.enabled false
+        csv.enabled false
     }
 }
 
-project.tasks["sonarqube"].dependsOn jacocoTestReport
+codeCoverageReport.dependsOn {
+    subprojects*.test
+    subprojects.findAll { it.tasks.findByName("integrationTest") != null }.integrationTest
+}
+
+project.tasks["sonarqube"].dependsOn codeCoverageReport
 sonarqube {
     properties {
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.organization", "michaelruocco"
-        property "sonar.projectKey", "michaelruocco_${name}"
-        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/report.xml"
-    }
-}
-
-java {
-    withJavadocJar()
-    withSourcesJar()
-}
-
-def pomConfig = {
-    licenses {
-        license {
-            name "MIT License"
-            url "https://opensource.org/licenses/MIT"
-            distribution "repo"
-        }
-    }
-
-    developers {
-        developer {
-            id "mruoc"
-            name "Michael Ruocco"
-            email "michael.ruocco@hotmail.com"
-        }
-    }
-
-    scm {
-        url "https://github.com/michaelruocco/library-template"
-    }
-}
-
-publishing {
-    publications {
-        mavenPublication(MavenPublication) {
-            from components.java
-            pom.withXml {
-                def root = asNode()
-                root.appendNode("description", "Template repo to speed up creating new library projects")
-                root.appendNode("name", "library-template")
-                root.appendNode("url", "https://github.com/michaelruocco/library-template")
-                root.children().last() + pomConfig
-            }
-        }
-    }
-}
-
-bintray {
-    user = System.getenv("BINTRAY_USER")
-    key = System.getenv("BINTRAY_KEY")
-    publications = ["mavenPublication"]
-    publish = true
-
-    pkg {
-        repo = "maven"
-        name = "library-template"
-        userOrg = "michaelruocco"
-        licenses = ["bsd"]
-        vcsUrl = "https://github.com/michaelruocco/library-template.git"
-        version {
-            name = project.version
-            desc = project.version
-            released = new Date()
-            gpg {
-                sign = true
-            }
-            mavenCentralSync {
-                sync = true
-            }
-        }
-    }
-}
-
-artifactory {
-    contextUrl = "http://oss.jfrog.org"
-    publish {
-        repository {
-            repoKey = "oss-snapshot-local"
-            username = System.getenv("BINTRAY_USER")
-            password = System.getenv("BINTRAY_KEY")
-        }
-        defaults {
-            publications("mavenPublication")
-            publishArtifacts = true
-            publishPom = true
-        }
-    }
-    resolve {
-        repoKey = "jcenter"
-    }
-    clientConfig.info.setBuildNumber(System.getProperty("build.number"))
-}
-
-spotless {
-    java {
-        removeUnusedImports()
-        trimTrailingWhitespace()
-        indentWithSpaces(4)
-        endWithNewline()
-
-        replace 'Not enough space after if', 'if(', 'if ('
-        replaceRegex 'Too much space after if', 'if +\\(', 'if ('
-
-        replace 'Not enough space after for', 'for(', 'for ('
-        replaceRegex 'Too much space after for', 'for +\\(', 'for ('
-
-        replace 'Not enough space after while', 'while(', 'while ('
-        replaceRegex 'Too much space after while', 'while +\\(', 'while ('
+        property "sonar.projectKey", "michaelruocco_one-time-passcode"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/report.xml"
     }
 }
 
@@ -214,4 +153,16 @@ dependencyUpdates.resolutionStrategy {
             }
         }
     }
+}
+
+import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorExtension.Generator
+
+def oneTimePasscodeGenerator = new Generator(
+        "oneTimePasscode",
+        { dependency -> dependency.getModuleGroup().startsWith("com.github.michaelruocco") },
+        { dependency -> true }
+)
+
+dependencyGraphGenerator {
+    generators = [Generator.ALL, oneTimePasscodeGenerator]
 }

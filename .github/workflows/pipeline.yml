@@ -3,7 +3,7 @@ name: pipeline
 on:
   push:
     branches-ignore:
-      - 'library-template-*'
+      - 'one-time-passcode-*'
 
 jobs:
   build:
@@ -48,6 +48,9 @@ jobs:
       - name: Test
         run: ./gradlew test
 
+      - name: Integration Test
+        run: ./gradlew integrationTest
+
       - name: Sonar Analysis
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -64,20 +67,3 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_TOKEN }}
           coverage-reports: ./build/reports/jacoco/report.xml
-
-      - name: Publish snapshot
-        if: github.ref != 'refs/heads/master'
-        env:
-          BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
-          BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
-        run: ./gradlew artifactoryPublish -Dbuild.number=${{ github.run_number }}
-
-      - name: Release
-        if: github.ref == 'refs/heads/master'
-        env:
-          BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
-          BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
-        run: |
-          ./gradlew release -Prelease.customUsername=${{ github.actor }} -Prelease.customPassword=${{ github.token }}
-          ./gradlew bintrayUpload -Dbuild.number=${{ github.run_number }}
-          ./gradlew currentVersion

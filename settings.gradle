@@ -1,2 +1,7 @@
-rootProject.name = 'library-template'
+rootProject.name = 'one-time-passcode'
 
+include ':entities'
+project(':entities').projectDir = file('domain/entities')
+
+include ':use-cases'
+project(':use-cases').projectDir = file('domain/use-cases')
