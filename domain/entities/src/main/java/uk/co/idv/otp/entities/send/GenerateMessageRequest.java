@@ -12,4 +12,8 @@ public class GenerateMessageRequest {
     private final Passcode passcode;
     private final Activity activity;
 
+    public String getActivityName() {
+        return activity.getName();
+    }
+
 }

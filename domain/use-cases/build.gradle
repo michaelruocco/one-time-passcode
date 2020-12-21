@@ -5,5 +5,7 @@ repositories {
 dependencies {
     api project(":entities")
 
-    //implementation "com.github.michaelruocco:verification-context-context-entities:0.1.0-publish-more-libs-SNAPSHOT"
+    testImplementation testFixtures(project(":entities"))
+    testImplementation "com.github.michaelruocco:verification-context-context-entities:${contextVersion}:test-fixtures"
+    testImplementation "com.github.michaelruocco:verification-context-identity-entities:${contextVersion}:test-fixtures"
 }

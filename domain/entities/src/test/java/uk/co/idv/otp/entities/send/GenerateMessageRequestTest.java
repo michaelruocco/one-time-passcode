@@ -32,4 +32,15 @@ class GenerateMessageRequestTest {
         assertThat(request.getActivity()).isEqualTo(activity);
     }
 
+    @Test
+    void shouldReturnActivityName() {
+        Activity activity = OnlinePurchaseMother.build();
+
+        GenerateMessageRequest request = GenerateMessageRequest.builder()
+                .activity(activity)
+                .build();
+
+        assertThat(request.getActivityName()).isEqualTo(activity.getName());
+    }
+
 }

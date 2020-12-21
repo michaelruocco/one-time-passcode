@@ -6,10 +6,6 @@ repositories {
     mavenLocal()
 }
 
-ext {
-    contextVersion = "0.1.0-publish-more-libs-SNAPSHOT"
-}
-
 dependencies {
     api "com.github.michaelruocco:verification-context-context-entities:${contextVersion}"
     implementation "org.apache.commons:commons-collections4:4.4"

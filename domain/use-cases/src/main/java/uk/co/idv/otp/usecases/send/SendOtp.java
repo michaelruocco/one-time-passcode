@@ -46,7 +46,7 @@ public class SendOtp {
                 .passcode(passcodeGenerator.generate())
                 .activity(activity)
                 .build();
-        return messageGenerator.generate(request);
+        return messageGenerator.apply(request);
     }
 
     private Delivery deliver(OtpDeliveryMethod method, Message message) {

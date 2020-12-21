@@ -62,6 +62,7 @@ subprojects {
     ext {
         lombokVersion = "1.18.16"
         slf4jVersion = "1.7.30"
+        contextVersion = "0.1.0-publish-more-libs-SNAPSHOT"
 
         junitVersion = "5.7.0"
         assertjVersion = "3.18.1"
