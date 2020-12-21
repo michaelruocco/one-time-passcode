@@ -9,12 +9,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SendOtpRequestTest {
 
     @Test
-    void shouldReturnVerificationId() {
-        UUID verificationId = UUID.randomUUID();
+    void shouldReturnContextId() {
+        UUID contextId = UUID.randomUUID();
 
-        ResendOtpRequest request = new ResendOtpRequest(verificationId);
+        SendOtpRequest request = SendOtpRequest.builder()
+                .contextId(contextId)
+                .build();
 
-        assertThat(request.getVerificationId()).isEqualTo(verificationId);
+        assertThat(request.getContextId()).isEqualTo(contextId);
+    }
+
+    @Test
+    void shouldReturnDeliveryMethodId() {
+        UUID deliveryMethodId = UUID.randomUUID();
+
+        SendOtpRequest request = SendOtpRequest.builder()
+                .deliveryMethodId(deliveryMethodId)
+                .build();
+
+        assertThat(request.getDeliveryMethodId()).isEqualTo(deliveryMethodId);
     }
 
 }

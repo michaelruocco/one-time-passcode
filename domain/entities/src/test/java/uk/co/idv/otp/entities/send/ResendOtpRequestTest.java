@@ -10,24 +10,11 @@ class ResendOtpRequestTest {
 
     @Test
     void shouldReturnVerificationId() {
-        UUID contextId = UUID.randomUUID();
+        UUID verificationId = UUID.randomUUID();
 
-        SendOtpRequest request = SendOtpRequest.builder()
-                .contextId(contextId)
-                .build();
+        ResendOtpRequest request = new ResendOtpRequest(verificationId);
 
-        assertThat(request.getContextId()).isEqualTo(contextId);
-    }
-
-    @Test
-    void shouldReturnDeliveryMethodId() {
-        UUID deliveryMethodId = UUID.randomUUID();
-
-        SendOtpRequest request = SendOtpRequest.builder()
-                .deliveryMethodId(deliveryMethodId)
-                .build();
-
-        assertThat(request.getDeliveryMethodId()).isEqualTo(deliveryMethodId);
+        assertThat(request.getVerificationId()).isEqualTo(verificationId);
     }
 
 }
