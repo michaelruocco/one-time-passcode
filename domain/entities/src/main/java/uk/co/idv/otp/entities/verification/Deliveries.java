@@ -2,6 +2,7 @@ package uk.co.idv.otp.entities.verification;
 
 import lombok.Builder;
 import lombok.Data;
+import org.apache.commons.collections4.IterableUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,6 +21,10 @@ public class Deliveries implements Iterable<Delivery> {
     @Override
     public Iterator<Delivery> iterator() {
         return values.iterator();
+    }
+
+    public Delivery first() {
+        return IterableUtils.first(values);
     }
 
     public Deliveries add(Delivery delivery) {

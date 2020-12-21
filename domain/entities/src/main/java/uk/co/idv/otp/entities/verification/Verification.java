@@ -23,4 +23,9 @@ public class Verification {
                 .deliveries(deliveries.add(delivery))
                 .build();
     }
+
+    public Delivery getFirstDelivery() {
+        return deliveries.first();
+    }
+
 }

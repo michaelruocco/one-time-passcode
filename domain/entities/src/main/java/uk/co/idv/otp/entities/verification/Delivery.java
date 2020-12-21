@@ -10,8 +10,8 @@ import java.time.Instant;
 public class Delivery {
 
     private final OtpDeliveryMethod method;
-    private final Passcode passcode;
-    private final String message;
+    private final Message message;
+    private final String messageId;
     private final Instant sent;
 
 }

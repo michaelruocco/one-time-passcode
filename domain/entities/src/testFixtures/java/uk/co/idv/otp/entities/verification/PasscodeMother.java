@@ -8,6 +8,10 @@ public interface PasscodeMother {
         return builder().build();
     }
 
+    static Passcode withValue(String value) {
+        return builder().value(value).build();
+    }
+
     static Passcode.PasscodeBuilder builder() {
         return Passcode.builder()
                 .value("87654321")

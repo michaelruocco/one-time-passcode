@@ -21,25 +21,25 @@ class DeliveryTest {
     }
 
     @Test
-    void shouldReturnPasscode() {
-        Passcode passcode = mock(Passcode.class);
-
-        Delivery delivery = Delivery.builder()
-                .passcode(passcode)
-                .build();
-
-        assertThat(delivery.getPasscode()).isEqualTo(passcode);
-    }
-
-    @Test
     void shouldReturnMessage() {
-        String message = "message";
+        Message message = mock(Message.class);
 
         Delivery delivery = Delivery.builder()
                 .message(message)
                 .build();
 
         assertThat(delivery.getMessage()).isEqualTo(message);
+    }
+
+    @Test
+    void shouldReturnMessageId() {
+        String messageId = "message-id";
+
+        Delivery delivery = Delivery.builder()
+                .messageId(messageId)
+                .build();
+
+        assertThat(delivery.getMessageId()).isEqualTo(messageId);
     }
 
     @Test

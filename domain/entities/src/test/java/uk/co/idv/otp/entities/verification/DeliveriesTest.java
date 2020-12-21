@@ -47,6 +47,19 @@ class DeliveriesTest {
     }
 
     @Test
+    void shouldReturnFirstDelivery() {
+        Delivery delivery1 = mock(Delivery.class);
+        Delivery delivery2 = mock(Delivery.class);
+        Deliveries deliveries = Deliveries.builder()
+                .values(Arrays.asList(delivery1, delivery2))
+                .build();
+
+        Delivery first = deliveries.first();
+
+        assertThat(first).isEqualTo(delivery1);
+    }
+
+    @Test
     void shouldAddDeliveryIfDeliveriesRemaining() {
         Delivery existing = mock(Delivery.class);
         Deliveries deliveries = Deliveries.builder()

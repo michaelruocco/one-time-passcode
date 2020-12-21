@@ -1,0 +1,9 @@
+repositories {
+    mavenLocal()
+}
+
+dependencies {
+    api project(":entities")
+
+    //implementation "com.github.michaelruocco:verification-context-context-entities:0.1.0-publish-more-libs-SNAPSHOT"
+}

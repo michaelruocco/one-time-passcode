@@ -7,12 +7,19 @@ repositories {
 }
 
 ext {
-    contextClientVersion = "0.1.0-SNAPSHOT"
+    contextVersion = "0.1.0-publish-more-libs-SNAPSHOT"
 }
 
 dependencies {
+    api "com.github.michaelruocco:verification-context-context-entities:${contextVersion}"
     //implementation "com.github.michaelruocco:verification-context-context-client:${contextClientVersion}:all"
+    implementation "org.apache.commons:commons-collections4:4.4"
 
+    testImplementation "com.github.michaelruocco:verification-context-context-entities:${contextVersion}:test-fixtures"
+    testImplementation "com.github.michaelruocco:verification-context-identity-entities:${contextVersion}:test-fixtures"
+
+    testFixturesImplementation "com.github.michaelruocco:verification-context-context-entities:${contextVersion}:test-fixtures"
+    testFixturesImplementation "com.github.michaelruocco:verification-context-identity-entities:${contextVersion}:test-fixtures"
     //testFixturesImplementation "com.github.michaelruocco:verification-context-context-client:${contextClientVersion}:all"
     //testFixturesImplementation "com.github.michaelruocco:verification-context-otp-entities:${contextClientVersion}:test-fixtures"
     //testFixturesImplementation "com.github.michaelruocco:verification-context-method-entities:${contextClientVersion}:test-fixtures"

@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 class VerificationTest {
 
@@ -62,6 +63,19 @@ class VerificationTest {
                 .build();
 
         assertThat(verification.getDeliveries()).isEqualTo(deliveries);
+    }
+
+    @Test
+    void shouldReturnFirstDelivery() {
+        Delivery delivery1 = mock(Delivery.class);
+        Delivery delivery2 = mock(Delivery.class);
+        Deliveries deliveries = DeliveriesMother.withDeliveries(delivery1, delivery2);
+
+        Verification verification = Verification.builder()
+                .deliveries(deliveries)
+                .build();
+
+        assertThat(verification.getFirstDelivery()).isEqualTo(delivery1);
     }
 
     @Test
