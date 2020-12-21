@@ -30,7 +30,7 @@ project.version = scmVersion.version
 allprojects {
     apply plugin: "idea"
     apply plugin: "jacoco"
-    apply plugin: 'nebula.lint'
+    apply plugin: "nebula.lint"
 
     group "com.github.michaelruocco"
     version = rootProject.version

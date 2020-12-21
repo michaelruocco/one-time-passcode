@@ -1,0 +1,19 @@
+plugins {
+    id "java-test-fixtures"
+}
+
+repositories {
+    mavenLocal()
+}
+
+ext {
+    contextClientVersion = "0.1.0-SNAPSHOT"
+}
+
+dependencies {
+    //implementation "com.github.michaelruocco:verification-context-context-client:${contextClientVersion}:all"
+
+    //testFixturesImplementation "com.github.michaelruocco:verification-context-context-client:${contextClientVersion}:all"
+    //testFixturesImplementation "com.github.michaelruocco:verification-context-otp-entities:${contextClientVersion}:test-fixtures"
+    //testFixturesImplementation "com.github.michaelruocco:verification-context-method-entities:${contextClientVersion}:test-fixtures"
+}
