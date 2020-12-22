@@ -1,7 +1,8 @@
-package uk.co.idv.otp.entities.verification;
+package uk.co.idv.otp.entities.send.message;
 
 import lombok.Builder;
 import lombok.Data;
+import uk.co.idv.otp.entities.passcode.Passcode;
 
 @Builder
 @Data

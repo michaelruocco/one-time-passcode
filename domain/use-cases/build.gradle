@@ -5,6 +5,9 @@ repositories {
 dependencies {
     api project(":entities")
 
+    implementation "com.github.michaelruocco:verification-context-context-entities:${contextVersion}"
+    implementation "javax.money:money-api:1.1"
+
     testImplementation testFixtures(project(":entities"))
     testImplementation "com.github.michaelruocco:verification-context-context-entities:${contextVersion}:test-fixtures"
     testImplementation "com.github.michaelruocco:verification-context-identity-entities:${contextVersion}:test-fixtures"

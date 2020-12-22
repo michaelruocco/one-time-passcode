@@ -1,11 +1,16 @@
 package uk.co.idv.otp.entities.verification;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.otp.entities.Verification;
+import uk.co.idv.otp.entities.delivery.Deliveries;
+import uk.co.idv.otp.entities.delivery.Delivery;
+import uk.co.idv.otp.entities.send.message.Message;
 
 import java.time.Instant;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class VerificationTest {
@@ -79,6 +84,22 @@ class VerificationTest {
     }
 
     @Test
+    void shouldReturnMessageFromFirstDelivery() {
+        Message message1 = mock(Message.class);
+        Message message2 = mock(Message.class);
+        Deliveries deliveries = DeliveriesMother.withDeliveries(
+                givenDeliveryWithMessage(message1),
+                givenDeliveryWithMessage(message2)
+        );
+
+        Verification verification = Verification.builder()
+                .deliveries(deliveries)
+                .build();
+
+        assertThat(verification.getFirstMessage()).isEqualTo(message1);
+    }
+
+    @Test
     void shouldReturnSuccessful() {
         Verification verification = Verification.builder()
                 .successful(true)
@@ -110,6 +131,12 @@ class VerificationTest {
         assertThat(updated.getDeliveries())
                 .containsAll(verification.getDeliveries())
                 .contains(delivery);
+    }
+
+    private Delivery givenDeliveryWithMessage(Message message) {
+        Delivery delivery = mock(Delivery.class);
+        given(delivery.getMessage()).willReturn(message);
+        return delivery;
     }
 
 }

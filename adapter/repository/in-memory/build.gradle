@@ -1,0 +1,9 @@
+repositories {
+    mavenLocal()
+}
+
+dependencies {
+    api project(":use-cases")
+
+    testImplementation testFixtures(project(":entities"))
+}

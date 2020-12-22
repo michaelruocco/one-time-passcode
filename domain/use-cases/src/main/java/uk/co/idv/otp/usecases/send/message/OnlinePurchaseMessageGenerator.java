@@ -2,9 +2,9 @@ package uk.co.idv.otp.usecases.send.message;
 
 import uk.co.idv.context.entities.activity.Activity;
 import uk.co.idv.context.entities.activity.OnlinePurchase;
-import uk.co.idv.otp.entities.send.GenerateMessageRequest;
-import uk.co.idv.otp.entities.verification.Message;
-import uk.co.idv.otp.entities.verification.Passcode;
+import uk.co.idv.otp.entities.send.message.GenerateMessageRequest;
+import uk.co.idv.otp.entities.send.message.Message;
+import uk.co.idv.otp.entities.passcode.Passcode;
 
 import java.util.Optional;
 

@@ -2,6 +2,7 @@ package uk.co.idv.otp.entities.send;
 
 import uk.co.idv.context.entities.activity.Activity;
 import uk.co.idv.context.entities.activity.OnlinePurchaseMother;
+import uk.co.idv.otp.entities.send.message.GenerateMessageRequest;
 import uk.co.idv.otp.entities.verification.PasscodeMother;
 
 public interface GenerateMessageRequestMother {

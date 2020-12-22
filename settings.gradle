@@ -5,3 +5,9 @@ project(':entities').projectDir = file('domain/entities')
 
 include ':use-cases'
 project(':use-cases').projectDir = file('domain/use-cases')
+
+include ':passcode-generator'
+project(':passcode-generator').projectDir = file('adapter/passcode-generator')
+
+include ':in-memory-repository'
+project(':in-memory-repository').projectDir = file('adapter/repository/in-memory')

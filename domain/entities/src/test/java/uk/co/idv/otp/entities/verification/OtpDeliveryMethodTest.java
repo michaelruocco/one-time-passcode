@@ -1,6 +1,7 @@
 package uk.co.idv.otp.entities.verification;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.otp.entities.delivery.OtpDeliveryMethod;
 
 import java.util.UUID;
 

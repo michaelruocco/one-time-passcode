@@ -1,6 +1,9 @@
 package uk.co.idv.otp.entities.verification;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.otp.entities.delivery.Deliveries;
+import uk.co.idv.otp.entities.delivery.Delivery;
+import uk.co.idv.otp.entities.delivery.NoDeliveriesRemainingException;
 
 import java.util.Arrays;
 import java.util.Collection;

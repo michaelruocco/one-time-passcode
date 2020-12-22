@@ -1,5 +1,7 @@
 package uk.co.idv.otp.entities.verification;
 
+import uk.co.idv.otp.entities.Verification;
+
 import java.time.Instant;
 import java.util.UUID;
 

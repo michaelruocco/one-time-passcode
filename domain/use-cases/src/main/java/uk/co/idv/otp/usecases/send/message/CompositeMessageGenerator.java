@@ -1,9 +1,8 @@
 package uk.co.idv.otp.usecases.send.message;
 
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.otp.entities.send.GenerateMessageRequest;
-import uk.co.idv.otp.entities.verification.Message;
-import uk.co.idv.otp.usecases.send.MessageGenerator;
+import uk.co.idv.otp.entities.send.message.GenerateMessageRequest;
+import uk.co.idv.otp.entities.send.message.Message;
 
 import java.util.Arrays;
 import java.util.Collection;

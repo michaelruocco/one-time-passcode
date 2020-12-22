@@ -1,5 +1,8 @@
 package uk.co.idv.otp.entities.verification;
 
+import uk.co.idv.otp.entities.passcode.Passcode;
+import uk.co.idv.otp.entities.send.message.Message;
+
 public class MessageMother {
 
     private MessageMother() {

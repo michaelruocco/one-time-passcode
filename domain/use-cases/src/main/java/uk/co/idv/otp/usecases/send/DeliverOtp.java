@@ -1,7 +1,7 @@
 package uk.co.idv.otp.usecases.send;
 
-import uk.co.idv.otp.entities.send.DeliveryRequest;
-import uk.co.idv.otp.entities.verification.Delivery;
+import uk.co.idv.otp.entities.delivery.DeliveryRequest;
+import uk.co.idv.otp.entities.delivery.Delivery;
 
 public interface DeliverOtp {
 

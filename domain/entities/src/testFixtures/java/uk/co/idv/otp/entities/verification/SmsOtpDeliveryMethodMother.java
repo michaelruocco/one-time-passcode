@@ -1,5 +1,7 @@
 package uk.co.idv.otp.entities.verification;
 
+import uk.co.idv.otp.entities.delivery.OtpDeliveryMethod;
+
 import java.util.UUID;
 
 public interface SmsOtpDeliveryMethodMother {

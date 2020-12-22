@@ -1,5 +1,7 @@
 package uk.co.idv.otp.entities.verification;
 
+import uk.co.idv.otp.entities.delivery.Delivery;
+
 import java.time.Instant;
 
 public interface DeliveryMother {

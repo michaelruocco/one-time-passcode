@@ -1,10 +1,11 @@
 package uk.co.idv.otp.entities.send;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.otp.entities.verification.Message;
+import uk.co.idv.otp.entities.Verification;
+import uk.co.idv.otp.entities.delivery.DeliveryRequest;
+import uk.co.idv.otp.entities.send.message.Message;
 import uk.co.idv.otp.entities.verification.MessageMother;
-import uk.co.idv.otp.entities.verification.OtpDeliveryMethod;
-import uk.co.idv.otp.entities.verification.SmsOtpDeliveryMethodMother;
+import uk.co.idv.otp.entities.verification.VerificationMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,13 +13,13 @@ class DeliveryRequestTest {
 
     @Test
     void shouldReturnMethod() {
-        OtpDeliveryMethod method = SmsOtpDeliveryMethodMother.sms();
+        Verification verification = VerificationMother.build();
 
         DeliveryRequest request = DeliveryRequest.builder()
-                .method(method)
+                .verification(verification)
                 .build();
 
-        assertThat(request.getMethod()).isEqualTo(method);
+        assertThat(request.getVerification()).isEqualTo(verification);
     }
 
     @Test

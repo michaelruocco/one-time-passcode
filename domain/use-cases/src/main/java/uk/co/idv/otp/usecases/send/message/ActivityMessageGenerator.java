@@ -1,7 +1,7 @@
 package uk.co.idv.otp.usecases.send.message;
 
-import uk.co.idv.otp.entities.send.GenerateMessageRequest;
-import uk.co.idv.otp.entities.verification.Message;
+import uk.co.idv.otp.entities.send.message.GenerateMessageRequest;
+import uk.co.idv.otp.entities.send.message.Message;
 
 import java.util.Optional;
 import java.util.function.Function;
