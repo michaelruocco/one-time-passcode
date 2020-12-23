@@ -1,11 +1,11 @@
 package uk.co.idv.otp.usecases.send;
 
+import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.otp.entities.delivery.OtpDeliveryMethod;
-import uk.co.idv.otp.entities.Verification;
 
 public class DeliveryMethodExtractor {
 
-    public OtpDeliveryMethod extract(Verification verification) {
+    public OtpDeliveryMethod extract(Context context) {
         return null;
     }
 

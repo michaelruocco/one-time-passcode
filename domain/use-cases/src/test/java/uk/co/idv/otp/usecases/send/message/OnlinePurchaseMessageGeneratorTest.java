@@ -5,7 +5,7 @@ import uk.co.idv.context.entities.activity.Activity;
 import uk.co.idv.context.entities.activity.LoginMother;
 import uk.co.idv.context.entities.activity.OnlinePurchaseMother;
 import uk.co.idv.otp.entities.send.message.GenerateMessageRequest;
-import uk.co.idv.otp.entities.send.GenerateMessageRequestMother;
+import uk.co.idv.otp.entities.send.message.GenerateMessageRequestMother;
 import uk.co.idv.otp.entities.send.message.Message;
 
 import java.util.Optional;

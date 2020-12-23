@@ -2,7 +2,7 @@ package uk.co.idv.otp.adapter.repository;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.otp.entities.Verification;
-import uk.co.idv.otp.entities.verification.VerificationMother;
+import uk.co.idv.otp.entities.VerificationMother;
 import uk.co.idv.otp.usecases.VerificationNotFoundException;
 import uk.co.idv.otp.usecases.VerificationRepository;
 

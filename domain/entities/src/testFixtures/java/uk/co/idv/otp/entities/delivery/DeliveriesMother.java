@@ -1,7 +1,4 @@
-package uk.co.idv.otp.entities.verification;
-
-import uk.co.idv.otp.entities.delivery.Deliveries;
-import uk.co.idv.otp.entities.delivery.Delivery;
+package uk.co.idv.otp.entities.delivery;
 
 import java.util.Arrays;
 import java.util.Collections;

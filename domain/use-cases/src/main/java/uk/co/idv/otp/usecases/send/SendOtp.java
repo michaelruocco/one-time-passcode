@@ -22,8 +22,7 @@ public class SendOtp {
 
     public Verification send(SendOtpRequest request) {
         Verification verification = verificationLoader.send(request);
-        Message message = generateMessage(verification);
-        Delivery delivery = deliver(verification, message);
+        Delivery delivery = deliver(verification);
         verification.add(delivery);
         repository.save(verification);
         return verification;
@@ -37,10 +36,10 @@ public class SendOtp {
         return messageGenerator.apply(messageRequest);
     }
 
-    private Delivery deliver(Verification verification, Message message) {
+    private Delivery deliver(Verification verification) {
         DeliveryRequest request = DeliveryRequest.builder()
-                .verification(verification)
-                .message(message)
+                .method(verification.getDeliveryMethod())
+                .message(generateMessage(verification))
                 .build();
         return deliverOtp.deliver(request);
     }

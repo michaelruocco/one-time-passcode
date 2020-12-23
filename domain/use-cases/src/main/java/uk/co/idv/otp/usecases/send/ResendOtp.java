@@ -34,7 +34,7 @@ public class ResendOtp {
         Message firstMessage = verification.getFirstMessage();
         Passcode passcode = passcodeGenerator.generate(verification);
         DeliveryRequest deliveryRequest = DeliveryRequest.builder()
-                .verification(verification)
+                .method(verification.getDeliveryMethod())
                 .message(firstMessage.update(passcode))
                 .build();
         return deliverOtp.deliver(deliveryRequest);

@@ -11,3 +11,6 @@ project(':passcode-generator').projectDir = file('adapter/passcode-generator')
 
 include ':in-memory-repository'
 project(':in-memory-repository').projectDir = file('adapter/repository/in-memory')
+
+include ':in-memory-delivery'
+project(':in-memory-delivery').projectDir = file('adapter/delivery/in-memory')

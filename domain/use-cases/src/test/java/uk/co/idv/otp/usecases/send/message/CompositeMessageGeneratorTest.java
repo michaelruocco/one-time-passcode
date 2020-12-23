@@ -2,9 +2,9 @@ package uk.co.idv.otp.usecases.send.message;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.otp.entities.send.message.GenerateMessageRequest;
-import uk.co.idv.otp.entities.send.GenerateMessageRequestMother;
+import uk.co.idv.otp.entities.send.message.GenerateMessageRequestMother;
 import uk.co.idv.otp.entities.send.message.Message;
-import uk.co.idv.otp.entities.verification.MessageMother;
+import uk.co.idv.otp.entities.send.message.MessageMother;
 
 import java.util.Optional;
 

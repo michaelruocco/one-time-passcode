@@ -5,7 +5,7 @@ import uk.co.idv.context.entities.activity.Activity;
 import uk.co.idv.context.entities.activity.OnlinePurchaseMother;
 import uk.co.idv.otp.entities.passcode.Passcode;
 import uk.co.idv.otp.entities.send.message.GenerateMessageRequest;
-import uk.co.idv.otp.entities.verification.PasscodeMother;
+import uk.co.idv.otp.entities.passcode.PasscodeMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

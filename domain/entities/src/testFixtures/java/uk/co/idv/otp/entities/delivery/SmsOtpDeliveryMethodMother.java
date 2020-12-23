@@ -1,6 +1,5 @@
-package uk.co.idv.otp.entities.verification;
+package uk.co.idv.otp.entities.delivery;
 
-import uk.co.idv.otp.entities.delivery.OtpDeliveryMethod;
 
 import java.util.UUID;
 

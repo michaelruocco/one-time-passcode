@@ -1,6 +1,6 @@
-package uk.co.idv.otp.entities.verification;
+package uk.co.idv.otp.entities.delivery;
 
-import uk.co.idv.otp.entities.delivery.Delivery;
+import uk.co.idv.otp.entities.send.message.MessageMother;
 
 import java.time.Instant;
 
