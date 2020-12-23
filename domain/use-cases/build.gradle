@@ -1,6 +1,7 @@
 dependencies {
     api project(":entities")
     implementation "com.github.michaelruocco:verification-context-context-entities:${contextVersion}"
+    implementation "com.github.michaelruocco:verification-context-common-use-cases:${contextVersion}"
     implementation "javax.money:money-api:1.1"
 
     testImplementation testFixtures(project(":entities"))

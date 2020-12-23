@@ -8,7 +8,12 @@ dependencies {
     implementation "org.apache.commons:commons-collections4:4.4"
 
     testImplementation "com.github.michaelruocco:verification-context-context-entities:${contextVersion}:test-fixtures"
+    testImplementation "com.github.michaelruocco:verification-context-otp-entities:${contextVersion}:test-fixtures"
     testRuntimeOnly "com.github.michaelruocco:verification-context-identity-entities:${contextVersion}:test-fixtures"
+    testRuntimeOnly "com.github.michaelruocco:verification-context-method-entities:${contextVersion}:test-fixtures"
 
     testFixturesImplementation "com.github.michaelruocco:verification-context-context-entities:${contextVersion}:test-fixtures"
+    testFixturesImplementation "com.github.michaelruocco:verification-context-otp-entities:${contextVersion}:test-fixtures"
+    testFixturesRuntimeOnly "com.github.michaelruocco:verification-context-identity-entities:${contextVersion}:test-fixtures"
+    testFixturesRuntimeOnly "com.github.michaelruocco:verification-context-method-entities:${contextVersion}:test-fixtures"
 }

@@ -1,5 +1,6 @@
 package uk.co.idv.otp.entities.delivery;
 
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethodMother;
 import uk.co.idv.otp.entities.send.message.MessageMother;
 
 import java.time.Instant;
@@ -16,7 +17,7 @@ public interface DeliveryMother {
 
     static Delivery.DeliveryBuilder builder() {
         return Delivery.builder()
-                .method(SmsOtpDeliveryMethodMother.sms())
+                .method(DeliveryMethodMother.build())
                 .message(MessageMother.build())
                 .messageId("ABC-123")
                 .sent(Instant.parse("2020-09-14T20:03:02.002Z"));

@@ -14,7 +14,7 @@ public class VerificationLoader {
 
     public Verification send(SendOtpRequest request) {
         Context context = contextLoader.load(toLoadContextRequest(request));
-        return contextConverter.toVerification(context);
+        return contextConverter.toVerification(request, context);
     }
 
     private LoadContextRequest toLoadContextRequest(SendOtpRequest request) {

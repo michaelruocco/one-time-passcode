@@ -1,11 +1,11 @@
 package uk.co.idv.otp.entities.send;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethodMother;
 import uk.co.idv.otp.entities.delivery.DeliveryRequest;
-import uk.co.idv.otp.entities.delivery.OtpDeliveryMethod;
 import uk.co.idv.otp.entities.send.message.Message;
 import uk.co.idv.otp.entities.send.message.MessageMother;
-import uk.co.idv.otp.entities.delivery.SmsOtpDeliveryMethodMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,7 +13,7 @@ class DeliveryRequestTest {
 
     @Test
     void shouldReturnMethod() {
-        OtpDeliveryMethod method = SmsOtpDeliveryMethodMother.sms();
+        DeliveryMethod method = DeliveryMethodMother.build();
 
         DeliveryRequest request = DeliveryRequest.builder()
                 .method(method)

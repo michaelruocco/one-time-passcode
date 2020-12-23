@@ -4,9 +4,9 @@ import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.context.entities.activity.Activity;
 import uk.co.idv.method.entities.otp.OtpConfig;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.otp.entities.delivery.Deliveries;
 import uk.co.idv.otp.entities.delivery.Delivery;
-import uk.co.idv.otp.entities.delivery.OtpDeliveryMethod;
 import uk.co.idv.otp.entities.passcode.GeneratePasscodeRequest;
 import uk.co.idv.otp.entities.send.message.Message;
 
@@ -23,7 +23,7 @@ public class Verification implements GeneratePasscodeRequest {
     private final Instant created;
     private final Instant expiry;
     private final Activity activity;
-    private final OtpDeliveryMethod deliveryMethod;
+    private final DeliveryMethod deliveryMethod;
     private final OtpConfig config;
     private final Deliveries deliveries;
     private final boolean successful;

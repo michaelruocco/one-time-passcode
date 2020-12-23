@@ -1,8 +1,8 @@
 package uk.co.idv.otp.entities.verification;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.otp.entities.delivery.Delivery;
-import uk.co.idv.otp.entities.delivery.OtpDeliveryMethod;
 import uk.co.idv.otp.entities.send.message.Message;
 
 import java.time.Instant;
@@ -14,7 +14,7 @@ class DeliveryTest {
 
     @Test
     void shouldReturnMethod() {
-        OtpDeliveryMethod method = mock(OtpDeliveryMethod.class);
+        DeliveryMethod method = mock(DeliveryMethod.class);
 
         Delivery delivery = Delivery.builder()
                 .method(method)
