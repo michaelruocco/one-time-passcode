@@ -26,6 +26,7 @@ public class Verification implements GeneratePasscodeRequest {
     private final DeliveryMethod deliveryMethod;
     private final OtpConfig config;
     private final Deliveries deliveries;
+    private final boolean protectSensitiveData;
     private final boolean successful;
     private final boolean complete;
 

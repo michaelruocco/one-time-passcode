@@ -34,6 +34,7 @@ public class ContextConverter {
                 .deliveryMethod(otpParams.getDeliveryMethod())
                 .config(otpConfig)
                 .deliveries(buildEmptyDeliveries(otpConfig))
+                .protectSensitiveData(context.isProtectSensitiveData())
                 .build();
     }
 

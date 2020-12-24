@@ -103,6 +103,15 @@ class VerificationTest {
     }
 
     @Test
+    void shouldReturnProtectSensitiveData() {
+        Verification verification = Verification.builder()
+                .protectSensitiveData(true)
+                .build();
+
+        assertThat(verification.isProtectSensitiveData()).isTrue();
+    }
+
+    @Test
     void shouldReturnSuccessful() {
         Verification verification = Verification.builder()
                 .successful(true)
