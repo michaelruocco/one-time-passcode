@@ -1,7 +1,7 @@
 package uk.co.idv.otp.adapter.passcode.generator;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.otp.entities.Verification;
+import uk.co.idv.otp.entities.OtpVerification;
 import uk.co.idv.otp.entities.passcode.GeneratePasscodeRequest;
 import uk.co.idv.otp.entities.passcode.Passcode;
 import uk.co.idv.otp.usecases.passcode.PasscodeGenerator;
@@ -25,7 +25,7 @@ class RandomPasscodeGeneratorTest {
 
     @Test
     void shouldPopulateCreatedOnPasscode() {
-        Verification verification = mock(Verification.class);
+        OtpVerification verification = mock(OtpVerification.class);
 
         Passcode passcode = generator.generate(verification);
 
@@ -35,7 +35,7 @@ class RandomPasscodeGeneratorTest {
     @Test
     void shouldPopulateExpiryOnPasscodeBasedOnPasscodeDuration() {
         Duration duration = Duration.ofMinutes(5);
-        Verification verification = mock(Verification.class);
+        OtpVerification verification = mock(OtpVerification.class);
         given(verification.getPasscodeDuration()).willReturn(duration);
 
         Passcode passcode = generator.generate(verification);

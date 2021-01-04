@@ -6,8 +6,8 @@ import uk.co.idv.otp.entities.delivery.DeliveryRequest;
 import uk.co.idv.otp.entities.send.message.Message;
 import uk.co.idv.otp.entities.send.ResendOtpRequest;
 import uk.co.idv.otp.entities.delivery.Delivery;
-import uk.co.idv.otp.entities.Verification;
-import uk.co.idv.otp.usecases.VerificationRepository;
+import uk.co.idv.otp.entities.OtpVerification;
+import uk.co.idv.otp.usecases.OtpVerificationRepository;
 import uk.co.idv.otp.usecases.passcode.PasscodeGenerator;
 import uk.co.idv.otp.usecases.send.message.MessageGenerator;
 
@@ -19,18 +19,18 @@ public class ResendOtp {
     private final PasscodeGenerator passcodeGenerator;
     private final MessageGenerator messageGenerator;
     private final DeliverOtp deliverOtp;
-    private final VerificationRepository repository;
+    private final OtpVerificationRepository repository;
 
-    public Verification resend(ResendOtpRequest request) {
+    public OtpVerification resend(ResendOtpRequest request) {
         UUID id = request.getVerificationId();
-        Verification verification = repository.load(id);
+        OtpVerification verification = repository.load(id);
         Delivery resentDelivery = redeliver(verification);
         verification.add(resentDelivery);
         repository.save(verification);
         return verification;
     }
 
-    private Delivery redeliver(Verification verification) {
+    private Delivery redeliver(OtpVerification verification) {
         Message firstMessage = verification.getFirstMessage();
         Passcode passcode = passcodeGenerator.generate(verification);
         DeliveryRequest deliveryRequest = DeliveryRequest.builder()

@@ -5,14 +5,14 @@ import uk.co.idv.otp.entities.delivery.DeliveriesMother;
 import java.time.Instant;
 import java.util.UUID;
 
-public interface VerificationMother {
+public interface OtpVerificationMother {
 
-    static Verification build() {
+    static OtpVerification build() {
         return builder().build();
     }
 
-    static Verification.VerificationBuilder builder() {
-        return Verification.builder()
+    static OtpVerification.OtpVerificationBuilder builder() {
+        return OtpVerification.builder()
                 .id(UUID.fromString("624c63c6-a967-4b45-ab19-0237e1617122"))
                 .contextId(UUID.fromString("2948aadc-7f63-4b00-875b-77a4e6608e5c"))
                 .created(Instant.parse("2020-09-14T20:03:01.999Z"))

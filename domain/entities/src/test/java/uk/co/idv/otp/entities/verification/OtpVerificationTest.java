@@ -1,8 +1,8 @@
 package uk.co.idv.otp.entities.verification;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.otp.entities.Verification;
-import uk.co.idv.otp.entities.VerificationMother;
+import uk.co.idv.otp.entities.OtpVerification;
+import uk.co.idv.otp.entities.OtpVerificationMother;
 import uk.co.idv.otp.entities.delivery.Deliveries;
 import uk.co.idv.otp.entities.delivery.DeliveriesMother;
 import uk.co.idv.otp.entities.delivery.Delivery;
@@ -16,13 +16,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class VerificationTest {
+class OtpVerificationTest {
 
     @Test
     void shouldReturnId() {
         UUID id = UUID.randomUUID();
 
-        Verification verification = Verification.builder()
+        OtpVerification verification = OtpVerification.builder()
                 .id(id)
                 .build();
 
@@ -33,7 +33,7 @@ class VerificationTest {
     void shouldReturnContextId() {
         UUID contextId = UUID.randomUUID();
 
-        Verification verification = Verification.builder()
+        OtpVerification verification = OtpVerification.builder()
                 .contextId(contextId)
                 .build();
 
@@ -44,7 +44,7 @@ class VerificationTest {
     void shouldReturnCreated() {
         Instant created = Instant.now();
 
-        Verification verification = Verification.builder()
+        OtpVerification verification = OtpVerification.builder()
                 .created(created)
                 .build();
 
@@ -55,7 +55,7 @@ class VerificationTest {
     void shouldReturnExpiry() {
         Instant expiry = Instant.now();
 
-        Verification verification = Verification.builder()
+        OtpVerification verification = OtpVerification.builder()
                 .expiry(expiry)
                 .build();
 
@@ -66,7 +66,7 @@ class VerificationTest {
     void shouldReturnDeliveries() {
         Deliveries deliveries = DeliveriesMother.one();
 
-        Verification verification = Verification.builder()
+        OtpVerification verification = OtpVerification.builder()
                 .deliveries(deliveries)
                 .build();
 
@@ -79,7 +79,7 @@ class VerificationTest {
         Delivery delivery2 = mock(Delivery.class);
         Deliveries deliveries = DeliveriesMother.withDeliveries(delivery1, delivery2);
 
-        Verification verification = Verification.builder()
+        OtpVerification verification = OtpVerification.builder()
                 .deliveries(deliveries)
                 .build();
 
@@ -95,7 +95,7 @@ class VerificationTest {
                 givenDeliveryWithMessage(message2)
         );
 
-        Verification verification = Verification.builder()
+        OtpVerification verification = OtpVerification.builder()
                 .deliveries(deliveries)
                 .build();
 
@@ -104,7 +104,7 @@ class VerificationTest {
 
     @Test
     void shouldReturnProtectSensitiveData() {
-        Verification verification = Verification.builder()
+        OtpVerification verification = OtpVerification.builder()
                 .protectSensitiveData(true)
                 .build();
 
@@ -113,7 +113,7 @@ class VerificationTest {
 
     @Test
     void shouldReturnSuccessful() {
-        Verification verification = Verification.builder()
+        OtpVerification verification = OtpVerification.builder()
                 .successful(true)
                 .build();
 
@@ -122,7 +122,7 @@ class VerificationTest {
 
     @Test
     void shouldReturnComplete() {
-        Verification verification = Verification.builder()
+        OtpVerification verification = OtpVerification.builder()
                 .complete(true)
                 .build();
 
@@ -131,10 +131,10 @@ class VerificationTest {
 
     @Test
     void shouldAddDelivery() {
-        Verification verification = VerificationMother.build();
+        OtpVerification verification = OtpVerificationMother.build();
         Delivery delivery = DeliveryMother.withSent(Instant.now());
 
-        Verification updated = verification.add(delivery);
+        OtpVerification updated = verification.add(delivery);
 
         assertThat(updated)
                 .usingRecursiveComparison()

@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Builder
 @Data
-public class SendOtpRequest {
+public class SendOtpRequest implements LoadOtpVerificationRequest {
 
     private final UUID contextId;
     private final UUID deliveryMethodId;

@@ -1,0 +1,5 @@
+dependencies {
+    api project(":use-cases")
+
+    implementation "com.github.michaelruocco:verification-context-context-client:0.1.0-SNAPSHOT:all"
+}

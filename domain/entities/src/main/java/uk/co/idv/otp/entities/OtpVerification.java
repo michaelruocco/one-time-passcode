@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Builder(toBuilder = true)
 @Data
-public class Verification implements GeneratePasscodeRequest {
+public class OtpVerification implements GeneratePasscodeRequest {
 
     private final UUID id;
     private final UUID contextId;
@@ -30,7 +30,17 @@ public class Verification implements GeneratePasscodeRequest {
     private final boolean successful;
     private final boolean complete;
 
-    public Verification add(Delivery delivery) {
+    @Override
+    public int getPasscodeLength() {
+        return config.getPasscodeLength();
+    }
+
+    @Override
+    public Duration getPasscodeDuration() {
+        return config.getPasscodeDuration();
+    }
+
+    public OtpVerification add(Delivery delivery) {
         return toBuilder()
                 .deliveries(deliveries.add(delivery))
                 .build();
@@ -42,16 +52,6 @@ public class Verification implements GeneratePasscodeRequest {
 
     public Message getFirstMessage() {
         return getFirstDelivery().getMessage();
-    }
-
-    @Override
-    public int getPasscodeLength() {
-        return config.getPasscodeLength();
-    }
-
-    @Override
-    public Duration getPasscodeDuration() {
-        return config.getPasscodeDuration();
     }
 
 }
