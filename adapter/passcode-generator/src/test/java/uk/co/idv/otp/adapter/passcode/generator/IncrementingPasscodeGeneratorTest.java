@@ -15,13 +15,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class RandomPasscodeGeneratorTest {
+class IncrementingPasscodeGeneratorTest {
 
     private static final Instant NOW = Instant.now();
 
     private final Clock clock = Clock.fixed(NOW, ZoneId.systemDefault());
 
-    private final PasscodeGenerator generator = new RandomPasscodeGenerator(clock);
+    private final PasscodeGenerator generator = new IncrementingPasscodeGenerator(clock);
 
     @Test
     void shouldPopulateCreatedOnPasscode() {
@@ -44,16 +44,14 @@ class RandomPasscodeGeneratorTest {
     }
 
     @Test
-    void shouldReturnPasscodeWithDigitsOfPasscodeLength() {
+    void shouldReturnPasscodeWithDigitsOfPasscodeLengthAndIncrementingValue() {
         int length = 8;
         GeneratePasscodeRequest request = mock(GeneratePasscodeRequest.class);
         given(request.getPasscodeLength()).willReturn(length);
 
-        Passcode passcode = generator.generate(request);
-
-        assertThat(passcode.getValue())
-                .containsOnlyDigits()
-                .hasSize(length);
+        assertThat(generator.generate(request).getValue()).isEqualTo("00000001");
+        assertThat(generator.generate(request).getValue()).isEqualTo("00000002");
+        assertThat(generator.generate(request).getValue()).isEqualTo("00000003");
     }
 
 }

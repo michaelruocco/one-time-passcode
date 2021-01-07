@@ -13,6 +13,10 @@ public class CompositeMessageGenerator implements MessageGenerator {
 
     private final Collection<ActivityMessageGenerator> generators;
 
+    public CompositeMessageGenerator() {
+        this(new OnlinePurchaseMessageGenerator());
+    }
+
     public CompositeMessageGenerator(ActivityMessageGenerator... generators) {
         this(Arrays.asList(generators));
     }

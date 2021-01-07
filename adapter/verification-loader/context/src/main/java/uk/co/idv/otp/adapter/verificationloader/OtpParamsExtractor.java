@@ -1,39 +1,42 @@
 package uk.co.idv.otp.adapter.verificationloader;
 
 import uk.co.idv.context.entities.verification.Verification;
-import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.otp.Otp;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.method.entities.otp.delivery.query.DeliveryMethodNotFoundException;
 import uk.co.idv.otp.entities.send.OtpParams;
+import uk.co.idv.otp.usecases.send.DeliveryMethodNotEligibleException;
 import uk.co.idv.otp.usecases.send.OtpNotNextEligibleMethodException;
 
 import java.util.UUID;
-import java.util.stream.Stream;
 
 public class OtpParamsExtractor {
 
-    public OtpParams extract(UUID deliveryMethodId, Verification verification) {
-        Stream<Otp> otpMethods = verification.getMethods().stream()
-                .map(Otp.class::cast)
-                .filter(Method::isEligible);
-        if (isEmpty(otpMethods)) {
-            throw new OtpNotNextEligibleMethodException(verification.getContextId());
+    public OtpParams extract(Verification verification, UUID deliveryMethodId) {
+        Otp otp = findOtpWithEligibleDeliveryMethod(verification, deliveryMethodId);
+        DeliveryMethod deliveryMethod = otp.getDeliveryMethod(deliveryMethodId);
+        if (!deliveryMethod.isEligible()) {
+            throw new DeliveryMethodNotEligibleException(deliveryMethodId);
         }
-        Otp otp = findOtpWithDeliveryMethod(otpMethods, deliveryMethodId);
         return OtpParams.builder()
                 .otpConfig(otp.getConfig())
-                .deliveryMethod(otp.getDeliveryMethod(deliveryMethodId))
+                .deliveryMethod(deliveryMethod)
                 .build();
     }
 
-    private boolean isEmpty(Stream<Otp> methods) {
-        return methods.count() < 1;
-    }
-
-    private Otp findOtpWithDeliveryMethod(Stream<Otp> otpMethods, UUID deliveryMethodId) {
-        return otpMethods.filter(method -> method.containsDeliveryMethod(deliveryMethodId))
+    private Otp findOtpWithEligibleDeliveryMethod(Verification verification, UUID deliveryMethodId) {
+        if (!verification.hasMethods()) {
+            throw new OtpNotNextEligibleMethodException(verification.getContextId());
+        }
+        Otp otp = verification.getMethods().stream()
+                .map(Otp.class::cast)
+                .filter(method -> method.containsDeliveryMethod(deliveryMethodId))
                 .findFirst()
                 .orElseThrow(() -> new DeliveryMethodNotFoundException(deliveryMethodId));
+        if (!otp.getDeliveryMethod(deliveryMethodId).isEligible()) {
+            throw new DeliveryMethodNotEligibleException(deliveryMethodId);
+        }
+        return otp;
     }
 
 }

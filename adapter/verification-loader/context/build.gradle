@@ -1,5 +1,18 @@
+plugins {
+    id "java-test-fixtures"
+}
+
 dependencies {
     api project(":use-cases")
+    api "com.github.michaelruocco:verification-context-context-client:${contextVersion}"
+    api "com.github.michaelruocco:verification-context-common-json:${contextVersion}"
+    api "com.github.michaelruocco:verification-context-context-json:${contextVersion}"
+    api "com.github.michaelruocco:verification-context-otp-json:${contextVersion}"
+    api "com.github.michaelruocco:verification-context-common-use-cases:${contextVersion}"
+    implementation "org.zalando:jackson-datatype-money:1.2.1"
 
-    implementation "com.github.michaelruocco:verification-context-context-client:0.1.0-SNAPSHOT:all"
+    testFixturesImplementation "com.github.michaelruocco:verification-context-context-entities:${contextVersion}:test-fixtures"
+    testFixturesImplementation "com.github.michaelruocco:verification-context-method-entities:${contextVersion}:test-fixtures"
+    testFixturesImplementation "com.github.michaelruocco:verification-context-otp-entities:${contextVersion}:test-fixtures"
+    testFixturesImplementation "com.github.michaelruocco:verification-context-identity-entities:${contextVersion}:test-fixtures"
 }

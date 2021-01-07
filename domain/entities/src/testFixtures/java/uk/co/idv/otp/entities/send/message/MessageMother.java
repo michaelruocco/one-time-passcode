@@ -10,7 +10,10 @@ public class MessageMother {
     }
 
     public static Message build() {
-        Passcode passcode = PasscodeMother.build();
+        return withPasscode(PasscodeMother.build());
+    }
+
+    public static Message withPasscode(Passcode passcode) {
         return Message.builder()
                 .passcode(passcode)
                 .text(toMessage(passcode))
@@ -19,9 +22,9 @@ public class MessageMother {
 
     private static String toMessage(Passcode passcode) {
         return String.format("Use one time code %s " +
-                "to make a payment of GBP 9.99 " +
-                "to Amazon with card ending 8928. " +
-                "Never share this code with anyone", passcode.getValue());
+                "to make a payment of GBP 10.99 " +
+                "to Amazon with card ending 1111. " +
+                "Never share this code with anyone.", passcode.getValue());
     }
 
 }

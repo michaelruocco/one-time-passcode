@@ -8,20 +8,21 @@ import uk.co.idv.otp.entities.delivery.Deliveries;
 import uk.co.idv.otp.entities.send.LoadOtpVerificationRequest;
 import uk.co.idv.otp.entities.send.OtpParams;
 
-import java.util.UUID;
-
 @RequiredArgsConstructor
 public class VerificationConverter {
 
     private final OtpParamsExtractor otpParamsExtractor;
 
+    public VerificationConverter() {
+        this(new OtpParamsExtractor());
+    }
+
     public OtpVerification toVerification(LoadOtpVerificationRequest request, Verification verification) {
-        UUID deliveryMethodId = request.getDeliveryMethodId();
-        OtpParams otpParams = otpParamsExtractor.extract(deliveryMethodId, verification);
+        OtpParams otpParams = otpParamsExtractor.extract(verification, request.getDeliveryMethodId());
         OtpConfig otpConfig = otpParams.getOtpConfig();
         return OtpVerification.builder()
                 .id(verification.getId())
-                .contextId(verification.getId())
+                .contextId(verification.getContextId())
                 .created(verification.getCreated())
                 .expiry(verification.getExpiry())
                 .activity(verification.getActivity())

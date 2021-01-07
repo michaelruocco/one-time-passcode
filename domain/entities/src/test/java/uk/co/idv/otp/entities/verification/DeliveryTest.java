@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.otp.entities.delivery.Delivery;
 import uk.co.idv.otp.entities.send.message.Message;
+import uk.co.idv.otp.entities.send.message.MessageMother;
 
 import java.time.Instant;
 
@@ -32,6 +33,28 @@ class DeliveryTest {
                 .build();
 
         assertThat(delivery.getMessage()).isEqualTo(message);
+    }
+
+    @Test
+    void shouldReturnTextFromMessage() {
+        Message message = MessageMother.build();
+
+        Delivery delivery = Delivery.builder()
+                .message(message)
+                .build();
+
+        assertThat(delivery.getMessageText()).isEqualTo(message.getText());
+    }
+
+    @Test
+    void shouldReturnPasscodeFromMessage() {
+        Message message = MessageMother.build();
+
+        Delivery delivery = Delivery.builder()
+                .message(message)
+                .build();
+
+        assertThat(delivery.getPasscode()).isEqualTo(message.getPasscode());
     }
 
     @Test

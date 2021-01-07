@@ -1,0 +1,7 @@
+dependencies {
+    implementation project(":use-cases")
+    implementation project(":passcode-generator")
+    implementation project(":context-verification-loader")
+    implementation project(":in-memory-repository")
+    implementation project(":in-memory-delivery")
+}

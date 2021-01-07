@@ -1,6 +1,7 @@
 package uk.co.idv.otp.adapter.delivery;
 
-import lombok.RequiredArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.otp.entities.delivery.Delivery;
@@ -10,16 +11,20 @@ import uk.co.idv.otp.usecases.send.DeliverOtp;
 import java.time.Clock;
 
 @Slf4j
-@RequiredArgsConstructor
+@Builder
 public class InMemoryDeliverOtp implements DeliverOtp {
 
     private final IdGenerator idGenerator;
     private final Clock clock;
 
+    @Getter
+    private Delivery lastDelivery;
+
     @Override
     public Delivery deliver(DeliveryRequest request) {
         Delivery delivery = toDelivery(request);
         log.info("in memory delivery {}", delivery);
+        lastDelivery = delivery;
         return delivery;
     }
 

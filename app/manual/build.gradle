@@ -1,0 +1,34 @@
+plugins {
+    id "org.unbroken-dome.test-sets" version "${testSetsPluginVersion}"
+}
+
+configurations {
+    testRuntimeOnly.exclude module: "slf4j-simple"
+}
+
+testSets {
+    integrationTest
+}
+
+ext {
+    logbackVersion = "1.2.3"
+}
+
+dependencies {
+    implementation project(":config")
+    implementation project(":use-cases")
+    implementation project(":passcode-generator")
+    implementation project(":in-memory-delivery")
+    implementation "com.github.michaelruocco:verification-context-common-use-cases:${contextVersion}"
+
+    testRuntimeOnly "ch.qos.logback:logback-core:${logbackVersion}"
+    testRuntimeOnly "ch.qos.logback:logback-classic:${logbackVersion}"
+
+    integrationTestImplementation project(":in-memory-repository")
+    integrationTestImplementation testFixtures(project(":entities"))
+    integrationTestImplementation testFixtures(project(":context-verification-loader"))
+    integrationTestImplementation "com.github.michaelruocco:testing-clocks:0.1.4"
+    integrationTestImplementation "com.github.michaelruocco:verification-context-common-use-cases:${contextVersion}:test-fixtures"
+    integrationTestImplementation "com.github.michaelruocco:verification-context-otp-entities:${contextVersion}:test-fixtures"
+    integrationTestImplementation "com.github.michaelruocco:verification-context-context-entities:${contextVersion}:test-fixtures"
+}

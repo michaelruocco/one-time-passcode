@@ -23,11 +23,11 @@ public class ResendOtp {
 
     public OtpVerification resend(ResendOtpRequest request) {
         UUID id = request.getVerificationId();
-        OtpVerification verification = repository.load(id);
-        Delivery resentDelivery = redeliver(verification);
-        verification.add(resentDelivery);
-        repository.save(verification);
-        return verification;
+        OtpVerification originalVerification = repository.load(id);
+        Delivery resentDelivery = redeliver(originalVerification);
+        OtpVerification updatedVerification = originalVerification.add(resentDelivery);
+        repository.save(updatedVerification);
+        return updatedVerification;
     }
 
     private Delivery redeliver(OtpVerification verification) {

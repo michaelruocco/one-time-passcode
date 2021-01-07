@@ -9,6 +9,10 @@ public interface DeliveriesMother {
         return builder().build();
     }
 
+    static Deliveries empty() {
+        return withDeliveries();
+    }
+
     static Deliveries withDeliveries(Delivery... deliveries) {
         return builder().values(Arrays.asList(deliveries)).build();
     }

@@ -25,7 +25,10 @@ class InMemoryDeliverOtpTest {
     private final IdGenerator idGenerator = mock(IdGenerator.class);
     private final Clock clock = Clock.fixed(NOW, ZoneId.systemDefault());
 
-    private final DeliverOtp deliverOtp = new InMemoryDeliverOtp(idGenerator, clock);
+    private final DeliverOtp deliverOtp = InMemoryDeliverOtp.builder()
+            .idGenerator(idGenerator)
+            .clock(clock)
+            .build();
 
     @BeforeEach
     void setUp() {
