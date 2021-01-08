@@ -54,4 +54,8 @@ public class OtpVerification implements GeneratePasscodeRequest {
         return getFirstDelivery().getMessage();
     }
 
+    public boolean hasExpired(Instant now) {
+        return now.isAfter(expiry);
+    }
+
 }

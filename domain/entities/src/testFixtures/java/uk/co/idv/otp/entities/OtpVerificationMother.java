@@ -11,6 +11,10 @@ public interface OtpVerificationMother {
         return builder().build();
     }
 
+    static OtpVerification withExpiry(Instant expiry) {
+        return builder().expiry(expiry).build();
+    }
+
     static OtpVerification.OtpVerificationBuilder builder() {
         return OtpVerification.builder()
                 .id(UUID.fromString("624c63c6-a967-4b45-ab19-0237e1617122"))

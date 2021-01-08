@@ -24,7 +24,6 @@ import uk.co.idv.otp.usecases.send.DeliveryMethodNotEligibleException;
 import uk.co.idv.otp.usecases.send.OtpNotNextEligibleMethodException;
 
 import java.time.Duration;
-import java.time.Instant;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -146,8 +145,8 @@ class SendOtpIntegrationTest {
         OtpVerification created = application.sendOtp(request);
 
         assertThat(created.getContextId()).isEqualTo(request.getContextId());
-        assertThat(created.getCreated()).isEqualTo(Instant.parse("2020-09-14T20:03:03.003Z"));
-        assertThat(created.getExpiry()).isEqualTo(Instant.parse("2020-09-14T20:08:03.003Z"));
+        assertThat(created.getCreated()).isEqualTo(harness.now());
+        assertThat(created.getExpiry()).isEqualTo(harness.now().plus(Duration.ofMinutes(5)));
         assertThat(created.getActivity()).isEqualTo(OnlinePurchaseMother.build());
         assertThat(created.getDeliveryMethod()).isEqualTo(DeliveryMethodMother.eligible());
         assertThat(created.getConfig()).isEqualTo(OtpConfigMother.build());

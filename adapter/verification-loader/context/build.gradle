@@ -15,4 +15,6 @@ dependencies {
     testFixturesImplementation "com.github.michaelruocco:verification-context-method-entities:${contextVersion}:test-fixtures"
     testFixturesImplementation "com.github.michaelruocco:verification-context-otp-entities:${contextVersion}:test-fixtures"
     testFixturesImplementation "com.github.michaelruocco:verification-context-identity-entities:${contextVersion}:test-fixtures"
+    testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 }

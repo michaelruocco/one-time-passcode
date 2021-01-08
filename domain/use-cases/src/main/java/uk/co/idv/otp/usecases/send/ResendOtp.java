@@ -8,6 +8,7 @@ import uk.co.idv.otp.entities.send.ResendOtpRequest;
 import uk.co.idv.otp.entities.delivery.Delivery;
 import uk.co.idv.otp.entities.OtpVerification;
 import uk.co.idv.otp.usecases.OtpVerificationRepository;
+import uk.co.idv.otp.usecases.get.GetOtp;
 import uk.co.idv.otp.usecases.passcode.PasscodeGenerator;
 import uk.co.idv.otp.usecases.send.message.MessageGenerator;
 
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Builder
 public class ResendOtp {
 
+    private final GetOtp getOtp;
     private final PasscodeGenerator passcodeGenerator;
     private final MessageGenerator messageGenerator;
     private final DeliverOtp deliverOtp;
@@ -23,7 +25,7 @@ public class ResendOtp {
 
     public OtpVerification resend(ResendOtpRequest request) {
         UUID id = request.getVerificationId();
-        OtpVerification originalVerification = repository.load(id);
+        OtpVerification originalVerification = getOtp.get(id);
         Delivery resentDelivery = redeliver(originalVerification);
         OtpVerification updatedVerification = originalVerification.add(resentDelivery);
         repository.save(updatedVerification);

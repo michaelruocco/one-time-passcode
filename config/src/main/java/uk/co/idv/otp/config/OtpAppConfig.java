@@ -5,7 +5,7 @@ import uk.co.idv.otp.usecases.OtpFacade;
 import uk.co.idv.otp.usecases.OtpVerificationRepository;
 import uk.co.idv.otp.usecases.passcode.PasscodeGenerator;
 import uk.co.idv.otp.usecases.send.DeliverOtp;
-import uk.co.idv.otp.usecases.send.GetOtp;
+import uk.co.idv.otp.usecases.get.GetOtp;
 import uk.co.idv.otp.usecases.send.OtpVerificationLoader;
 import uk.co.idv.otp.usecases.send.ResendOtp;
 import uk.co.idv.otp.usecases.send.SendOtp;
@@ -42,7 +42,10 @@ public class OtpAppConfig {
     }
 
     private GetOtp getOtp() {
-        return new GetOtp(repository);
+        return GetOtp.builder()
+                .clock(clock)
+                .repository(repository)
+                .build();
     }
 
     private ResendOtp resendOtp() {

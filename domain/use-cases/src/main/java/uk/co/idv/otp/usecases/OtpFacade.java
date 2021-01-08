@@ -4,7 +4,7 @@ import lombok.Builder;
 import uk.co.idv.otp.entities.OtpVerification;
 import uk.co.idv.otp.entities.send.ResendOtpRequest;
 import uk.co.idv.otp.entities.send.SendOtpRequest;
-import uk.co.idv.otp.usecases.send.GetOtp;
+import uk.co.idv.otp.usecases.get.GetOtp;
 import uk.co.idv.otp.usecases.send.ResendOtp;
 import uk.co.idv.otp.usecases.send.SendOtp;
 

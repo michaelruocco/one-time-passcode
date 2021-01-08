@@ -34,7 +34,7 @@ public class TestHarness {
 
     private final VerificationLoaderConfig loaderConfig = ContextVerificationLoaderConfig.builder()
             .clock(appAdapter.getClock())
-            .verificationClient(new StubVerificationClient())
+            .verificationClient(new StubVerificationClient(appAdapter.getClock()))
             .build();
 
     private final OtpAppConfig otpConfig = OtpAppConfig.builder()

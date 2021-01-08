@@ -12,6 +12,7 @@ import uk.co.idv.otp.entities.send.ResendOtpRequest;
 import uk.co.idv.otp.entities.send.ResendOtpRequestMother;
 import uk.co.idv.otp.entities.send.message.Message;
 import uk.co.idv.otp.usecases.OtpVerificationRepository;
+import uk.co.idv.otp.usecases.get.GetOtp;
 import uk.co.idv.otp.usecases.passcode.PasscodeGenerator;
 import uk.co.idv.otp.usecases.send.message.MessageGenerator;
 
@@ -23,12 +24,14 @@ import static org.mockito.Mockito.verify;
 
 class ResendOtpTest {
 
+    private final GetOtp getOtp = mock(GetOtp.class);
     private final PasscodeGenerator passcodeGenerator = mock(PasscodeGenerator.class);
     private final MessageGenerator messageGenerator = mock(MessageGenerator.class);
     private final DeliverOtp deliverOtp = mock(DeliverOtp.class);
     private final OtpVerificationRepository repository = mock(OtpVerificationRepository.class);
 
     private final ResendOtp resendOtp = ResendOtp.builder()
+            .getOtp(getOtp)
             .passcodeGenerator(passcodeGenerator)
             .messageGenerator(messageGenerator)
             .deliverOtp(deliverOtp)
@@ -82,7 +85,7 @@ class ResendOtpTest {
     void shouldPassDeliveryMethodWhenDelivering() {
         ResendOtpRequest request = ResendOtpRequestMother.build();
         OtpVerification verification = OtpVerificationMother.build();
-        given(repository.load(request.getVerificationId())).willReturn(verification);
+        given(getOtp.get(request.getVerificationId())).willReturn(verification);
         given(passcodeGenerator.generate(verification)).willReturn(PasscodeMother.build());
 
         resendOtp.resend(request);
@@ -95,7 +98,7 @@ class ResendOtpTest {
 
     private OtpVerification givenOriginalVerification(ResendOtpRequest request) {
         OtpVerification originalVerification = mock(OtpVerification.class);
-        given(repository.load(request.getVerificationId())).willReturn(originalVerification);
+        given(getOtp.get(request.getVerificationId())).willReturn(originalVerification);
         return originalVerification;
     }
 

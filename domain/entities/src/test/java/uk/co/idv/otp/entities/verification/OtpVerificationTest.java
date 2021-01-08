@@ -9,6 +9,7 @@ import uk.co.idv.otp.entities.delivery.Delivery;
 import uk.co.idv.otp.entities.delivery.DeliveryMother;
 import uk.co.idv.otp.entities.send.message.Message;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -143,6 +144,27 @@ class OtpVerificationTest {
         assertThat(updated.getDeliveries())
                 .containsAll(verification.getDeliveries())
                 .contains(delivery);
+    }
+
+    @Test
+    void shouldReturnTrueIfHasExpired() {
+        Instant expiry = Instant.now();
+        OtpVerification verification = OtpVerificationMother.withExpiry(expiry);
+        Instant now = expiry.plus(Duration.ofMillis(1));
+
+        boolean expired = verification.hasExpired(now);
+
+        assertThat(expired).isTrue();
+    }
+
+    @Test
+    void shouldReturnFalseIfHasNotExpired() {
+        Instant expiry = Instant.now();
+        OtpVerification verification = OtpVerificationMother.withExpiry(expiry);
+
+        boolean expired = verification.hasExpired(expiry);
+
+        assertThat(expired).isFalse();
     }
 
     private Delivery givenDeliveryWithMessage(Message message) {

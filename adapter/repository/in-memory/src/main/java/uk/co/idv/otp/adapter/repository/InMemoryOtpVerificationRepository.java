@@ -1,7 +1,6 @@
 package uk.co.idv.otp.adapter.repository;
 
 import uk.co.idv.otp.entities.OtpVerification;
-import uk.co.idv.otp.usecases.VerificationNotFoundException;
 import uk.co.idv.otp.usecases.OtpVerificationRepository;
 
 import java.util.HashMap;
@@ -19,9 +18,8 @@ public class InMemoryOtpVerificationRepository implements OtpVerificationReposit
     }
 
     @Override
-    public OtpVerification load(UUID id) {
-        return Optional.ofNullable(verifications.get(id))
-                .orElseThrow(() -> new VerificationNotFoundException(id));
+    public Optional<OtpVerification> load(UUID id) {
+        return Optional.ofNullable(verifications.get(id));
     }
 
 }
