@@ -1,34 +1,31 @@
 package uk.co.idv.otp.adapter.passcode.generator;
 
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import uk.co.idv.otp.entities.passcode.GeneratePasscodeRequest;
-import uk.co.idv.otp.entities.passcode.Passcode;
-import uk.co.idv.otp.usecases.passcode.PasscodeGenerator;
 
 import java.time.Clock;
-import java.time.Instant;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.IntFunction;
 
-@RequiredArgsConstructor
-public class IncrementingPasscodeGenerator implements PasscodeGenerator {
+public class IncrementingPasscodeGenerator extends DefaultPasscodeGenerator {
 
-    private final AtomicInteger count = new AtomicInteger();
-    private final Clock clock;
-
-    @Override
-    public Passcode generate(GeneratePasscodeRequest request) {
-        Instant created = clock.instant();
-        return Passcode.builder()
-                .created(created)
-                .expiry(created.plus(request.getPasscodeDuration()))
-                .value(generateNumericStringAndIncrementCounter(request.getPasscodeLength()))
-                .build();
+    public IncrementingPasscodeGenerator(Clock clock) {
+        super(clock, new IncrementingValueGenerator());
     }
 
-    private String generateNumericStringAndIncrementCounter(int length) {
-        String value = Integer.toString(count.incrementAndGet());
-        return StringUtils.leftPad(value, length, "0");
+    private static class IncrementingValueGenerator implements IntFunction<String> {
+
+        private final AtomicInteger count = new AtomicInteger();
+
+        @Override
+        public String apply(int length) {
+            return generateValueAndIncrementCounter(length);
+        }
+
+        private String generateValueAndIncrementCounter(int length) {
+            String value = Integer.toString(count.incrementAndGet());
+            return StringUtils.leftPad(value, length, "0");
+        }
+
     }
 
 }
