@@ -1,6 +1,6 @@
 dependencies {
     api project(":use-cases")
-    implementation "com.github.michaelruocco:verification-context-common-use-cases:${contextVersion}"
+    implementation "com.github.michaelruocco:verification-context-client:${contextVersion}:all"
 
     testImplementation testFixtures(project(":entities"))
 }

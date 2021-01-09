@@ -1,7 +1,6 @@
 package uk.co.idv.otp.app.manual;
 
 import org.slf4j.MDC;
-import uk.co.idv.common.usecases.id.NonRandomIdGenerator;
 import uk.co.idv.otp.adapter.delivery.InMemoryDeliverOtp;
 import uk.co.idv.otp.adapter.passcode.generator.IncrementingPasscodeGenerator;
 import uk.co.idv.otp.adapter.repository.InMemoryOtpVerificationRepository;
