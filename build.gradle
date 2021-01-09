@@ -38,6 +38,7 @@ allprojects {
     repositories {
         mavenCentral()
         jcenter()
+        maven { url "https://oss.jfrog.org/artifactory/oss-snapshot-local" }
     }
 
     jacoco {
@@ -64,7 +65,7 @@ subprojects {
 
         lombokVersion = "1.18.16"
         slf4jVersion = "1.7.30"
-        contextVersion = "0.1.0"
+        contextVersion = "0.1.1-otp-changes-SNAPSHOT"
 
         junitVersion = "5.7.0"
         assertjVersion = "3.18.1"
