@@ -17,8 +17,4 @@ public class DefaultAppAdapter implements AppAdapter {
     @Builder.Default
     private final IdGenerator idGenerator = new RandomIdGenerator();
 
-    public static AppAdapter build() {
-        return builder().build();
-    }
-
 }
