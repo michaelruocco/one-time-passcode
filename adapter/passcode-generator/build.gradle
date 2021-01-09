@@ -1,6 +1,6 @@
 dependencies {
     api project(":use-cases")
-    implementation "org.apache.commons:commons-lang3:3.11"
+    compile "org.apache.commons:commons-text:1.9"
 
     testImplementation testFixtures(project(":entities"))
 }
