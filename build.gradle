@@ -11,11 +11,10 @@ buildscript {
 plugins {
     id "idea"
     id "java-library"
-    id "com.diffplug.spotless" version "5.8.2"
+    id "com.diffplug.spotless" version "5.9.0"
     id "com.github.ben-manes.versions" version "0.36.0"
     id "pl.allegro.tech.build.axion-release" version "1.12.1"
     id "org.sonarqube" version "3.0"
-    id "nebula.lint" version "16.16.0"
     id "com.vanniktech.dependency.graph.generator" version "0.5.0"
 }
 
@@ -30,7 +29,6 @@ project.version = scmVersion.version
 allprojects {
     apply plugin: "idea"
     apply plugin: "jacoco"
-    apply plugin: "nebula.lint"
 
     group "com.github.michaelruocco"
     version = rootProject.version
@@ -44,10 +42,6 @@ allprojects {
         toolVersion = "0.8.6"
     }
 
-    gradleLint {
-        rules = ['all-dependency']
-        alwaysRun = false
-    }
 }
 
 subprojects {
@@ -68,7 +62,7 @@ subprojects {
 
         junitVersion = "5.7.0"
         assertjVersion = "3.18.1"
-        mockitoVersion = "3.6.28"
+        mockitoVersion = "3.7.0"
     }
 
     dependencies {
