@@ -1,15 +1,15 @@
 # One Time Passcode
 
-[![Build](https://github.com/michaelruocco/library-template/workflows/pipeline/badge.svg)](https://github.com/michaelruocco/library-template/actions)
-[![codecov](https://codecov.io/gh/michaelruocco/library-template/branch/master/graph/badge.svg?token=FWDNP534O7)](https://codecov.io/gh/michaelruocco/library-template)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/272889cf707b4dcb90bf451392530794)](https://www.codacy.com/gh/michaelruocco/library-template/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=michaelruocco/library-template&amp;utm_campaign=Badge_Grade)
-[![BCH compliance](https://bettercodehub.com/edge/badge/michaelruocco/library-template?branch=master)](https://bettercodehub.com/)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_library-template&metric=alert_status)](https://sonarcloud.io/dashboard?id=michaelruocco_library-template)
-[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_library-template&metric=sqale_index)](https://sonarcloud.io/dashboard?id=michaelruocco_library-template)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_library-template&metric=coverage)](https://sonarcloud.io/dashboard?id=michaelruocco_library-template)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_library-template&metric=ncloc)](https://sonarcloud.io/dashboard?id=michaelruocco_library-template)
-[![Download](https://api.bintray.com/packages/michaelruocco/maven/library-template/images/download.svg)](https://bintray.com/michaelruocco/maven/library-template/_latestVersion)
-[![Maven Central](https://img.shields.io/maven-central/v/com.github.michaelruocco/library-template.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.michaelruocco%22%20AND%20a:%22library-template%22)
+[![Build](https://github.com/michaelruocco/one-time-passcode/workflows/pipeline/badge.svg)](https://github.com/michaelruocco/one-time-passcode/actions)
+[![codecov](https://codecov.io/gh/michaelruocco/one-time-passcode/branch/master/graph/badge.svg?token=FWDNP534O7)](https://codecov.io/gh/michaelruocco/one-time-passcode)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/272889cf707b4dcb90bf451392530794)](https://www.codacy.com/gh/michaelruocco/one-time-passcode/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=michaelruocco/one-time-passcode&amp;utm_campaign=Badge_Grade)
+[![BCH compliance](https://bettercodehub.com/edge/badge/michaelruocco/one-time-passcode?branch=master)](https://bettercodehub.com/)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_one-time-passcode&metric=alert_status)](https://sonarcloud.io/dashboard?id=michaelruocco_one-time-passcode)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_one-time-passcode&metric=sqale_index)](https://sonarcloud.io/dashboard?id=michaelruocco_one-time-passcode)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_one-time-passcode&metric=coverage)](https://sonarcloud.io/dashboard?id=michaelruocco_one-time-passcode)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_one-time-passcode&metric=ncloc)](https://sonarcloud.io/dashboard?id=michaelruocco_one-time-passcode)
+[![Download](https://api.bintray.com/packages/michaelruocco/maven/one-time-passcode/images/download.svg)](https://bintray.com/michaelruocco/maven/one-time-passcode/_latestVersion)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.michaelruocco/one-time-passcode.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.michaelruocco%22%20AND%20a:%22one-time-passcode%22)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Todo
