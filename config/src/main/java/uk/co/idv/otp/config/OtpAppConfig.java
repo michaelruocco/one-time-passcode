@@ -50,6 +50,7 @@ public class OtpAppConfig {
 
     private ResendOtp resendOtp() {
         return ResendOtp.builder()
+                .getOtp(getOtp())
                 .passcodeGenerator(passcodeGenerator)
                 .messageGenerator(messageGenerator())
                 .deliverOtp(deliverOtp)

@@ -19,8 +19,10 @@ import uk.co.idv.otp.entities.OtpVerification;
 import uk.co.idv.otp.entities.delivery.Deliveries;
 import uk.co.idv.otp.entities.delivery.Delivery;
 import uk.co.idv.otp.entities.delivery.DeliveryMother;
+import uk.co.idv.otp.entities.delivery.NoDeliveriesRemainingException;
 import uk.co.idv.otp.entities.passcode.Passcode;
 import uk.co.idv.otp.entities.passcode.PasscodeMother;
+import uk.co.idv.otp.entities.send.ResendOtpRequest;
 import uk.co.idv.otp.entities.send.SendOtpRequest;
 import uk.co.idv.otp.entities.send.message.Message;
 import uk.co.idv.otp.entities.send.message.MessageMother;
@@ -138,7 +140,7 @@ class SendOtpIntegrationTest {
 
         application.sendOtp(request);
 
-        assertThat(harness.getLastDelivery()).isEqualTo(expectedDelivery());
+        assertThat(harness.getLastDelivery()).isEqualTo(firstExpectedDelivery());
     }
 
     @Test
@@ -167,7 +169,7 @@ class SendOtpIntegrationTest {
         assertThat(created.isComplete()).isFalse();
         Deliveries deliveries = created.getDeliveries();
         assertThat(deliveries.getMax()).isEqualTo(2);
-        assertThat(deliveries.getValues()).containsExactly(expectedDelivery());
+        assertThat(deliveries.getValues()).containsExactly(firstExpectedDelivery());
     }
 
     @Test
@@ -180,6 +182,38 @@ class SendOtpIntegrationTest {
         assertThat(retrieved).isEqualTo(created);
     }
 
+    @Test
+    void shouldResendPasscode() {
+        SendOtpRequest sendRequest = buildSuccessfulSendOtpRequest();
+        OtpVerification initial = application.sendOtp(sendRequest);
+        ResendOtpRequest resendRequest = new ResendOtpRequest(initial.getId());
+
+        OtpVerification updated = application.resendOtp(resendRequest);
+
+        assertThat(updated)
+                .usingRecursiveComparison()
+                .ignoringFields("deliveries")
+                .isEqualTo(initial);
+        assertThat(updated.getDeliveries()).containsExactly(
+                firstExpectedDelivery(),
+                secondExpectedDelivery()
+        );
+    }
+
+    @Test
+    void shouldThrowExceptionIfAttemptToResendAfterMaxNumberOfDeliveriesAlreadyPerformed() {
+        SendOtpRequest sendRequest = buildSuccessfulSendOtpRequest();
+        OtpVerification initial = application.sendOtp(sendRequest);
+        ResendOtpRequest resendRequest = new ResendOtpRequest(initial.getId());
+        application.resendOtp(resendRequest);
+
+        Throwable error = catchThrowable(() -> application.resendOtp(resendRequest));
+
+        assertThat(error)
+                .isInstanceOf(NoDeliveriesRemainingException.class)
+                .hasMessage("2");
+    }
+
     private static SendOtpRequest buildSuccessfulSendOtpRequest() {
         return SendOtpRequest.builder()
                 .contextId(UUID.fromString("2a3559bd-0071-4bbf-8901-42b9f17dd93f"))
@@ -187,23 +221,31 @@ class SendOtpIntegrationTest {
                 .build();
     }
 
-    private Delivery expectedDelivery() {
+    private Delivery firstExpectedDelivery() {
         return DeliveryMother.builder()
                 .sent(harness.now())
-                .message(toExpectedMessage())
+                .message(toExpectedMessage(toPasscode("00000001")))
                 .messageId("76c9ec3b-b7aa-41ae-8066-796856e71e65")
                 .build();
     }
 
-    private Message toExpectedMessage() {
-        return MessageMother.withPasscode(toExpectedPasscode());
+    private Delivery secondExpectedDelivery() {
+        return DeliveryMother.builder()
+                .sent(harness.now())
+                .message(toExpectedMessage(toPasscode("00000002")))
+                .messageId("85bbb05a-3cf8-45e5-bae8-430503164c3b")
+                .build();
     }
 
-    private Passcode toExpectedPasscode() {
+    private Message toExpectedMessage(Passcode passcode) {
+        return MessageMother.withPasscode(passcode);
+    }
+
+    private Passcode toPasscode(String value) {
         return PasscodeMother.builder()
                 .created(harness.now())
                 .expiry(harness.now().plus(Duration.ofMinutes(2)))
-                .value("00000001")
+                .value(value)
                 .build();
     }
 
