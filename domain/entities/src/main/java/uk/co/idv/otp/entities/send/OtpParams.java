@@ -12,4 +12,8 @@ public class OtpParams {
     private final DeliveryMethod deliveryMethod;
     private final OtpConfig otpConfig;
 
+    public int getMaxNumberOfPasscodeDeliveries() {
+        return otpConfig.getMaxNumberOfPasscodeDeliveries();
+    }
+
 }

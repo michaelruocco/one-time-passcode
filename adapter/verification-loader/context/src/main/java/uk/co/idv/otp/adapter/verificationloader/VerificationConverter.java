@@ -17,7 +17,7 @@ public class VerificationConverter {
         this(new OtpParamsExtractor());
     }
 
-    public OtpVerification toVerification(LoadOtpVerificationRequest request, Verification verification) {
+    public OtpVerification toOtpVerification(LoadOtpVerificationRequest request, Verification verification) {
         OtpParams otpParams = otpParamsExtractor.extract(verification, request.getDeliveryMethodId());
         OtpConfig otpConfig = otpParams.getOtpConfig();
         return OtpVerification.builder()

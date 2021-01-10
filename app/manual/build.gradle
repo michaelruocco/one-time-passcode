@@ -10,10 +10,6 @@ testSets {
     integrationTest
 }
 
-ext {
-    logbackVersion = "1.2.3"
-}
-
 dependencies {
     implementation project(":config")
     implementation project(":use-cases")

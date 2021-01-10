@@ -5,6 +5,7 @@ import uk.co.idv.method.entities.otp.OtpConfig;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class OtpParamsTest {
@@ -29,6 +30,19 @@ class OtpParamsTest {
                 .build();
 
         assertThat(request.getOtpConfig()).isEqualTo(otpConfig);
+    }
+
+    @Test
+    void shouldReturnMaxNumberOfPasscodeDeliveriesFromOtpConfig() {
+        int expectedMaxNumberOfDeliveries = 3;
+        OtpConfig otpConfig = mock(OtpConfig.class);
+        given(otpConfig.getMaxNumberOfPasscodeDeliveries()).willReturn(expectedMaxNumberOfDeliveries);
+
+        OtpParams request = OtpParams.builder()
+                .otpConfig(otpConfig)
+                .build();
+
+        assertThat(request.getMaxNumberOfPasscodeDeliveries()).isEqualTo(expectedMaxNumberOfDeliveries);
     }
 
 }

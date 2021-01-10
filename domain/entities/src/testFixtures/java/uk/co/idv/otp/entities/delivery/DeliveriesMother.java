@@ -9,6 +9,13 @@ public interface DeliveriesMother {
         return builder().build();
     }
 
+    static Deliveries empty(int maxNumberOfDeliveries) {
+        return builder()
+                .max(maxNumberOfDeliveries)
+                .values(Collections.emptyList())
+                .build();
+    }
+
     static Deliveries empty() {
         return withDeliveries();
     }

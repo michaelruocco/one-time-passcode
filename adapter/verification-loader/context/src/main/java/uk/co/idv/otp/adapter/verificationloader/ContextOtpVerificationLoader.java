@@ -20,7 +20,7 @@ public class ContextOtpVerificationLoader implements OtpVerificationLoader {
     public OtpVerification load(LoadOtpVerificationRequest request) {
         ClientCreateVerificationRequest clientRequest = factory.build(request.getContextId());
         Verification verification = verificationClient.createVerification(clientRequest);
-        return verificationConverter.toVerification(request, verification);
+        return verificationConverter.toOtpVerification(request, verification);
     }
 
 }

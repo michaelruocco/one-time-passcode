@@ -2,9 +2,17 @@ plugins {
     id "java-test-fixtures"
 }
 
+configurations {
+    testRuntimeOnly.exclude module: "slf4j-simple"
+}
+
 dependencies {
     api project(":use-cases")
     implementation "com.github.michaelruocco:verification-context-client:${contextVersion}:all"
+
+    testImplementation testFixtures(project(":entities"))
+    testRuntimeOnly "ch.qos.logback:logback-core:${logbackVersion}"
+    testRuntimeOnly "ch.qos.logback:logback-classic:${logbackVersion}"
 
     testFixturesApi "com.github.michaelruocco:verification-context-client-test-fixtures:${contextVersion}:all"
     testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
