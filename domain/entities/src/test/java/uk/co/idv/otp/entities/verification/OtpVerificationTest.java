@@ -132,7 +132,7 @@ class OtpVerificationTest {
 
     @Test
     void shouldAddDelivery() {
-        OtpVerification verification = OtpVerificationMother.build();
+        OtpVerification verification = OtpVerificationMother.incomplete();
         Delivery delivery = DeliveryMother.withSent(Instant.now());
 
         OtpVerification updated = verification.add(delivery);

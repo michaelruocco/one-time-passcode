@@ -26,7 +26,7 @@ public interface DeliveriesMother {
 
     static Deliveries.DeliveriesBuilder builder() {
         return Deliveries.builder()
-                .max(3)
+                .max(2)
                 .values(Collections.singleton(DeliveryMother.build()));
     }
 

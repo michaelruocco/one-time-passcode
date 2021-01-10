@@ -84,8 +84,8 @@ class ResendOtpTest {
     @Test
     void shouldPassDeliveryMethodWhenDelivering() {
         ResendOtpRequest request = ResendOtpRequestMother.build();
-        OtpVerification verification = OtpVerificationMother.build();
-        given(getOtp.get(request.getVerificationId())).willReturn(verification);
+        OtpVerification verification = OtpVerificationMother.incomplete();
+        given(getOtp.get(request.getId())).willReturn(verification);
         given(passcodeGenerator.generate(verification)).willReturn(PasscodeMother.build());
 
         resendOtp.resend(request);
@@ -98,7 +98,7 @@ class ResendOtpTest {
 
     private OtpVerification givenOriginalVerification(ResendOtpRequest request) {
         OtpVerification originalVerification = mock(OtpVerification.class);
-        given(getOtp.get(request.getVerificationId())).willReturn(originalVerification);
+        given(getOtp.get(request.getId())).willReturn(originalVerification);
         return originalVerification;
     }
 

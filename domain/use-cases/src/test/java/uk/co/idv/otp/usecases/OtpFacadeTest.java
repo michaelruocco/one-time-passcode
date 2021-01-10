@@ -32,7 +32,7 @@ class OtpFacadeTest {
     @Test
     void shouldSendOtp() {
         SendOtpRequest request = SendOtpRequestMother.build();
-        OtpVerification expectedVerification = OtpVerificationMother.build();
+        OtpVerification expectedVerification = OtpVerificationMother.incomplete();
         given(sendOtp.send(request)).willReturn(expectedVerification);
 
         OtpVerification verification = facade.send(request);
@@ -42,7 +42,7 @@ class OtpFacadeTest {
 
     @Test
     void shouldGetOtp() {
-        OtpVerification expectedVerification = OtpVerificationMother.build();
+        OtpVerification expectedVerification = OtpVerificationMother.incomplete();
         UUID id = expectedVerification.getId();
         given(getOtp.get(id)).willReturn(expectedVerification);
 
@@ -54,7 +54,7 @@ class OtpFacadeTest {
     @Test
     void shouldResendOtp() {
         ResendOtpRequest request = ResendOtpRequestMother.build();
-        OtpVerification expectedVerification = OtpVerificationMother.build();
+        OtpVerification expectedVerification = OtpVerificationMother.incomplete();
         given(resendOtp.resend(request)).willReturn(expectedVerification);
 
         OtpVerification verification = facade.resend(request);

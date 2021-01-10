@@ -78,7 +78,7 @@ class SendOtpTest {
     @Test
     void shouldPassActivityWhenGeneratingMessage() {
         SendOtpRequest request = SendOtpRequestMother.build();
-        OtpVerification originalVerification = OtpVerificationMother.build();
+        OtpVerification originalVerification = OtpVerificationMother.incomplete();
         given(verificationLoader.load(request)).willReturn(originalVerification);
 
         sendOtp.send(request);
@@ -92,7 +92,7 @@ class SendOtpTest {
     @Test
     void shouldPassDeliveryMethodWhenDeliveringMessage() {
         SendOtpRequest request = SendOtpRequestMother.build();
-        OtpVerification originalVerification = OtpVerificationMother.build();
+        OtpVerification originalVerification = OtpVerificationMother.incomplete();
         given(verificationLoader.load(request)).willReturn(originalVerification);
 
         sendOtp.send(request);

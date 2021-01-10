@@ -14,7 +14,7 @@ class ResendOtpRequestTest {
 
         ResendOtpRequest request = new ResendOtpRequest(verificationId);
 
-        assertThat(request.getVerificationId()).isEqualTo(verificationId);
+        assertThat(request.getId()).isEqualTo(verificationId);
     }
 
 }

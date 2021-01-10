@@ -52,7 +52,7 @@ class ContextOtpVerificationLoaderTest {
     }
 
     private OtpVerification givenConvertedToOtpVerification(LoadOtpVerificationRequest request, Verification verification) {
-        OtpVerification otpVerification = OtpVerificationMother.build();
+        OtpVerification otpVerification = OtpVerificationMother.incomplete();
         given(verificationConverter.toOtpVerification(request, verification)).willReturn(otpVerification);
         return otpVerification;
     }

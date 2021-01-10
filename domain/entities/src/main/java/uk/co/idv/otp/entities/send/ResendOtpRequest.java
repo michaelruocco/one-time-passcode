@@ -9,6 +9,6 @@ import java.util.UUID;
 @Data
 public class ResendOtpRequest {
 
-    private final UUID verificationId;
+    private final UUID id;
 
 }

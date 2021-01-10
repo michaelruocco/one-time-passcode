@@ -25,7 +25,7 @@ class InMemoryOtpVerificationRepositoryTest {
 
     @Test
     void shouldLoadVerificationById() {
-        OtpVerification verification = OtpVerificationMother.build();
+        OtpVerification verification = OtpVerificationMother.incomplete();
         repository.save(verification);
 
         Optional<OtpVerification> loaded = repository.load(verification.getId());

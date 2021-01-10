@@ -18,6 +18,9 @@ project(':in-memory-delivery').projectDir = file('adapter/delivery/in-memory')
 include ':context-verification-loader'
 project(':context-verification-loader').projectDir = file('adapter/verification-loader/context')
 
+include ':json'
+project(':json').projectDir = file('adapter/json')
+
 include ':config'
 project(':config').projectDir = file('config')
 

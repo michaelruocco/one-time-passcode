@@ -24,7 +24,7 @@ public class ResendOtp {
     private final OtpVerificationRepository repository;
 
     public OtpVerification resend(ResendOtpRequest request) {
-        UUID id = request.getVerificationId();
+        UUID id = request.getId();
         OtpVerification originalVerification = getOtp.get(id);
         Delivery resentDelivery = redeliver(originalVerification);
         OtpVerification updatedVerification = originalVerification.add(resentDelivery);
