@@ -15,6 +15,9 @@ project(':in-memory-repository').projectDir = file('adapter/repository/in-memory
 include ':in-memory-delivery'
 project(':in-memory-delivery').projectDir = file('adapter/delivery/in-memory')
 
+include ':sns-delivery'
+project(':sns-delivery').projectDir = file('adapter/delivery/sns')
+
 include ':context-verification-loader'
 project(':context-verification-loader').projectDir = file('adapter/verification-loader/context')
 
