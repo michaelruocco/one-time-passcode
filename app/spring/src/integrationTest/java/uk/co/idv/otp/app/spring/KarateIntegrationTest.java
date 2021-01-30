@@ -71,6 +71,8 @@ class KarateIntegrationTest {
     private static void setApplicationProperties(int serverPort) {
         System.setProperty("environment", ENVIRONMENT);
         System.setProperty("server.port", Integer.toString(serverPort));
+        System.setProperty("aws.accessKeyId", "abc");
+        System.setProperty("aws.secretKey", "123");
         System.setProperty("aws.sns.endpoint.uri", SNS.getEndpointUri());
         System.setProperty("spring.data.mongodb.uri", MONGO.getConnectionString());
         System.setProperty("response.filtering.enabled", "true");
