@@ -1,0 +1,75 @@
+apply plugin: "maven-publish"
+apply plugin: "com.jfrog.bintray"
+apply plugin: "com.jfrog.artifactory"
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+project.ext.pomConfig = {
+    licenses {
+        license {
+            name "MIT License"
+            url "https://opensource.org/licenses/MIT"
+            distribution "repo"
+        }
+    }
+
+    developers {
+        developer {
+            id "mruoc"
+            name "Michael Ruocco"
+            email "michael.ruocco@hotmail.com"
+        }
+    }
+
+    scm {
+        url "https://github.com/michaelruocco/one-time-passcode"
+    }
+}
+
+bintray {
+    user = System.getenv("BINTRAY_USER")
+    key = System.getenv("BINTRAY_KEY")
+    publications = ["lib"]
+    publish = true
+    pkg {
+        repo = "maven"
+        name = "${project.artifactName}"
+        userOrg = "michaelruocco"
+        licenses = ["mit"]
+        vcsUrl = "https://github.com/michaelruocco/one-time-passcode.git"
+        version {
+            name = project.version
+            desc = project.version
+            released = new Date()
+            gpg {
+                sign = true
+            }
+            mavenCentralSync {
+                sync = true
+            }
+        }
+    }
+}
+
+artifactory {
+    contextUrl = "http://oss.jfrog.org"
+    publish {
+        repository {
+            repoKey = "oss-snapshot-local"
+            username = System.getenv("BINTRAY_USER")
+            password = System.getenv("BINTRAY_KEY")
+        }
+        defaults {
+            publications("lib")
+            publishArtifacts = true
+            publishPom = true
+        }
+    }
+    resolve {
+        repoKey = "jcenter"
+    }
+    clientConfig.info.setBuildNumber(System.getProperty("build.number"))
+}

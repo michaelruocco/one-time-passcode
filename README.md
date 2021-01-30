@@ -14,7 +14,9 @@
 
 ## Todo
 
-*   Set up repo
+*   Secure sensitive data if comes from context
+
+*   Implement verify otp
 
 ## Useful Commands
 

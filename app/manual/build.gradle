@@ -23,6 +23,6 @@ dependencies {
     integrationTestImplementation project(":in-memory-repository")
     integrationTestImplementation testFixtures(project(":entities"))
     integrationTestImplementation testFixtures(project(":context-verification-loader"))
-    integrationTestImplementation "com.github.michaelruocco:testing-clocks:0.1.4"
+    integrationTestImplementation "com.github.michaelruocco:testing-clocks:${testingClocksVersion}"
     integrationTestImplementation "com.github.michaelruocco:verification-context-client-test-fixtures:${contextVersion}:all"
 }

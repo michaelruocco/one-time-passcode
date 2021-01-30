@@ -3,5 +3,8 @@ dependencies {
     implementation project(":passcode-generator")
     implementation project(":context-verification-loader")
     implementation project(":in-memory-repository")
+    implementation project(":mongo-repository")
     implementation project(":in-memory-delivery")
+    implementation project(":sns-delivery")
+    implementation "org.mongodb:mongo-java-driver:${mongoVersion}"
 }

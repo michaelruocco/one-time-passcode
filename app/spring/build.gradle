@@ -1,0 +1,120 @@
+buildscript {
+    ext {
+        springBootVersion = "2.4.2"
+    }
+}
+
+plugins {
+    id "org.unbroken-dome.test-sets" version "${testSetsPluginVersion}"
+    id "org.springframework.boot" version "${springBootVersion}"
+    id "io.spring.dependency-management" version "1.0.11.RELEASE"
+    id "com.bmuschko.docker-remote-api" version "6.7.0"
+    id "com.avast.gradle.docker-compose" version "0.14.0"
+    id "maven-publish"
+}
+
+ext {
+    karateVersion = "0.9.6"
+    logbackJsonVersion = "0.1.5"
+    mongoVersion = "3.12.7"
+    artifactName = "${rootProject.name}-${project.name}"
+}
+
+testSets {
+    integrationTest
+}
+
+configurations {
+    runtimeOnly.exclude module: "slf4j-simple"
+}
+
+dependencies {
+    implementation project(":manual-app")
+    implementation project(":use-cases")
+    implementation project(":config")
+    implementation project(":passcode-generator")
+    implementation project(":in-memory-delivery")
+    implementation project(":in-memory-repository")
+    implementation project(":mongo-repository")
+    implementation project(":sns-delivery")
+    implementation project(":json")
+    implementation testFixtures(project(":context-verification-loader"))
+    implementation "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.hateoas:spring-hateoas"
+    implementation "com.github.michaelruocco:spring-filters:0.1.9"
+    implementation "com.github.michaelruocco:json-adapter:1.0.0"
+    implementation "com.github.michaelruocco:testing-clocks:${testingClocksVersion}"
+    implementation "com.fasterxml.jackson.core:jackson-databind"
+    implementation "org.mongodb:mongo-java-driver:${mongoVersion}"
+    runtimeOnly "ch.qos.logback.contrib:logback-json-classic:${logbackJsonVersion}"
+    runtimeOnly "ch.qos.logback.contrib:logback-jackson:${logbackJsonVersion}"
+    runtimeOnly "net.logstash.logback:logstash-logback-encoder:6.6"
+
+    testImplementation testFixtures(project(":entities"))
+
+    integrationTestImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
+    integrationTestImplementation "com.intuit.karate:karate-core:${karateVersion}"
+    integrationTestImplementation "com.intuit.karate:karate-junit5:${karateVersion}"
+    integrationTestImplementation "org.awaitility:awaitility"
+    integrationTestImplementation "org.testcontainers:junit-jupiter:1.15.1"
+    integrationTestImplementation "junit:junit"
+    integrationTestRuntimeOnly "com.intuit.karate:karate-apache:${karateVersion}"
+}
+
+springBoot {
+    buildInfo()
+}
+
+bootRun {
+    systemProperties = System.getProperties()
+    systemProperty "spring.profiles.active", System.properties.getOrDefault("spring.profiles.active", "stubbed,simple-logging")
+    systemProperty "server.port", System.properties.getOrDefault("server.port", "8082")
+    systemProperty "request.logging.enabled", System.properties.getOrDefault("request.logging.enabled", "true")
+    systemProperty "response.logging.enabled", System.properties.getOrDefault("response.logging.enabled", "true")
+    systemProperty "response.filtering.enabled", System.properties.getOrDefault("response.filtering.enabled", "true")
+}
+
+apply from: rootProject.file('publish.gradle')
+
+publishing {
+    publications {
+        lib(MavenPublication) { publication ->
+            artifact bootJar
+            artifact sourcesJar
+            artifact javadocJar
+            artifactId "${artifactName}"
+            pom.withXml {
+                def root = asNode()
+                root.appendNode("description", "One time passcode spring application")
+                root.appendNode("name", "${artifactName}")
+                root.appendNode("url", "https://github.com/michaelruocco/one-time-passcode")
+                root.children().last() + project.pomConfig
+            }
+        }
+    }
+}
+
+docker {
+    registryCredentials {
+        username.set(System.getenv("DOCKER_USERNAME"))
+        password.set(System.getenv("DOCKER_PASSWORD"))
+    }
+}
+
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+
+task buildImage(type: DockerBuildImage) {
+    inputDir.set(file("."))
+    images.add("michaelruocco/${artifactName}:latest")
+}
+
+task pushImage(type: DockerPushImage) {
+    images.set(buildImage.images)
+}
+
+dockerCompose {
+    startedServices = ['one-time-passcode-app']
+}

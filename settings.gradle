@@ -12,6 +12,9 @@ project(':passcode-generator').projectDir = file('adapter/passcode-generator')
 include ':in-memory-repository'
 project(':in-memory-repository').projectDir = file('adapter/repository/in-memory')
 
+include ':mongo-repository'
+project(':mongo-repository').projectDir = file('adapter/repository/mongo')
+
 include ':in-memory-delivery'
 project(':in-memory-delivery').projectDir = file('adapter/delivery/in-memory')
 
@@ -29,3 +32,6 @@ project(':config').projectDir = file('config')
 
 include ':manual-app'
 project(':manual-app').projectDir = file('app/manual')
+
+include ':spring-app'
+project(':spring-app').projectDir = file('app/spring')

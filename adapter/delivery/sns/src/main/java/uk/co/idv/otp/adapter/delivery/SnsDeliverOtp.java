@@ -15,9 +15,11 @@ import java.time.Clock;
 @Slf4j
 public class SnsDeliverOtp implements DeliverOtp {
 
-    private final DeliveryRequestConverter converter;
     private final AmazonSNS client;
     private final Clock clock;
+
+    @Builder.Default
+    private final DeliveryRequestConverter converter = new DeliveryRequestConverter();
 
     @Override
     public Delivery deliver(DeliveryRequest deliveryRequest) {

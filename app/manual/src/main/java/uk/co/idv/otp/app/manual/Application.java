@@ -1,11 +1,13 @@
 package uk.co.idv.otp.app.manual;
 
+import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.otp.config.OtpAppConfig;
 import uk.co.idv.otp.entities.OtpVerification;
 import uk.co.idv.otp.entities.send.ResendOtpRequest;
 import uk.co.idv.otp.entities.send.SendOtpRequest;
 import uk.co.idv.otp.usecases.OtpFacade;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public class Application {
@@ -26,6 +28,10 @@ public class Application {
 
     public OtpVerification resendOtp(ResendOtpRequest request) {
         return facade.resend(request);
+    }
+
+    public Optional<ApiError> handle(Throwable cause) {
+        return Optional.empty();
     }
 
 }

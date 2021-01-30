@@ -1,0 +1,8 @@
+dependencies {
+    api project(":use-cases")
+    implementation "org.mongodb:mongo-java-driver:${mongoVersion}"
+
+    testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertjVersion}"
+    testImplementation testFixtures(project(":entities"))
+    testImplementation testFixtures(project(":json"))
+}

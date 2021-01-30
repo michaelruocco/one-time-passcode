@@ -3,12 +3,13 @@ package uk.co.idv.otp.app.manual;
 import org.slf4j.MDC;
 import uk.co.idv.otp.adapter.delivery.InMemoryDeliverOtp;
 import uk.co.idv.otp.adapter.passcode.generator.IncrementingPasscodeGenerator;
-import uk.co.idv.otp.adapter.repository.InMemoryOtpVerificationRepository;
 import uk.co.idv.otp.adapter.verificationloader.StubVerificationClient;
 import uk.co.idv.otp.app.manual.config.AppAdapter;
 import uk.co.idv.otp.app.manual.config.DefaultAppAdapter;
 import uk.co.idv.otp.config.OtpAppConfig;
+import uk.co.idv.otp.config.RepositoryConfig;
 import uk.co.idv.otp.config.VerificationLoaderConfig;
+import uk.co.idv.otp.config.repository.InMemoryRepositoryConfig;
 import uk.co.idv.otp.config.verificationloader.ContextVerificationLoaderConfig;
 import uk.co.idv.otp.entities.delivery.Delivery;
 import uk.co.mruoc.test.clock.OverridableClock;
@@ -31,14 +32,13 @@ public class TestHarness {
             .idGenerator(appAdapter.getIdGenerator())
             .build();
 
-    private final VerificationLoaderConfig loaderConfig = ContextVerificationLoaderConfig.builder()
-            .clock(appAdapter.getClock())
-            .verificationClient(new StubVerificationClient(appAdapter.getClock()))
-            .build();
+    private final VerificationLoaderConfig loaderConfig = new ContextVerificationLoaderConfig(new StubVerificationClient(appAdapter.getClock()));
+
+    private final RepositoryConfig repositoryConfig = new InMemoryRepositoryConfig();
 
     private final OtpAppConfig otpConfig = OtpAppConfig.builder()
             .clock(appAdapter.getClock())
-            .repository(new InMemoryOtpVerificationRepository())
+            .repository(repositoryConfig.verificationRepository())
             .deliverOtp(deliverOtp)
             .verificationLoader(loaderConfig.verificationLoader())
             .passcodeGenerator(new IncrementingPasscodeGenerator(appAdapter.getClock()))

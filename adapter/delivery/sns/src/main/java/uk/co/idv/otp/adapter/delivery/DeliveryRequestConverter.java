@@ -12,6 +12,10 @@ public class DeliveryRequestConverter {
 
     private final MessageAttributeBuilder attributeBuilder;
 
+    public DeliveryRequestConverter() {
+        this(new MessageAttributeBuilder());
+    }
+
     public PublishRequest toPublishRequest(DeliveryRequest request) {
         Message message = request.getMessage();
         DeliveryMethod method = request.getMethod();

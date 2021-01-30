@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: one-time-passcode
+  main:
+    banner-mode: off
+
+management:
+  endpoint:
+    health:
+      show-details: always
