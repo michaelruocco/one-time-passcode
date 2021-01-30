@@ -17,7 +17,7 @@ import java.time.Clock;
 public class SnsDeliveryConfig implements DeliveryConfig {
 
     private final Clock clock;
-    private final String endpointUrl;
+    private final String endpointUri;
     private final String region;
 
     @Builder.Default
@@ -36,7 +36,7 @@ public class SnsDeliveryConfig implements DeliveryConfig {
     }
 
     private EndpointConfiguration getEndpointConfiguration() {
-        return new EndpointConfiguration(endpointUrl, region);
+        return new EndpointConfiguration(endpointUri, region);
     }
 
     private AmazonSNS build(EndpointConfiguration endpointConfiguration) {

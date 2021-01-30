@@ -15,8 +15,8 @@
 ## Todo
 
 *   Secure sensitive data if comes from context
-
 *   Implement verify otp
+*   Add json error handling
 
 ## Useful Commands
 

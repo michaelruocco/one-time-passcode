@@ -3,8 +3,6 @@ package uk.co.idv.otp.app.spring.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.co.idv.context.adapter.client.VerificationClient;
-import uk.co.idv.otp.adapter.delivery.InMemoryDeliverOtp;
-import uk.co.idv.otp.adapter.verificationloader.StubVerificationClient;
 import uk.co.idv.otp.app.manual.Application;
 import uk.co.idv.otp.app.manual.config.AppAdapter;
 import uk.co.idv.otp.app.manual.config.DefaultAppAdapter;
@@ -21,20 +19,7 @@ import java.time.Clock;
 public class SpringCommonDomainConfig {
 
     @Bean
-    public DeliverOtp deliverOtp(AppAdapter appAdapter) {
-        return InMemoryDeliverOtp.builder()
-                .clock(appAdapter.getClock())
-                .idGenerator(appAdapter.getIdGenerator())
-                .build();
-    }
-
-    @Bean
-    public VerificationClient stubVerificationClient(AppAdapter appAdapter) {
-        return new StubVerificationClient(appAdapter.getClock());
-    }
-
-    @Bean
-    public VerificationLoaderConfig testFindIdentityConfig(VerificationClient client) {
+    public VerificationLoaderConfig verificationLoaderConfig(VerificationClient client) {
         return new ContextVerificationLoaderConfig(client);
     }
 

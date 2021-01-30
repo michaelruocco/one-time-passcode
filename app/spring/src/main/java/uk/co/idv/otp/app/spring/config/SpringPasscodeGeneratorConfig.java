@@ -9,7 +9,7 @@ import uk.co.idv.otp.app.manual.config.AppAdapter;
 import uk.co.idv.otp.usecases.passcode.PasscodeGenerator;
 
 @Configuration
-public class PasscodeGeneratorConfig {
+public class SpringPasscodeGeneratorConfig {
 
     @Profile("!test")
     @Bean

@@ -46,4 +46,5 @@ public class SpringMongoRepositoryConfig {
     private static String loadConnectionString() {
         return System.getProperty("spring.data.mongodb.uri");
     }
+
 }

@@ -30,7 +30,7 @@ services:
 
   mongo:
     image: mongo
-    container_name: mongo
+    container_name: otp-mongo
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: welcome
@@ -44,14 +44,16 @@ services:
     mem_limit: 2048m
     mem_reservation: 2048m
     ports:
-      - 8081:80
+      - 8082:80
     environment:
       - SERVER_PORT=80
       - SPRING_PROFILES_ACTIVE=simple-logging
+      - CONTEXT_URI=http://host.docker.internal:8081
       - AWS_ACCESS_KEY=abc
       - AWS_SECRET_KEY=123
       - AWS_SNS_ENDPOINT_URI=http://aws-sns:4566
-      - MONGO_CONNECTION_STRING=mongodb://idv:welcome01@mongo:27017/idv-local
+      #- AWS_SNS_ENDPOINT_URI=https://sns.eu-west-1.amazonaws.com
+      - MONGO_CONNECTION_STRING=mongodb://idv:welcome01@otp-mongo:27017/idv-local
       - REQUEST_LOGGING_ENABLED=true
       - RESPONSE_LOGGING_ENABLED=true
     depends_on:
