@@ -2,11 +2,11 @@ package uk.co.idv.otp.adapter.delivery;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.otp.entities.delivery.Delivery;
 import uk.co.idv.otp.entities.delivery.DeliveryRequest;
 import uk.co.idv.otp.entities.delivery.DeliveryRequestMother;
 import uk.co.idv.otp.usecases.send.DeliverOtp;
+import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -22,17 +22,17 @@ class InMemoryDeliverOtpTest {
     private static final Instant NOW = Instant.now();
     private static final UUID MESSAGE_ID = UUID.randomUUID();
 
-    private final IdGenerator idGenerator = mock(IdGenerator.class);
+    private final UuidGenerator uuidGenerator = mock(UuidGenerator.class);
     private final Clock clock = Clock.fixed(NOW, ZoneId.systemDefault());
 
     private final DeliverOtp deliverOtp = InMemoryDeliverOtp.builder()
-            .idGenerator(idGenerator)
+            .uuidGenerator(uuidGenerator)
             .clock(clock)
             .build();
 
     @BeforeEach
     void setUp() {
-        given(idGenerator.generate()).willReturn(MESSAGE_ID);
+        given(uuidGenerator.generate()).willReturn(MESSAGE_ID);
     }
 
     @Test

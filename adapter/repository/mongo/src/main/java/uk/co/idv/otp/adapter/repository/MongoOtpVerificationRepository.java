@@ -13,6 +13,8 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
+import static uk.co.mruoc.duration.logger.MongoMdcDurationLoggerUtils.logDuration;
+
 @Builder
 public class MongoOtpVerificationRepository implements OtpVerificationRepository {
 
@@ -28,7 +30,7 @@ public class MongoOtpVerificationRepository implements OtpVerificationRepository
             Document document = verificationConverter.toDocument(verification);
             collection.replaceOne(query, document, options);
         } finally {
-            MongoDurationLogger.log("save-attempts", start);
+            logDuration("save-attempts", start);
         }
     }
 
@@ -40,7 +42,7 @@ public class MongoOtpVerificationRepository implements OtpVerificationRepository
             FindIterable<Document> documents = collection.find(query);
             return Optional.ofNullable(documents.first()).map(this::toVerification);
         } finally {
-            MongoDurationLogger.log("load-attempts-by-idv-id", start);
+            logDuration("load-attempts-by-idv-id", start);
         }
     }
 

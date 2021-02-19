@@ -6,5 +6,7 @@ dependencies {
     implementation project(":mongo-repository")
     implementation project(":in-memory-delivery")
     implementation project(":sns-delivery")
+    implementation "com.github.michaelruocco.idv:verification-client:${contextVersion}"
+    implementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
     implementation "org.mongodb:mongo-java-driver:${mongoVersion}"
 }

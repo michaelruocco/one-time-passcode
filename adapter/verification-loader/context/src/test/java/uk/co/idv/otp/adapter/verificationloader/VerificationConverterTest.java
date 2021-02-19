@@ -2,8 +2,8 @@ package uk.co.idv.otp.adapter.verificationloader;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.verification.Verification;
-import uk.co.idv.context.entities.verification.VerificationMother;
+import uk.co.idv.method.entities.verification.Verification;
+import uk.co.idv.method.entities.verification.VerificationMother;
 import uk.co.idv.otp.entities.OtpVerification;
 import uk.co.idv.otp.entities.delivery.Deliveries;
 import uk.co.idv.otp.entities.send.LoadOtpVerificationRequest;

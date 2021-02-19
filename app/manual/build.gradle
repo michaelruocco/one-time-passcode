@@ -11,11 +11,13 @@ testSets {
 }
 
 dependencies {
+    api "com.github.michaelruocco.idv:verification-client:${contextVersion}"
+    api "com.github.michaelruocco.idv:common-json:${contextVersion}"
     implementation project(":config")
     implementation project(":use-cases")
     implementation project(":passcode-generator")
     implementation project(":in-memory-delivery")
-    implementation "com.github.michaelruocco:verification-context-client:${contextVersion}:all"
+    implementation "com.github.michaelruocco:random-value-suppliers:${randomValueSuppliersVersion}"
 
     testRuntimeOnly "ch.qos.logback:logback-core:${logbackVersion}"
     testRuntimeOnly "ch.qos.logback:logback-classic:${logbackVersion}"
@@ -24,5 +26,5 @@ dependencies {
     integrationTestImplementation testFixtures(project(":entities"))
     integrationTestImplementation testFixtures(project(":context-verification-loader"))
     integrationTestImplementation "com.github.michaelruocco:testing-clocks:${testingClocksVersion}"
-    integrationTestImplementation "com.github.michaelruocco:verification-context-client-test-fixtures:${contextVersion}:all"
+    integrationTestImplementation "com.github.michaelruocco.idv:verification-client:${contextVersion}:test-fixtures"
 }

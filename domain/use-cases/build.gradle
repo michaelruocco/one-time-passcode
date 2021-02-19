@@ -1,8 +1,8 @@
 dependencies {
     api project(":entities")
-    implementation "com.github.michaelruocco:verification-context-client:${contextVersion}:all"
+    //implementation "com.github.michaelruocco:verification-context-client:${contextVersion}:all"
     implementation "javax.money:money-api:1.1"
 
     testImplementation testFixtures(project(":entities"))
-    testImplementation "com.github.michaelruocco:verification-context-client-test-fixtures:${contextVersion}:all"
+    //testImplementation "com.github.michaelruocco:verification-context-client-test-fixtures:${contextVersion}:all"
 }

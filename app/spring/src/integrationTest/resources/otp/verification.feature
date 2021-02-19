@@ -26,18 +26,15 @@ Feature: Verification Requests
         "expiry": "#notnull",
         "complete": false,
         "activity": {
+          "name": "online-purchase",
+          "merchantName": "Amazon",
           "reference": "ABC123",
           "cost": {
             "amount": 10.99,
             "currency": "GBP"
           },
-          "name": "online-purchase",
-          "cardNumber": {
-            "type": "credit-card-number",
-            "value": "4929111111111111"
-          },
-          "timestamp": "2020-06-06T12:36:15.179Z",
-          "merchantName": "Amazon"
+          "last4DigitsOfCardNumber": "1111",
+          "timestamp": "2020-06-06T12:36:15.179Z"
         },
         "deliveryMethod": {
           "id":"c9959188-969e-42f3-8178-42ef824c81d3",

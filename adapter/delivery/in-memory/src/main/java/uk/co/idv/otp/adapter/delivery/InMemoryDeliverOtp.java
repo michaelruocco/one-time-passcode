@@ -3,10 +3,10 @@ package uk.co.idv.otp.adapter.delivery;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.otp.entities.delivery.Delivery;
 import uk.co.idv.otp.entities.delivery.DeliveryRequest;
 import uk.co.idv.otp.usecases.send.DeliverOtp;
+import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
 
 import java.time.Clock;
 
@@ -14,7 +14,7 @@ import java.time.Clock;
 @Builder
 public class InMemoryDeliverOtp implements DeliverOtp {
 
-    private final IdGenerator idGenerator;
+    private final UuidGenerator uuidGenerator;
     private final Clock clock;
 
     @Getter
@@ -32,7 +32,7 @@ public class InMemoryDeliverOtp implements DeliverOtp {
         return Delivery.builder()
                 .method(request.getMethod())
                 .message(request.getMessage())
-                .messageId(idGenerator.generate().toString())
+                .messageId(uuidGenerator.generate().toString())
                 .sent(clock.instant())
                 .build();
     }

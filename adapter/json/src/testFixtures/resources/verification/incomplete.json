@@ -4,6 +4,7 @@
   "created": "2020-09-14T20:03:01.999Z",
   "expiry": "2020-09-14T20:08:01.999Z",
   "activity": {
+    "name": "online-purchase",
     "timestamp": "2020-06-06T12:36:15.179Z",
     "merchantName": "Amazon",
     "reference": "ABC123",
@@ -11,11 +12,7 @@
       "amount": 10.99,
       "currency": "GBP"
     },
-    "cardNumber": {
-      "type": "credit-card-number",
-      "value": "4929111111111111"
-    },
-    "name": "online-purchase"
+    "last4DigitsOfCardNumber": "1111"
   },
   "deliveryMethod": {
     "id": "c9959188-969e-42f3-8178-42ef824c81d3",

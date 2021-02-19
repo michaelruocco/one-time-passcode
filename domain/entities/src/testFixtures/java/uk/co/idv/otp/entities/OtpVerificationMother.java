@@ -1,6 +1,6 @@
 package uk.co.idv.otp.entities;
 
-import uk.co.idv.context.entities.activity.OnlinePurchaseMother;
+import uk.co.idv.activity.entities.OnlinePurchaseMother;
 import uk.co.idv.method.entities.otp.OtpConfigMother;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethodMother;
 import uk.co.idv.otp.entities.delivery.DeliveriesMother;

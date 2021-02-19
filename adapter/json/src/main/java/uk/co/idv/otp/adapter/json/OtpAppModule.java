@@ -3,12 +3,12 @@ package uk.co.idv.otp.adapter.json;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import uk.co.idv.context.adapter.json.activity.ActivityModule;
-import uk.co.idv.context.adapter.json.error.ContextErrorModule;
-import uk.co.idv.context.adapter.json.verification.VerificationModule;
+import uk.co.idv.activity.adapter.json.ActivityModule;
+import uk.co.idv.method.adapter.json.error.MethodErrorModule;
 import uk.co.idv.method.adapter.json.method.MethodMappings;
 import uk.co.idv.method.adapter.json.otp.OtpMapping;
 import uk.co.idv.method.adapter.json.otp.OtpModule;
+import uk.co.idv.method.adapter.json.verification.VerificationModule;
 import uk.co.idv.otp.adapter.json.passcode.PasscodeDeserializer;
 import uk.co.idv.otp.adapter.json.send.ResendOtpRequestDeserializer;
 import uk.co.idv.otp.adapter.json.send.SendOtpRequestDeserializer;
@@ -41,7 +41,7 @@ public class OtpAppModule extends SimpleModule {
         return Arrays.asList(
                 new ActivityModule(),
                 new OtpModule(),
-                new ContextErrorModule(),
+                new MethodErrorModule(),
                 new VerificationModule(new MethodMappings(new OtpMapping()))
         );
     }

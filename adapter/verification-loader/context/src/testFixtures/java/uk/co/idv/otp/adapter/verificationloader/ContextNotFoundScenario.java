@@ -1,8 +1,8 @@
 package uk.co.idv.otp.adapter.verificationloader;
 
 import uk.co.idv.context.adapter.client.exception.ApiErrorClientException;
-import uk.co.idv.context.adapter.json.error.contextnotfound.ContextNotFoundError;
-import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.method.adapter.json.error.contextnotfound.ContextNotFoundError;
+import uk.co.idv.method.entities.verification.Verification;
 
 import java.util.UUID;
 

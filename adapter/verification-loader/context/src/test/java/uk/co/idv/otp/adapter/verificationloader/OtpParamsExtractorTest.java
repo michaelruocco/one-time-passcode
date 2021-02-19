@@ -1,13 +1,13 @@
 package uk.co.idv.otp.adapter.verificationloader;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.verification.Verification;
-import uk.co.idv.context.entities.verification.VerificationMother;
 import uk.co.idv.method.entities.otp.Otp;
 import uk.co.idv.method.entities.otp.OtpMother;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethodMother;
 import uk.co.idv.method.entities.otp.delivery.query.DeliveryMethodNotFoundException;
+import uk.co.idv.method.entities.verification.Verification;
+import uk.co.idv.method.entities.verification.VerificationMother;
 import uk.co.idv.otp.entities.send.OtpParams;
 import uk.co.idv.otp.usecases.send.DeliveryMethodNotEligibleException;
 import uk.co.idv.otp.usecases.send.OtpNotNextEligibleMethodException;

@@ -1,8 +1,8 @@
 package uk.co.idv.otp.entities.send;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.activity.Activity;
-import uk.co.idv.context.entities.activity.OnlinePurchaseMother;
+import uk.co.idv.activity.entities.Activity;
+import uk.co.idv.activity.entities.OnlinePurchaseMother;
 import uk.co.idv.otp.entities.passcode.Passcode;
 import uk.co.idv.otp.entities.send.message.GenerateMessageRequest;
 import uk.co.idv.otp.entities.passcode.PasscodeMother;

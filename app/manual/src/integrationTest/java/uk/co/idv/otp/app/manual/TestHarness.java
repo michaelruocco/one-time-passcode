@@ -24,12 +24,12 @@ public class TestHarness {
 
     private final AppAdapter appAdapter = DefaultAppAdapter.builder()
             .clock(clock)
-            .idGenerator(new NonRandomIdGenerator())
+            .uuidGenerator(new NonRandomIdGenerator())
             .build();
 
     private final InMemoryDeliverOtp deliverOtp = InMemoryDeliverOtp.builder()
             .clock(appAdapter.getClock())
-            .idGenerator(appAdapter.getIdGenerator())
+            .idGenerator(appAdapter.getUuidGenerator())
             .build();
 
     private final VerificationLoaderConfig loaderConfig = new ContextVerificationLoaderConfig(new StubVerificationClient(appAdapter.getClock()));

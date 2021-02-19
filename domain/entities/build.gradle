@@ -4,10 +4,11 @@ plugins {
 
 dependencies {
     api "org.javamoney:moneta:1.4.2"
-    api "com.github.michaelruocco:verification-context-client:${contextVersion}:all"
+    api "com.github.michaelruocco.idv:otp-entities:${contextVersion}"
+    api "com.github.michaelruocco.idv:activity-entities:${contextVersion}"
     implementation "org.apache.commons:commons-collections4:4.4"
 
-    testImplementation "com.github.michaelruocco:verification-context-client-test-fixtures:${contextVersion}:all"
-
-    testFixturesImplementation "com.github.michaelruocco:verification-context-client-test-fixtures:${contextVersion}:all"
+    testFixturesApi "com.github.michaelruocco.idv:otp-entities:${contextVersion}:test-fixtures"
+    testFixturesApi "com.github.michaelruocco.idv:activity-entities:${contextVersion}:test-fixtures"
+    testFixturesApi "com.github.michaelruocco.idv:method-entities:${contextVersion}:test-fixtures"
 }

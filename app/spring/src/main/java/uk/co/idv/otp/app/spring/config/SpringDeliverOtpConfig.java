@@ -27,7 +27,7 @@ public class SpringDeliverOtpConfig {
     public DeliverOtp inMemoryDeliverOtp(AppAdapter appAdapter) {
         return InMemoryDeliverOtp.builder()
                 .clock(appAdapter.getClock())
-                .idGenerator(appAdapter.getIdGenerator())
+                .uuidGenerator(appAdapter.getUuidGenerator())
                 .build();
     }
 

@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.adapter.client.VerificationClient;
 import uk.co.idv.context.adapter.client.request.ClientCompleteVerificationRequest;
 import uk.co.idv.context.adapter.client.request.ClientCreateVerificationRequest;
-import uk.co.idv.context.entities.verification.Verification;
-import uk.co.idv.context.entities.verification.VerificationMother;
+import uk.co.idv.method.entities.verification.Verification;
+import uk.co.idv.method.entities.verification.VerificationMother;
 
 import java.time.Clock;
 import java.util.UUID;

@@ -1,9 +1,9 @@
 package uk.co.idv.otp.usecases.send.message;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.activity.Activity;
-import uk.co.idv.context.entities.activity.LoginMother;
-import uk.co.idv.context.entities.activity.OnlinePurchaseMother;
+import uk.co.idv.activity.entities.Activity;
+import uk.co.idv.activity.entities.LoginMother;
+import uk.co.idv.activity.entities.OnlinePurchaseMother;
 import uk.co.idv.otp.entities.send.message.GenerateMessageRequest;
 import uk.co.idv.otp.entities.send.message.GenerateMessageRequestMother;
 import uk.co.idv.otp.entities.send.message.Message;

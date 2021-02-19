@@ -1,7 +1,7 @@
 
 package uk.co.idv.otp.adapter.verificationloader;
 
-import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.method.entities.verification.Verification;
 import uk.co.idv.method.entities.otp.Otp;
 import uk.co.idv.method.entities.otp.delivery.query.DeliveryMethodNotFoundException;
 import uk.co.idv.otp.entities.send.OtpParams;

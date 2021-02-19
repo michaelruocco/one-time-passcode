@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.entities.activity.Activity;
+import uk.co.idv.activity.entities.Activity;
 import uk.co.idv.method.entities.otp.OtpConfig;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.otp.entities.OtpVerification;

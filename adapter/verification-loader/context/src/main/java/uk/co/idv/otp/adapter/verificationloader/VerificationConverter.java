@@ -1,7 +1,7 @@
 package uk.co.idv.otp.adapter.verificationloader;
 
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.method.entities.verification.Verification;
 import uk.co.idv.method.entities.otp.OtpConfig;
 import uk.co.idv.otp.entities.OtpVerification;
 import uk.co.idv.otp.entities.delivery.Deliveries;

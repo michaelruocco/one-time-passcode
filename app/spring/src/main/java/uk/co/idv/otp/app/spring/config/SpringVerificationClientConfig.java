@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import uk.co.idv.context.adapter.client.ContextClientConfig;
-import uk.co.idv.context.adapter.client.RestContextClient;
-import uk.co.idv.context.adapter.client.RestContextClientConfig;
+import uk.co.idv.context.adapter.client.RestVerificationClient;
+import uk.co.idv.context.adapter.client.RestVerificationClientConfig;
 import uk.co.idv.context.adapter.client.VerificationClient;
 import uk.co.idv.otp.adapter.verificationloader.StubVerificationClient;
 import uk.co.idv.otp.app.manual.config.AppAdapter;
@@ -19,7 +19,7 @@ public class SpringVerificationClientConfig {
     @Profile("!test")
     @Bean
     public VerificationClient verificationClient(ObjectMapper mapper) {
-        return RestContextClient.build(toContextClientConfig(mapper));
+        return RestVerificationClient.build(toContextClientConfig(mapper));
     }
 
     @Profile("test")
@@ -29,7 +29,7 @@ public class SpringVerificationClientConfig {
     }
 
     private static ContextClientConfig toContextClientConfig(ObjectMapper mapper) {
-        return RestContextClientConfig.builder()
+        return RestVerificationClientConfig.builder()
                 .baseUri(contextUri())
                 .mapper(mapper)
                 .build();

@@ -2,7 +2,7 @@ package uk.co.idv.otp.entities;
 
 import lombok.Builder;
 import lombok.Data;
-import uk.co.idv.context.entities.activity.Activity;
+import uk.co.idv.activity.entities.Activity;
 import uk.co.idv.method.entities.otp.OtpConfig;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.otp.entities.delivery.Deliveries;

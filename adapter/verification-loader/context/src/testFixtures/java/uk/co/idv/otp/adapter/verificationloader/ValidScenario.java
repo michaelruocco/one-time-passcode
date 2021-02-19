@@ -1,13 +1,13 @@
 package uk.co.idv.otp.adapter.verificationloader;
 
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.activity.OnlinePurchaseMother;
-import uk.co.idv.context.entities.context.method.MethodsMother;
-import uk.co.idv.context.entities.verification.Verification;
-import uk.co.idv.context.entities.verification.VerificationMother;
+import uk.co.idv.activity.entities.OnlinePurchaseMother;
+import uk.co.idv.method.entities.method.MethodsMother;
 import uk.co.idv.method.entities.otp.Otp;
 import uk.co.idv.method.entities.otp.OtpMother;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethodMother;
+import uk.co.idv.method.entities.verification.Verification;
+import uk.co.idv.method.entities.verification.VerificationMother;
 
 import java.time.Clock;
 import java.time.Instant;

@@ -3,7 +3,7 @@ package uk.co.idv.otp.adapter.verificationloader;
 import lombok.Builder;
 import uk.co.idv.context.adapter.client.VerificationClient;
 import uk.co.idv.context.adapter.client.request.ClientCreateVerificationRequest;
-import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.method.entities.verification.Verification;
 import uk.co.idv.otp.entities.send.LoadOtpVerificationRequest;
 import uk.co.idv.otp.entities.OtpVerification;
 import uk.co.idv.otp.usecases.send.OtpVerificationLoader;

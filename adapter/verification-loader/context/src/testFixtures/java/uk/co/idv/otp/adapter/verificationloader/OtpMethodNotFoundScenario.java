@@ -1,8 +1,8 @@
 package uk.co.idv.otp.adapter.verificationloader;
 
-import uk.co.idv.context.entities.context.method.MethodsMother;
-import uk.co.idv.context.entities.verification.Verification;
-import uk.co.idv.context.entities.verification.VerificationMother;
+import uk.co.idv.method.entities.method.MethodsMother;
+import uk.co.idv.method.entities.verification.Verification;
+import uk.co.idv.method.entities.verification.VerificationMother;
 
 import java.util.UUID;
 
