@@ -38,10 +38,9 @@ allprojects {
     version = rootProject.version
 
     repositories {
-        mavenLocal()
         mavenCentral()
         jcenter()
-        //maven { url "https://oss.jfrog.org/artifactory/oss-snapshot-local" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
 
     jacoco {
@@ -68,7 +67,7 @@ subprojects {
 
         lombokVersion = "1.18.18"
         slf4jVersion = "1.7.30"
-        contextVersion = "0.1.0-otp-changes-SNAPSHOT"
+        contextVersion = "0.1.1-otp-changes-SNAPSHOT"
         logbackVersion = "1.2.3"
         mongoVersion = "3.12.7"
         awsSdkVersion = "1.11.946"

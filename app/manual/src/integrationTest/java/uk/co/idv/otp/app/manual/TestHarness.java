@@ -12,6 +12,7 @@ import uk.co.idv.otp.config.VerificationLoaderConfig;
 import uk.co.idv.otp.config.repository.InMemoryRepositoryConfig;
 import uk.co.idv.otp.config.verificationloader.ContextVerificationLoaderConfig;
 import uk.co.idv.otp.entities.delivery.Delivery;
+import uk.co.mruoc.randomvalue.uuid.NonRandomUuidGenerator;
 import uk.co.mruoc.test.clock.OverridableClock;
 
 import java.time.Instant;
@@ -24,12 +25,12 @@ public class TestHarness {
 
     private final AppAdapter appAdapter = DefaultAppAdapter.builder()
             .clock(clock)
-            .uuidGenerator(new NonRandomIdGenerator())
+            .uuidGenerator(new NonRandomUuidGenerator())
             .build();
 
     private final InMemoryDeliverOtp deliverOtp = InMemoryDeliverOtp.builder()
             .clock(appAdapter.getClock())
-            .idGenerator(appAdapter.getUuidGenerator())
+            .uuidGenerator(appAdapter.getUuidGenerator())
             .build();
 
     private final VerificationLoaderConfig loaderConfig = new ContextVerificationLoaderConfig(new StubVerificationClient(appAdapter.getClock()));
