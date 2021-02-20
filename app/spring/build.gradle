@@ -29,7 +29,7 @@ configurations {
 }
 
 dependencies {
-    implementation project(":manual-app")
+    implementation project(":plain-app")
     implementation project(":use-cases")
     implementation project(":config")
     implementation project(":passcode-generator")

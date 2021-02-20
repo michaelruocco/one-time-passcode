@@ -3,8 +3,8 @@ package uk.co.idv.otp.adapter.verificationloader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.MDC;
-import uk.co.idv.context.adapter.client.header.ContextRequestHeaders;
-import uk.co.idv.context.adapter.client.request.ClientCreateVerificationRequest;
+import uk.co.idv.context.adapter.verification.client.header.ContextRequestHeaders;
+import uk.co.idv.context.adapter.verification.client.request.ClientCreateVerificationRequest;
 import uk.co.idv.method.entities.verification.CreateVerificationRequest;
 
 import java.util.UUID;

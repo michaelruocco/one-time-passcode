@@ -1,4 +1,4 @@
-package uk.co.idv.otp.app.manual.config;
+package uk.co.idv.otp.app.plain.config;
 
 import lombok.Builder;
 import lombok.Getter;

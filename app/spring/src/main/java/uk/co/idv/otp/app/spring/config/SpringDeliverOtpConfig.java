@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import uk.co.idv.otp.adapter.delivery.InMemoryDeliverOtp;
-import uk.co.idv.otp.app.manual.config.AppAdapter;
+import uk.co.idv.otp.app.plain.config.AppAdapter;
 import uk.co.idv.otp.config.delivery.SnsDeliveryConfig;
 import uk.co.idv.otp.usecases.send.DeliverOtp;
 

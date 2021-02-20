@@ -5,12 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import uk.co.idv.context.adapter.client.ContextClientConfig;
-import uk.co.idv.context.adapter.client.RestVerificationClient;
-import uk.co.idv.context.adapter.client.RestVerificationClientConfig;
-import uk.co.idv.context.adapter.client.VerificationClient;
+import uk.co.idv.context.adapter.verification.client.RestVerificationClient;
+import uk.co.idv.context.adapter.verification.client.RestVerificationClientConfig;
+import uk.co.idv.context.adapter.verification.client.VerificationClient;
+import uk.co.idv.context.adapter.verification.client.VerificationClientConfig;
 import uk.co.idv.otp.adapter.verificationloader.StubVerificationClient;
-import uk.co.idv.otp.app.manual.config.AppAdapter;
+import uk.co.idv.otp.app.plain.config.AppAdapter;
 
 @Slf4j
 @Configuration
@@ -28,7 +28,7 @@ public class SpringVerificationClientConfig {
         return new StubVerificationClient(appAdapter.getClock());
     }
 
-    private static ContextClientConfig toContextClientConfig(ObjectMapper mapper) {
+    private static VerificationClientConfig toContextClientConfig(ObjectMapper mapper) {
         return RestVerificationClientConfig.builder()
                 .baseUri(contextUri())
                 .mapper(mapper)

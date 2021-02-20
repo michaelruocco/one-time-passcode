@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.common.adapter.json.error.badrequest.BadRequestError;
-import uk.co.idv.otp.app.manual.Application;
+import uk.co.idv.otp.app.plain.Application;
 import uk.co.mruoc.spring.filter.validation.InvalidHeaderException;
 
 import java.util.Optional;

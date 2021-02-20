@@ -1,11 +1,11 @@
-package uk.co.idv.otp.app.manual;
+package uk.co.idv.otp.app.plain;
 
 import org.slf4j.MDC;
 import uk.co.idv.otp.adapter.delivery.InMemoryDeliverOtp;
 import uk.co.idv.otp.adapter.passcode.generator.IncrementingPasscodeGenerator;
 import uk.co.idv.otp.adapter.verificationloader.StubVerificationClient;
-import uk.co.idv.otp.app.manual.config.AppAdapter;
-import uk.co.idv.otp.app.manual.config.DefaultAppAdapter;
+import uk.co.idv.otp.app.plain.config.AppAdapter;
+import uk.co.idv.otp.app.plain.config.DefaultAppAdapter;
 import uk.co.idv.otp.config.OtpAppConfig;
 import uk.co.idv.otp.config.RepositoryConfig;
 import uk.co.idv.otp.config.VerificationLoaderConfig;

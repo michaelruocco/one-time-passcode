@@ -30,8 +30,8 @@ project(':json').projectDir = file('adapter/json')
 include ':config'
 project(':config').projectDir = file('config')
 
-include ':manual-app'
-project(':manual-app').projectDir = file('app/manual')
+include ':plain-app'
+project(':plain-app').projectDir = file('app/plain')
 
 include ':spring-app'
 project(':spring-app').projectDir = file('app/spring')

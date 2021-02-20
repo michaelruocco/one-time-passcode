@@ -2,10 +2,10 @@ package uk.co.idv.otp.app.spring.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import uk.co.idv.context.adapter.client.VerificationClient;
-import uk.co.idv.otp.app.manual.Application;
-import uk.co.idv.otp.app.manual.config.AppAdapter;
-import uk.co.idv.otp.app.manual.config.DefaultAppAdapter;
+import uk.co.idv.context.adapter.verification.client.VerificationClient;
+import uk.co.idv.otp.app.plain.Application;
+import uk.co.idv.otp.app.plain.config.AppAdapter;
+import uk.co.idv.otp.app.plain.config.DefaultAppAdapter;
 import uk.co.idv.otp.config.OtpAppConfig;
 import uk.co.idv.otp.config.VerificationLoaderConfig;
 import uk.co.idv.otp.config.verificationloader.ContextVerificationLoaderConfig;

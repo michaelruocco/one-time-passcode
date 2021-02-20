@@ -1,6 +1,6 @@
 package uk.co.idv.otp.adapter.verificationloader;
 
-import uk.co.idv.context.adapter.client.exception.ApiErrorClientException;
+import uk.co.idv.context.adapter.verification.client.exception.ApiErrorClientException;
 import uk.co.idv.method.adapter.json.error.contextexpired.ContextExpiredError;
 import uk.co.idv.method.entities.verification.Verification;
 

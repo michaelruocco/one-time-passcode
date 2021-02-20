@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import uk.co.idv.otp.adapter.passcode.generator.IncrementingPasscodeGenerator;
 import uk.co.idv.otp.adapter.passcode.generator.RandomPasscodeGenerator;
-import uk.co.idv.otp.app.manual.config.AppAdapter;
+import uk.co.idv.otp.app.plain.config.AppAdapter;
 import uk.co.idv.otp.usecases.passcode.PasscodeGenerator;
 
 @Configuration

@@ -1,4 +1,4 @@
-package uk.co.idv.otp.app.manual;
+package uk.co.idv.otp.app.plain;
 
 import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.otp.config.OtpAppConfig;

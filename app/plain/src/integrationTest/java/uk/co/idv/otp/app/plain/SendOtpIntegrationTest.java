@@ -1,10 +1,10 @@
-package uk.co.idv.otp.app.manual;
+package uk.co.idv.otp.app.plain;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.activity.entities.OnlinePurchaseMother;
-import uk.co.idv.context.adapter.client.exception.ApiErrorClientException;
+import uk.co.idv.context.adapter.verification.client.exception.ApiErrorClientException;
 import uk.co.idv.method.adapter.json.error.contextexpired.ContextExpiredError;
 import uk.co.idv.method.adapter.json.error.contextnotfound.ContextNotFoundError;
 import uk.co.idv.method.entities.otp.OtpConfigMother;

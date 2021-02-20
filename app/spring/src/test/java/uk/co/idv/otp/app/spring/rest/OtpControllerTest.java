@@ -3,7 +3,7 @@ package uk.co.idv.otp.app.spring.rest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import uk.co.idv.otp.app.manual.Application;
+import uk.co.idv.otp.app.plain.Application;
 import uk.co.idv.otp.entities.OtpVerification;
 import uk.co.idv.otp.entities.OtpVerificationMother;
 import uk.co.idv.otp.entities.send.ResendOtpRequest;
