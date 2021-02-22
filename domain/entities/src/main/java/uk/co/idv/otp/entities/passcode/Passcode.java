@@ -13,4 +13,12 @@ public class Passcode {
     private final Instant created;
     private final Instant expiry;
 
+    public boolean hasExpired(Instant now) {
+        return now.isAfter(expiry);
+    }
+
+    public boolean isValid(String value) {
+        return this.value.equals(value);
+    }
+
 }

@@ -13,6 +13,10 @@ public interface PasscodeMother {
         return builder().value(value).build();
     }
 
+    static Passcode withExpiry(Instant expiry) {
+        return builder().expiry(expiry).build();
+    }
+
     static Passcode.PasscodeBuilder builder() {
         return Passcode.builder()
                 .value("87654321")
