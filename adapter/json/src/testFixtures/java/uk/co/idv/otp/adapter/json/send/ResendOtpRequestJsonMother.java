@@ -5,7 +5,7 @@ import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 public interface ResendOtpRequestJsonMother {
 
     static String build() {
-        return loadContentFromClasspath("request/resend-otp-request.json");
+        return loadContentFromClasspath("send/resend-otp-request.json");
     }
 
 }

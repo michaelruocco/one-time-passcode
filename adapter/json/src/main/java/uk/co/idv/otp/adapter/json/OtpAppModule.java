@@ -13,6 +13,7 @@ import uk.co.idv.otp.adapter.json.passcode.PasscodeDeserializer;
 import uk.co.idv.otp.adapter.json.send.ResendOtpRequestDeserializer;
 import uk.co.idv.otp.adapter.json.send.SendOtpRequestDeserializer;
 import uk.co.idv.otp.adapter.json.send.message.MessageDeserializer;
+import uk.co.idv.otp.adapter.json.verify.VerifyOtpRequestDeserializer;
 import uk.co.idv.otp.entities.OtpVerification;
 import uk.co.idv.otp.entities.delivery.Deliveries;
 import uk.co.idv.otp.entities.delivery.Delivery;
@@ -23,6 +24,7 @@ import uk.co.idv.otp.entities.send.message.Message;
 import uk.co.idv.otp.adapter.json.delivery.DeliveryDeserializer;
 import uk.co.idv.otp.adapter.json.delivery.DeliveriesDeserializer;
 import uk.co.idv.otp.adapter.json.delivery.DeliveryMixin;
+import uk.co.idv.otp.entities.verify.VerifyOtpRequest;
 
 import java.util.Arrays;
 
@@ -33,7 +35,8 @@ public class OtpAppModule extends SimpleModule {
 
         setUpVerification();
         setUpDeliveries();
-        setUpRequests();
+        setUpSendRequests();
+        setUpVerifyRequests();
     }
 
     @Override
@@ -61,9 +64,13 @@ public class OtpAppModule extends SimpleModule {
         addDeserializer(Passcode.class, new PasscodeDeserializer());
     }
 
-    private void setUpRequests() {
+    private void setUpSendRequests() {
         addDeserializer(SendOtpRequest.class, new SendOtpRequestDeserializer());
         addDeserializer(ResendOtpRequest.class, new ResendOtpRequestDeserializer());
+    }
+
+    private void setUpVerifyRequests() {
+        addDeserializer(VerifyOtpRequest.class, new VerifyOtpRequestDeserializer());
     }
 
 }
