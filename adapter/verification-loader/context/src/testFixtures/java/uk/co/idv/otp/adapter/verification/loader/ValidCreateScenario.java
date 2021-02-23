@@ -1,4 +1,4 @@
-package uk.co.idv.otp.adapter.verificationloader;
+package uk.co.idv.otp.adapter.verification.loader;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.activity.entities.OnlinePurchaseMother;
@@ -8,13 +8,14 @@ import uk.co.idv.method.entities.otp.OtpMother;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethodMother;
 import uk.co.idv.method.entities.verification.Verification;
 import uk.co.idv.method.entities.verification.VerificationMother;
+import uk.co.idv.otp.adapter.verification.Scenario;
 
 import java.time.Clock;
 import java.time.Instant;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-public class ValidScenario implements Scenario {
+public class ValidCreateScenario implements Scenario {
 
     private final Clock clock;
 

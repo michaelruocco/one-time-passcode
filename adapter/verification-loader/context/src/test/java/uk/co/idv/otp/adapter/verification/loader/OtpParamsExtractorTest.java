@@ -1,4 +1,4 @@
-package uk.co.idv.otp.adapter.verificationloader;
+package uk.co.idv.otp.adapter.verification.loader;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.method.entities.otp.Otp;

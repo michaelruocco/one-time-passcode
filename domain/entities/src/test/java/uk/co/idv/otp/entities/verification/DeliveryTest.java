@@ -3,12 +3,16 @@ package uk.co.idv.otp.entities.verification;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.otp.entities.delivery.Delivery;
+import uk.co.idv.otp.entities.delivery.DeliveryMother;
+import uk.co.idv.otp.entities.passcode.Passcode;
 import uk.co.idv.otp.entities.send.message.Message;
 import uk.co.idv.otp.entities.send.message.MessageMother;
 
 import java.time.Instant;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class DeliveryTest {
@@ -77,6 +81,41 @@ class DeliveryTest {
                 .build();
 
         assertThat(delivery.getSent()).isEqualTo(sent);
+    }
+
+    @Test
+    void shouldReturnPasscodeFromMessageIfValid() {
+        Instant now = Instant.now();
+        Passcode expectedPasscode = mock(Passcode.class);
+        Message message = givenMessageWithValidPasscode(now, expectedPasscode);
+        Delivery delivery = DeliveryMother.withMessage(message);
+
+        Optional<Passcode> passcode = delivery.getPasscodeIfValid(now);
+
+        assertThat(passcode).contains(expectedPasscode);
+    }
+
+    @Test
+    void shouldNotReturnPasscodeFromMessageIfInvalid() {
+        Instant now = Instant.now();
+        Message message = givenMessageWithInvalidPasscode(now);
+        Delivery delivery = DeliveryMother.withMessage(message);
+
+        Optional<Passcode> passcode = delivery.getPasscodeIfValid(now);
+
+        assertThat(passcode).isEmpty();
+    }
+
+    private Message givenMessageWithValidPasscode(Instant now, Passcode passcode) {
+        Message message = mock(Message.class);
+        given(message.getPasscodeIfValid(now)).willReturn(Optional.of(passcode));
+        return message;
+    }
+
+    private Message givenMessageWithInvalidPasscode(Instant now) {
+        Message message = mock(Message.class);
+        given(message.getPasscodeIfValid(now)).willReturn(Optional.empty());
+        return message;
     }
 
 }

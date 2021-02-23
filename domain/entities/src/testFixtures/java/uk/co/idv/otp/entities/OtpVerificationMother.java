@@ -1,8 +1,10 @@
 package uk.co.idv.otp.entities;
 
 import uk.co.idv.activity.entities.OnlinePurchaseMother;
+import uk.co.idv.method.entities.otp.OtpConfig;
 import uk.co.idv.method.entities.otp.OtpConfigMother;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethodMother;
+import uk.co.idv.otp.entities.delivery.Deliveries;
 import uk.co.idv.otp.entities.delivery.DeliveriesMother;
 
 import java.time.Instant;
@@ -12,6 +14,14 @@ public interface OtpVerificationMother {
 
     static OtpVerification incomplete() {
         return builder().build();
+    }
+
+    static OtpVerification withConfig(OtpConfig config) {
+        return builder().config(config).build();
+    }
+
+    static OtpVerification withDeliveries(Deliveries deliveries) {
+        return builder().deliveries(deliveries).build();
     }
 
     static OtpVerification withExpiry(Instant expiry) {

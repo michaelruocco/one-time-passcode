@@ -5,6 +5,7 @@ import uk.co.idv.otp.config.OtpAppConfig;
 import uk.co.idv.otp.entities.OtpVerification;
 import uk.co.idv.otp.entities.send.ResendOtpRequest;
 import uk.co.idv.otp.entities.send.SendOtpRequest;
+import uk.co.idv.otp.entities.verify.VerifyOtpRequest;
 import uk.co.idv.otp.usecases.OtpFacade;
 
 import java.util.Optional;
@@ -28,6 +29,10 @@ public class Application {
 
     public OtpVerification resendOtp(ResendOtpRequest request) {
         return facade.resend(request);
+    }
+
+    public OtpVerification verifyOtp(VerifyOtpRequest request) {
+        return facade.verify(request);
     }
 
     public Optional<ApiError> handle(Throwable cause) {

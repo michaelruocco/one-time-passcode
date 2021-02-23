@@ -1,13 +1,18 @@
 package uk.co.idv.otp.entities.verification;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.method.entities.otp.OtpConfig;
+import uk.co.idv.method.entities.otp.OtpConfigMother;
 import uk.co.idv.otp.entities.OtpVerification;
 import uk.co.idv.otp.entities.OtpVerificationMother;
 import uk.co.idv.otp.entities.delivery.Deliveries;
 import uk.co.idv.otp.entities.delivery.DeliveriesMother;
 import uk.co.idv.otp.entities.delivery.Delivery;
 import uk.co.idv.otp.entities.delivery.DeliveryMother;
+import uk.co.idv.otp.entities.passcode.Passcodes;
 import uk.co.idv.otp.entities.send.message.Message;
+import uk.co.idv.otp.entities.verify.AttemptedPasscodes;
+import uk.co.idv.otp.entities.verify.AttemptedPasscodesMother;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -167,10 +172,69 @@ class OtpVerificationTest {
         assertThat(expired).isFalse();
     }
 
+    @Test
+    void shouldReturnVerificationWithCompleteUpdated() {
+        OtpVerification verification = OtpVerificationMother.incomplete();
+
+        OtpVerification updated = verification.withComplete(true);
+
+        assertThat(updated)
+                .usingRecursiveComparison()
+                .ignoringFields("complete")
+                .isEqualTo(verification);
+        assertThat(updated.isComplete()).isTrue();
+    }
+
+    @Test
+    void shouldReturnPasscodeLengthFromConfig() {
+        OtpConfig config = OtpConfigMother.build();
+        OtpVerification verification = OtpVerificationMother.withConfig(config);
+
+        int passcodeLength = verification.getPasscodeLength();
+
+        assertThat(passcodeLength).isEqualTo(config.getPasscodeLength());
+    }
+
+    @Test
+    void shouldReturnPasscodeDurationFromConfig() {
+        OtpConfig config = OtpConfigMother.build();
+        OtpVerification verification = OtpVerificationMother.withConfig(config);
+
+        Duration duration = verification.getPasscodeDuration();
+
+        assertThat(duration).isEqualTo(config.getPasscodeDuration());
+    }
+
+    @Test
+    void shouldVerifySuccessfullyIfValidPasscodesVerifiedWithCorrectPasscodeValues() {
+        AttemptedPasscodes attemptedPasscodes = AttemptedPasscodesMother.build();
+        Deliveries deliveries = givenDeliveriesWithValidPasscodes(attemptedPasscodes);
+        OtpVerification verification = OtpVerificationMother.builder()
+                .deliveries(deliveries)
+                .build();
+
+        OtpVerification verified = verification.verify(attemptedPasscodes);
+
+        assertThat(verified)
+                .usingRecursiveComparison()
+                .ignoringFields("successful", "attemptedPasscodes")
+                .isEqualTo(verification);
+        assertThat(verified.isSuccessful()).isTrue();
+        assertThat(verified.getAttemptedPasscodes()).contains(attemptedPasscodes);
+    }
+
     private Delivery givenDeliveryWithMessage(Message message) {
         Delivery delivery = mock(Delivery.class);
         given(delivery.getMessage()).willReturn(message);
         return delivery;
+    }
+
+    private Deliveries givenDeliveriesWithValidPasscodes(AttemptedPasscodes attemptedPasscodes) {
+        Passcodes passcodes = mock(Passcodes.class);
+        given(passcodes.anyValid(attemptedPasscodes.getValues())).willReturn(true);
+        Deliveries deliveries = mock(Deliveries.class);
+        given(deliveries.getValidPasscodes(attemptedPasscodes.getTimestamp())).willReturn(passcodes);
+        return deliveries;
     }
 
 }

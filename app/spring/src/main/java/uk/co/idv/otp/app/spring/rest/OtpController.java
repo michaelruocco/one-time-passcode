@@ -13,6 +13,7 @@ import uk.co.idv.otp.app.plain.Application;
 import uk.co.idv.otp.entities.OtpVerification;
 import uk.co.idv.otp.entities.send.ResendOtpRequest;
 import uk.co.idv.otp.entities.send.SendOtpRequest;
+import uk.co.idv.otp.entities.verify.VerifyOtpRequest;
 
 import java.net.URI;
 import java.util.UUID;
@@ -43,6 +44,11 @@ public class OtpController {
     @PatchMapping("/passcodes")
     public OtpVerification resendOtp(@RequestBody ResendOtpRequest request) {
         return application.resendOtp(request);
+    }
+
+    @PatchMapping("/{id}")
+    public OtpVerification verifyOtp(@RequestBody VerifyOtpRequest request) {
+        return application.verifyOtp(request);
     }
 
     private static URI buildGetOtpUri(UUID id) {

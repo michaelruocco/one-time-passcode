@@ -2,16 +2,20 @@ package uk.co.idv.otp.entities;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.With;
 import uk.co.idv.activity.entities.Activity;
 import uk.co.idv.method.entities.otp.OtpConfig;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.otp.entities.delivery.Deliveries;
 import uk.co.idv.otp.entities.delivery.Delivery;
 import uk.co.idv.otp.entities.passcode.GeneratePasscodeRequest;
+import uk.co.idv.otp.entities.passcode.Passcodes;
 import uk.co.idv.otp.entities.send.message.Message;
+import uk.co.idv.otp.entities.verify.AttemptedPasscodes;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 @Builder(toBuilder = true)
@@ -28,7 +32,10 @@ public class OtpVerification implements GeneratePasscodeRequest {
     private final Deliveries deliveries;
     private final boolean protectSensitiveData;
     private final boolean successful;
+    private final AttemptedPasscodes attemptedPasscodes;
+    @With
     private final boolean complete;
+    //TODO add context complete once added to verification returned from context
 
     @Override
     public int getPasscodeLength() {
@@ -38,6 +45,14 @@ public class OtpVerification implements GeneratePasscodeRequest {
     @Override
     public Duration getPasscodeDuration() {
         return config.getPasscodeDuration();
+    }
+
+    public OtpVerification verify(AttemptedPasscodes attemptedPasscodes) {
+        Passcodes passcodes = deliveries.getValidPasscodes(attemptedPasscodes.getTimestamp());
+        return toBuilder()
+                .attemptedPasscodes(attemptedPasscodes)
+                .successful(passcodes.anyValid(attemptedPasscodes.getValues()))
+                .build();
     }
 
     public OtpVerification add(Delivery delivery) {
@@ -56,6 +71,10 @@ public class OtpVerification implements GeneratePasscodeRequest {
 
     public boolean hasExpired(Instant now) {
         return now.isAfter(expiry);
+    }
+
+    public Optional<AttemptedPasscodes> getAttemptedPasscodes() {
+        return Optional.ofNullable(attemptedPasscodes);
     }
 
 }

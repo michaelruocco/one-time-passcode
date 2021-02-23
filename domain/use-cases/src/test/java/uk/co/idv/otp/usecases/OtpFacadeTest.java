@@ -7,9 +7,12 @@ import uk.co.idv.otp.entities.send.ResendOtpRequest;
 import uk.co.idv.otp.entities.send.ResendOtpRequestMother;
 import uk.co.idv.otp.entities.send.SendOtpRequest;
 import uk.co.idv.otp.entities.send.SendOtpRequestMother;
+import uk.co.idv.otp.entities.verify.VerifyOtpRequest;
+import uk.co.idv.otp.entities.verify.VerifyOtpRequestMother;
 import uk.co.idv.otp.usecases.get.GetOtp;
 import uk.co.idv.otp.usecases.send.ResendOtp;
 import uk.co.idv.otp.usecases.send.SendOtp;
+import uk.co.idv.otp.usecases.verify.VerifyOtp;
 
 import java.util.UUID;
 
@@ -22,11 +25,13 @@ class OtpFacadeTest {
     private final SendOtp sendOtp = mock(SendOtp.class);
     private final GetOtp getOtp = mock(GetOtp.class);
     private final ResendOtp resendOtp = mock(ResendOtp.class);
+    private final VerifyOtp verifyOtp = mock(VerifyOtp.class);
 
     private final OtpFacade facade = OtpFacade.builder()
             .sendOtp(sendOtp)
             .getOtp(getOtp)
             .resendOtp(resendOtp)
+            .verifyOtp(verifyOtp)
             .build();
 
     @Test
@@ -58,6 +63,17 @@ class OtpFacadeTest {
         given(resendOtp.resend(request)).willReturn(expectedVerification);
 
         OtpVerification verification = facade.resend(request);
+
+        assertThat(verification).isEqualTo(expectedVerification);
+    }
+
+    @Test
+    void shouldVerifyOtp() {
+        VerifyOtpRequest request = VerifyOtpRequestMother.build();
+        OtpVerification expectedVerification = OtpVerificationMother.incomplete();
+        given(verifyOtp.verify(request)).willReturn(expectedVerification);
+
+        OtpVerification verification = facade.verify(request);
 
         assertThat(verification).isEqualTo(expectedVerification);
     }

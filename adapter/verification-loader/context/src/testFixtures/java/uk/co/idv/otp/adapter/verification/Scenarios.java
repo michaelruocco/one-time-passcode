@@ -1,6 +1,11 @@
-package uk.co.idv.otp.adapter.verificationloader;
+package uk.co.idv.otp.adapter.verification;
 
 import lombok.RequiredArgsConstructor;
+import uk.co.idv.otp.adapter.verification.loader.ContextNotFoundScenario;
+import uk.co.idv.otp.adapter.verification.loader.DeliveryMethodNotEligibleScenario;
+import uk.co.idv.otp.adapter.verification.loader.DeliveryMethodNotFoundScenario;
+import uk.co.idv.otp.adapter.verification.loader.OtpMethodNotFoundScenario;
+import uk.co.idv.otp.adapter.verification.loader.ValidCreateScenario;
 
 import java.time.Clock;
 import java.util.Arrays;
@@ -14,7 +19,7 @@ public class Scenarios {
     private final Collection<Scenario> specificScenarios;
 
     public Scenarios(Clock clock) {
-        this(new ValidScenario(clock), buildSpecificScenarios());
+        this(new ValidCreateScenario(clock), buildSpecificScenarios());
     }
 
     public Scenario find(UUID id) {

@@ -1,4 +1,4 @@
-package uk.co.idv.otp.adapter.verificationloader;
+package uk.co.idv.otp.adapter.verification.loader;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.adapter.verification.client.VerificationClient;
@@ -10,6 +10,7 @@ import uk.co.idv.otp.entities.OtpVerification;
 import uk.co.idv.otp.entities.OtpVerificationMother;
 import uk.co.idv.otp.entities.send.LoadOtpVerificationRequest;
 import uk.co.idv.otp.entities.send.SendOtpRequestMother;
+import uk.co.idv.otp.usecases.send.OtpVerificationLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -21,7 +22,7 @@ class ContextOtpVerificationLoaderTest {
     private final VerificationConverter verificationConverter = mock(VerificationConverter.class);
     private final ClientCreateVerificationRequestFactory factory = mock(ClientCreateVerificationRequestFactory.class);
 
-    private final ContextOtpVerificationLoader loader = ContextOtpVerificationLoader.builder()
+    private final OtpVerificationLoader loader = ContextOtpVerificationLoader.builder()
             .verificationClient(verificationClient)
             .verificationConverter(verificationConverter)
             .factory(factory)
@@ -30,8 +31,8 @@ class ContextOtpVerificationLoaderTest {
     @Test
     void shouldLoadOtpVerification() {
         LoadOtpVerificationRequest request = SendOtpRequestMother.build();
-        ClientCreateVerificationRequest createVerificationRequest = givenConvertedToCreateVerificationRequest(request);
-        Verification verification = givenVerificationCreated(createVerificationRequest);
+        ClientCreateVerificationRequest createRequest = givenConvertedToCreateVerificationRequest(request);
+        Verification verification = givenVerificationCreated(createRequest);
         OtpVerification expectedOtpVerification = givenConvertedToOtpVerification(request, verification);
 
         OtpVerification otpVerification = loader.load(request);
@@ -40,9 +41,9 @@ class ContextOtpVerificationLoaderTest {
     }
 
     private ClientCreateVerificationRequest givenConvertedToCreateVerificationRequest(LoadOtpVerificationRequest request) {
-        ClientCreateVerificationRequest createVerificationRequest = ClientCreateVerificationRequestMother.build();
-        given(factory.build(request.getContextId())).willReturn(createVerificationRequest);
-        return createVerificationRequest;
+        ClientCreateVerificationRequest createRequest = ClientCreateVerificationRequestMother.build();
+        given(factory.build(request.getContextId())).willReturn(createRequest);
+        return createRequest;
     }
 
     private Verification givenVerificationCreated(ClientCreateVerificationRequest request) {

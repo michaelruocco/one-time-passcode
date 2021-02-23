@@ -2,15 +2,21 @@ package uk.co.idv.otp.entities.verification;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.otp.entities.delivery.Deliveries;
+import uk.co.idv.otp.entities.delivery.DeliveriesMother;
 import uk.co.idv.otp.entities.delivery.Delivery;
 import uk.co.idv.otp.entities.delivery.NoDeliveriesRemainingException;
+import uk.co.idv.otp.entities.passcode.Passcode;
+import uk.co.idv.otp.entities.passcode.Passcodes;
 
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class DeliveriesTest {
@@ -90,5 +96,30 @@ class DeliveriesTest {
         assertThat(error)
                 .isInstanceOf(NoDeliveriesRemainingException.class)
                 .hasMessage(Integer.toString(deliveries.getMax()));
+    }
+
+    @Test
+    void shouldReturnValidPasscodesFromDeliveries() {
+        Instant now = Instant.now();
+        Passcode passcode = mock(Passcode.class);
+        Delivery delivery1 = givenDeliveryWithValidPasscode(now, passcode);
+        Delivery delivery2 = givenDeliveryWithInvalidPasscode(now);
+        Deliveries deliveries = DeliveriesMother.withDeliveries(delivery1, delivery2);
+
+        Passcodes passcodes = deliveries.getValidPasscodes(now);
+
+        assertThat(passcodes).containsExactly(passcode);
+    }
+
+    private Delivery givenDeliveryWithValidPasscode(Instant now, Passcode passcode) {
+        Delivery delivery = mock(Delivery.class);
+        given(delivery.getPasscodeIfValid(now)).willReturn(Optional.of(passcode));
+        return delivery;
+    }
+
+    private Delivery givenDeliveryWithInvalidPasscode(Instant now) {
+        Delivery delivery = mock(Delivery.class);
+        given(delivery.getPasscodeIfValid(now)).willReturn(Optional.empty());
+        return delivery;
     }
 }

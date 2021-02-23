@@ -1,4 +1,4 @@
-package uk.co.idv.otp.adapter.verificationloader;
+package uk.co.idv.otp.adapter.verification;
 
 import uk.co.idv.method.entities.verification.Verification;
 

@@ -3,11 +3,15 @@ package uk.co.idv.otp.entities.delivery;
 import lombok.Builder;
 import lombok.Data;
 import org.apache.commons.collections4.IterableUtils;
+import uk.co.idv.otp.entities.passcode.Passcodes;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Builder
 @Data
@@ -37,6 +41,14 @@ public class Deliveries implements Iterable<Delivery> {
                 .max(max)
                 .values(updated)
                 .build();
+    }
+
+    public Passcodes getValidPasscodes(Instant now) {
+        return new Passcodes(values.stream()
+                .map(delivery -> delivery.getPasscodeIfValid(now))
+                .flatMap(Optional::stream)
+                .collect(Collectors.toList())
+        );
     }
 
 }

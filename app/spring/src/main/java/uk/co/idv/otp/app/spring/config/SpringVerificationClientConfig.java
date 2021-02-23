@@ -9,7 +9,7 @@ import uk.co.idv.context.adapter.verification.client.RestVerificationClient;
 import uk.co.idv.context.adapter.verification.client.RestVerificationClientConfig;
 import uk.co.idv.context.adapter.verification.client.VerificationClient;
 import uk.co.idv.context.adapter.verification.client.VerificationClientConfig;
-import uk.co.idv.otp.adapter.verificationloader.StubVerificationClient;
+import uk.co.idv.otp.adapter.verification.StubVerificationClient;
 import uk.co.idv.otp.app.plain.config.AppAdapter;
 
 @Slf4j

@@ -1,8 +1,9 @@
-package uk.co.idv.otp.adapter.verificationloader;
+package uk.co.idv.otp.adapter.verification.loader;
 
 import uk.co.idv.context.adapter.verification.client.exception.ApiErrorClientException;
 import uk.co.idv.method.adapter.json.error.contextnotfound.ContextNotFoundError;
 import uk.co.idv.method.entities.verification.Verification;
+import uk.co.idv.otp.adapter.verification.Scenario;
 
 import java.util.UUID;
 
@@ -19,6 +20,5 @@ public class ContextNotFoundScenario implements Scenario {
     public Verification apply(UUID contextId) {
         throw new ApiErrorClientException(new ContextNotFoundError(contextId.toString()));
     }
-
 
 }

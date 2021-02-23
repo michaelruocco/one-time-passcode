@@ -1,4 +1,4 @@
-package uk.co.idv.otp.adapter.verificationloader;
+package uk.co.idv.otp.adapter.verification.loader;
 
 import lombok.Builder;
 import uk.co.idv.context.adapter.verification.client.VerificationClient;

@@ -7,6 +7,7 @@ import uk.co.idv.otp.entities.passcode.Passcode;
 import uk.co.idv.otp.entities.send.message.Message;
 
 import java.time.Instant;
+import java.util.Optional;
 
 @Builder
 @Data
@@ -23,6 +24,10 @@ public class Delivery {
 
     public Passcode getPasscode() {
         return message.getPasscode();
+    }
+
+    public Optional<Passcode> getPasscodeIfValid(Instant now) {
+        return message.getPasscodeIfValid(now);
     }
 
 }
