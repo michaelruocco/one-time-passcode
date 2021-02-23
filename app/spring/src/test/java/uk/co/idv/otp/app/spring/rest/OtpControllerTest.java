@@ -10,6 +10,8 @@ import uk.co.idv.otp.entities.send.ResendOtpRequest;
 import uk.co.idv.otp.entities.send.ResendOtpRequestMother;
 import uk.co.idv.otp.entities.send.SendOtpRequest;
 import uk.co.idv.otp.entities.send.SendOtpRequestMother;
+import uk.co.idv.otp.entities.verify.VerifyOtpRequest;
+import uk.co.idv.otp.entities.verify.VerifyOtpRequestMother;
 
 import java.util.UUID;
 
@@ -67,6 +69,16 @@ class OtpControllerTest {
         assertThat(verification).isEqualTo(expectedVerification);
     }
 
+    @Test
+    void shouldVerifyOtp() {
+        VerifyOtpRequest request = VerifyOtpRequestMother.build();
+        OtpVerification expectedVerification = givenOtpVerifiedFor(request);
+
+        OtpVerification verification = controller.verifyOtp(request);
+
+        assertThat(verification).isEqualTo(expectedVerification);
+    }
+
     private OtpVerification givenVerificationCreatedFor(SendOtpRequest request) {
         OtpVerification verification = OtpVerificationMother.incomplete();
         given(application.sendOtp(request)).willReturn(verification);
@@ -82,6 +94,12 @@ class OtpControllerTest {
     private OtpVerification givenOtpResentFor(ResendOtpRequest request) {
         OtpVerification verification = OtpVerificationMother.incomplete();
         given(application.resendOtp(request)).willReturn(verification);
+        return verification;
+    }
+
+    private OtpVerification givenOtpVerifiedFor(VerifyOtpRequest request) {
+        OtpVerification verification = OtpVerificationMother.incomplete();
+        given(application.verifyOtp(request)).willReturn(verification);
         return verification;
     }
 
