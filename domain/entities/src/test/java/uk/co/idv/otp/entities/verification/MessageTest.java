@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.otp.entities.passcode.Passcode;
 import uk.co.idv.otp.entities.passcode.PasscodeMother;
 import uk.co.idv.otp.entities.send.message.Message;
+import uk.co.idv.otp.entities.send.message.MessageMother;
+
+import java.time.Instant;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -45,6 +49,28 @@ class MessageTest {
 
         assertThat(updatedMessage.getPasscode()).isEqualTo(updatedPasscode);
         assertThat(updatedMessage.getText()).isEqualTo(String.format(messageFormat, updatedPasscode.getValue()));
+    }
+
+    @Test
+    void shouldReturnPasscodeIfValid() {
+        Instant now = Instant.now();
+        Passcode validPasscode = PasscodeMother.withExpiry(now.plusMillis(1));
+        Message message = MessageMother.withPasscode(validPasscode);
+
+        Optional<Passcode> passcode = message.getPasscodeIfValid(now);
+
+        assertThat(passcode).contains(validPasscode);
+    }
+
+    @Test
+    void shouldReturnEmptyPasscodeIfNotValid() {
+        Instant now = Instant.now();
+        Passcode invalidPasscode = PasscodeMother.withExpiry(now.minusMillis(1));
+        Message message = MessageMother.withPasscode(invalidPasscode);
+
+        Optional<Passcode> passcode = message.getPasscodeIfValid(now);
+
+        assertThat(passcode).isEmpty();
     }
 
 }

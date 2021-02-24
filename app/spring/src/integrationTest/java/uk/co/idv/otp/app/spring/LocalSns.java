@@ -16,6 +16,7 @@ public class LocalSns extends GenericContainer<LocalSns> {
 
     public LocalSns() {
         super("localstack/localstack:latest");
+        withEnv("SERVICES", "sns");
         withExposedPorts(PORT);
         withLogConsumer(this::logInfo);
     }
