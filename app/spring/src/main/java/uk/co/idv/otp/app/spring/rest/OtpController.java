@@ -46,7 +46,7 @@ public class OtpController {
         return application.resendOtp(request);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping
     public OtpVerification verifyOtp(@RequestBody VerifyOtpRequest request) {
         return application.verifyOtp(request);
     }

@@ -8,10 +8,10 @@ import uk.co.idv.otp.config.RepositoryConfig;
 import uk.co.idv.otp.usecases.OtpVerificationRepository;
 import uk.co.mruoc.json.JsonConverter;
 
+import static uk.co.idv.otp.adapter.repository.OtpVerificationCollection.NAME;
+
 @Builder
 public class MongoRepositoryConfig implements RepositoryConfig {
-
-    public static final String TABLE_NAME = "otp-verification";
 
     private final JsonConverter jsonConverter;
     private final MongoDatabase database;
@@ -20,7 +20,7 @@ public class MongoRepositoryConfig implements RepositoryConfig {
     public OtpVerificationRepository verificationRepository() {
         return MongoOtpVerificationRepository.builder()
                 .verificationConverter(new OtpVerificationConverter(jsonConverter))
-                .collection(database.getCollection(TABLE_NAME))
+                .collection(database.getCollection(NAME))
                 .build();
     }
 }

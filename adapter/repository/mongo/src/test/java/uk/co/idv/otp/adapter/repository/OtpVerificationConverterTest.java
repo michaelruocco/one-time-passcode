@@ -41,11 +41,14 @@ class OtpVerificationConverterTest {
         Document document = converter.toDocument(verification);
 
         assertThatJson(document.toJson())
-                .whenIgnoringPaths("_id")
+                .whenIgnoringPaths("_id", "ttl")
                 .isEqualTo(JSON);
         assertThatJson(document.toJson())
                 .inPath("_id")
                 .isEqualTo(verification.getId().toString());
+        assertThatJson(document.toJson())
+                .inPath("ttl")
+                .isEqualTo("{\"$date\":1600114081999}");
     }
 
     @Test

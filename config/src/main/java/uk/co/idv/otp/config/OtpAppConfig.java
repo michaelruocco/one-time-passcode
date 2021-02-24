@@ -11,6 +11,7 @@ import uk.co.idv.otp.usecases.send.ResendOtp;
 import uk.co.idv.otp.usecases.send.SendOtp;
 import uk.co.idv.otp.usecases.send.message.CompositeMessageGenerator;
 import uk.co.idv.otp.usecases.send.message.MessageGenerator;
+import uk.co.idv.otp.usecases.verify.OtpVerificationUpdater;
 import uk.co.idv.otp.usecases.verify.VerifyOtp;
 
 import java.time.Clock;
@@ -20,6 +21,7 @@ public class OtpAppConfig {
 
     private final Clock clock;
     private final OtpVerificationLoader verificationLoader;
+    private final OtpVerificationUpdater verificationUpdater;
     private final DeliverOtp deliverOtp;
     private final OtpVerificationRepository repository;
     private final PasscodeGenerator passcodeGenerator;
@@ -64,6 +66,7 @@ public class OtpAppConfig {
         return VerifyOtp.builder()
                 .getOtp(getOtp())
                 .clock(clock)
+                .updater(verificationUpdater)
                 .repository(repository)
                 .build();
     }

@@ -39,6 +39,7 @@ public class SpringCommonDomainConfig {
         return OtpAppConfig.builder()
                 .clock(appAdapter.getClock())
                 .verificationLoader(verificationLoaderConfig.verificationLoader())
+                .verificationUpdater(verificationLoaderConfig.verificationUpdater())
                 .deliverOtp(deliverOtp)
                 .repository(repository)
                 .passcodeGenerator(passcodeGenerator)

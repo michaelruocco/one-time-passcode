@@ -42,6 +42,7 @@ public class TestHarness {
             .repository(repositoryConfig.verificationRepository())
             .deliverOtp(deliverOtp)
             .verificationLoader(loaderConfig.verificationLoader())
+            .verificationUpdater(loaderConfig.verificationUpdater())
             .passcodeGenerator(new IncrementingPasscodeGenerator(appAdapter.getClock()))
             .build();
 

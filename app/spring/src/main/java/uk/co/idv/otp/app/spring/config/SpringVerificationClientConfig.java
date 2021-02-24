@@ -16,13 +16,13 @@ import uk.co.idv.otp.app.plain.config.AppAdapter;
 @Configuration
 public class SpringVerificationClientConfig {
 
-    @Profile("!test")
+    @Profile("!test & !stubbed")
     @Bean
     public VerificationClient verificationClient(ObjectMapper mapper) {
         return RestVerificationClient.build(toContextClientConfig(mapper));
     }
 
-    @Profile("test")
+    @Profile("test | stubbed")
     @Bean
     public VerificationClient stubVerificationClient(AppAdapter appAdapter) {
         return new StubVerificationClient(appAdapter.getClock());
