@@ -8,7 +8,6 @@
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_one-time-passcode&metric=sqale_index)](https://sonarcloud.io/dashboard?id=michaelruocco_one-time-passcode)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_one-time-passcode&metric=coverage)](https://sonarcloud.io/dashboard?id=michaelruocco_one-time-passcode)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_one-time-passcode&metric=ncloc)](https://sonarcloud.io/dashboard?id=michaelruocco_one-time-passcode)
-[![Download](https://api.bintray.com/packages/michaelruocco/maven/one-time-passcode/images/download.svg)](https://bintray.com/michaelruocco/maven/one-time-passcode/_latestVersion)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.michaelruocco/one-time-passcode.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.michaelruocco%22%20AND%20a:%22one-time-passcode%22)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
