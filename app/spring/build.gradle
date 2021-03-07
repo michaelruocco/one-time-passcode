@@ -16,7 +16,6 @@ plugins {
 ext {
     karateVersion = "0.9.6"
     logbackJsonVersion = "0.1.5"
-    artifactName = "${rootProject.name}-${project.name}"
 }
 
 testSets {
@@ -79,26 +78,6 @@ bootRun {
     systemProperty "response.filtering.enabled", System.properties.getOrDefault("response.filtering.enabled", "true")
 }
 
-apply from: rootProject.file('publish.gradle')
-
-publishing {
-    publications {
-        lib(MavenPublication) { publication ->
-            artifact bootJar
-            artifact sourcesJar
-            artifact javadocJar
-            artifactId "${artifactName}"
-            pom.withXml {
-                def root = asNode()
-                root.appendNode("description", "One time passcode spring application")
-                root.appendNode("name", "${artifactName}")
-                root.appendNode("url", "https://github.com/michaelruocco/one-time-passcode")
-                root.children().last() + project.pomConfig
-            }
-        }
-    }
-}
-
 docker {
     registryCredentials {
         username.set(System.getenv("DOCKER_USERNAME"))
@@ -111,7 +90,8 @@ import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
 
 task buildImage(type: DockerBuildImage) {
     inputDir.set(file("."))
-    images.add("michaelruocco/${artifactName}:latest")
+    images.add("michaelruocco/${project.name}:${version}")
+    buildArgs = ["VERSION": version]
 }
 
 task pushImage(type: DockerPushImage) {
@@ -119,5 +99,8 @@ task pushImage(type: DockerPushImage) {
 }
 
 dockerCompose {
-    startedServices = ['one-time-passcode-app']
+    startedServices = ['idv-one-time-passcode-app']
+    environment.put 'APP_VERSION', version
 }
+
+apply from: rootProject.file("publish.gradle")

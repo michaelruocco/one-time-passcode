@@ -1,4 +1,4 @@
-rootProject.name = 'one-time-passcode'
+rootProject.name = 'idv-one-time-passcode'
 
 include ':entities'
 project(':entities').projectDir = file('domain/entities')
@@ -33,5 +33,5 @@ project(':config').projectDir = file('config')
 include ':plain-app'
 project(':plain-app').projectDir = file('app/plain')
 
-include ':spring-app'
-project(':spring-app').projectDir = file('app/spring')
+include ':idv-one-time-passcode-spring-app'
+project(':idv-one-time-passcode-spring-app').projectDir = file('app/spring')

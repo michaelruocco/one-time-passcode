@@ -17,8 +17,7 @@ plugins {
     id "org.sonarqube" version "3.1.1"
     id "com.vanniktech.dependency.graph.generator" version "0.5.0"
     id "nebula.lint" version "16.17.0"
-    id "com.jfrog.bintray" version "1.8.5"
-    id "com.jfrog.artifactory" version "4.20.0"
+    id "io.codearte.nexus-staging" version "0.30.0"
 }
 
 scmVersion {
@@ -34,7 +33,7 @@ allprojects {
     apply plugin: "jacoco"
     apply plugin: "nebula.lint"
 
-    group "com.github.michaelruocco"
+    group "com.github.michaelruocco.idv"
     version = rootProject.version
 
     repositories {
@@ -57,8 +56,6 @@ subprojects {
     apply plugin: "java-library"
     apply plugin: "com.diffplug.spotless"
 
-    archivesBaseName = "${rootProject.name}-${project.name}"
-
     sourceCompatibility = 13
     targetCompatibility = 13
 
@@ -67,7 +64,7 @@ subprojects {
 
         lombokVersion = "1.18.18"
         slf4jVersion = "1.7.30"
-        contextVersion = "0.1.2"
+        contextVersion = "0.1.3"
         logbackVersion = "1.2.3"
         mongoVersion = "3.12.8"
         awsSdkVersion = "1.11.959"
@@ -80,6 +77,29 @@ subprojects {
         mockitoVersion = "3.7.7"
         jsonUnitAssertjVersion = "2.24.0"
         testingClocksVersion = "0.1.4"
+
+        gitUrl = "https://github.com/michaelruocco/idv-one-time-passcode"
+        pomConfig = {
+            licenses {
+                license {
+                    name "MIT License"
+                    url "https://opensource.org/licenses/MIT"
+                    distribution "repo"
+                }
+            }
+
+            developers {
+                developer {
+                    id "mruoc"
+                    name "Michael Ruocco"
+                    email "michael.ruocco@hotmail.com"
+                }
+            }
+
+            scm {
+                url project.ext.gitUrl
+            }
+        }
     }
 
     dependencies {
@@ -151,7 +171,7 @@ sonarqube {
     properties {
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.organization", "michaelruocco"
-        property "sonar.projectKey", "michaelruocco_one-time-passcode"
+        property "sonar.projectKey", "michaelruocco_idv-one-time-passcode"
         property "sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/report.xml"
     }
 }
@@ -172,8 +192,8 @@ dependencyUpdates.resolutionStrategy {
 import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorExtension.Generator
 
 def oneTimePasscodeGenerator = new Generator(
-        "oneTimePasscode",
-        { dependency -> dependency.getModuleGroup().startsWith("com.github.michaelruocco") },
+        "idvOneTimePasscode",
+        { dependency -> dependency.getModuleGroup().startsWith("com.github.michaelruocco.idv") },
         { dependency -> true }
 )
 

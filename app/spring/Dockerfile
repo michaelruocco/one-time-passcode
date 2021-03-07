@@ -1,5 +1,7 @@
 FROM adoptopenjdk/openjdk13:alpine-jre
 
+ARG VERSION
+
 ENV SERVER_PORT=80 \
     SPRING_PROFILES_ACTIVE=default \
     ENVIRONMENT=idv-local \
@@ -10,7 +12,7 @@ ENV SERVER_PORT=80 \
     REQUEST_LOGGING_ENABLED=false \
     RESPONSE_LOGGING_ENABLED=false
 
-COPY build/libs/one-time-passcode-spring-app-*.jar /opt/app.jar
+COPY build/libs/idv-one-time-passcode-spring-app-${VERSION}.jar /opt/app.jar
 
 CMD java \
   -Djava.security.egd=file:/dev/./urandom \

@@ -1,75 +1,55 @@
 apply plugin: "maven-publish"
-apply plugin: "com.jfrog.bintray"
-apply plugin: "com.jfrog.artifactory"
+apply plugin: "signing"
 
 java {
     withJavadocJar()
     withSourcesJar()
 }
 
-project.ext.pomConfig = {
-    licenses {
-        license {
-            name "MIT License"
-            url "https://opensource.org/licenses/MIT"
-            distribution "repo"
-        }
-    }
-
-    developers {
-        developer {
-            id "mruoc"
-            name "Michael Ruocco"
-            email "michael.ruocco@hotmail.com"
-        }
-    }
-
-    scm {
-        url "https://github.com/michaelruocco/one-time-passcode"
-    }
-}
-
-bintray {
-    user = System.getenv("BINTRAY_USER")
-    key = System.getenv("BINTRAY_KEY")
-    publications = ["lib"]
-    publish = true
-    pkg {
-        repo = "maven"
-        name = "${project.artifactName}"
-        userOrg = "michaelruocco"
-        licenses = ["mit"]
-        vcsUrl = "https://github.com/michaelruocco/one-time-passcode.git"
-        version {
-            name = project.version
-            desc = project.version
-            released = new Date()
-            gpg {
-                sign = true
+publishing {
+    repositories {
+        maven {
+            name = "OSSRH"
+            url = toRepoUrl(project.version)
+            credentials {
+                username = System.getenv("OSSRH_USERNAME")
+                password = System.getenv("OSSRH_PASSWORD")
             }
-            mavenCentralSync {
-                sync = true
+        }
+    }
+    publications {
+        lib(MavenPublication) {
+            from components.java
+            suppressPomMetadataWarningsFor("testFixturesApiElements")
+            suppressPomMetadataWarningsFor("testFixturesRuntimeElements")
+            pom.withXml {
+                def root = asNode()
+                root.appendNode("description", project.name)
+                root.appendNode("name", project.name)
+                root.appendNode("url", project.ext.gitUrl)
+                root.children().last() + project.ext.pomConfig
             }
         }
     }
 }
 
-artifactory {
-    contextUrl = "http://oss.jfrog.org"
-    publish {
-        repository {
-            repoKey = "oss-snapshot-local"
-            username = System.getenv("BINTRAY_USER")
-            password = System.getenv("BINTRAY_KEY")
-        }
-        defaults {
-            publications("lib")
-            publishArtifacts = true
-            publishPom = true
-        }
+def toRepoUrl(version) {
+    if (version.endsWith('SNAPSHOT')) {
+        return "https://oss.sonatype.org/content/repositories/snapshots/"
     }
-    resolve {
-        repoKey = "jcenter"
-    }
-    clientConfig.info.setBuildNumber(System.getProperty("build.number"))
+    return "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+}
+
+signing {
+    def signingKey = System.getenv("OSSRH_PGP_SECRET_KEY")
+    def signingPassword = System.getenv("OSSRH_PGP_SECRET_KEY_PASSWORD")
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign publishing.publications.lib
+}
+signLibPublication.enabled = gradle.startParameter.taskNames.contains("publish")
+
+nexusStaging {
+    packageGroup = "com.github.michaelruocco"
+    username = System.getenv("OSSRH_USERNAME")
+    password = System.getenv("OSSRH_PASSWORD")
 }

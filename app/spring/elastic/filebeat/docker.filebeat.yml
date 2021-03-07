@@ -5,7 +5,7 @@ filebeat.autodiscover:
       templates:
         - condition:
             contains:
-              docker.container.name: "one-time-passcode"
+              docker.container.name: "idv-one-time-passcode-app"
           config:
             - type: container
               format: docker

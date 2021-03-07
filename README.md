@@ -1,4 +1,4 @@
-# One Time Passcode
+# IDV One Time Passcode
 
 [![Build](https://github.com/michaelruocco/one-time-passcode/workflows/pipeline/badge.svg)](https://github.com/michaelruocco/one-time-passcode/actions)
 [![codecov](https://codecov.io/gh/michaelruocco/one-time-passcode/branch/master/graph/badge.svg?token=FWDNP534O7)](https://codecov.io/gh/michaelruocco/one-time-passcode)
@@ -13,9 +13,13 @@
 
 ## Todo
 
-*   Implement verify otp
-*   Secure sensitive data if comes from context
+*   Rename to idv-one-time-passcode
+*   Add sending OTP via EMAIL as well as SMS
+*   Secure sensitive data flag is true from context
 *   Add json error handling
+*   Add pipeline building and publishing docker image
+*   Add pipeline publishing to maven central
+*   Add pipeline running postman collection
 
 ## Useful Commands
 
@@ -33,5 +37,5 @@
 ```gradle
 // generate dependency graph images at build/reports/dependency-graph
 ./gradlew generateDependencyGraph
-./gradlew generateDependencyGraphOneTimePasscode
+./gradlew generateDependencyGraphIdvOneTimePasscode
 ```
