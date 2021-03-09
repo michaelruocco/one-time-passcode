@@ -8,16 +8,18 @@ import java.time.Duration;
 import java.util.concurrent.Callable;
 
 import static org.awaitility.Awaitility.await;
+import static org.testcontainers.utility.MountableFile.forHostPath;
 
 @Slf4j
-public class LocalSns extends GenericContainer<LocalSns> {
+public class LocalAwsServices extends GenericContainer<LocalAwsServices> {
 
     private static final int PORT = 4566;
 
-    public LocalSns() {
+    public LocalAwsServices() {
         super("localstack/localstack:latest");
-        withEnv("SERVICES", "sns");
+        withEnv("SERVICES", "sns,ses");
         withExposedPorts(PORT);
+        withCopyFileToContainer(forHostPath("localstack/init-ses.sh"), "/docker-entrypoint-initaws.d/init-ses.sh");
         withLogConsumer(this::logInfo);
     }
 
@@ -40,7 +42,7 @@ public class LocalSns extends GenericContainer<LocalSns> {
     private Callable<Boolean> containerIsRunning() {
         return () -> {
             boolean running = this.isRunning();
-            log.info("checking sns container is running {}", running);
+            log.info("checking aws container is running {}", running);
             return running;
         };
     }

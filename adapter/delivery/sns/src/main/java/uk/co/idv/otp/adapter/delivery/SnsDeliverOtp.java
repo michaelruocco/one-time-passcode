@@ -7,19 +7,23 @@ import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.otp.entities.delivery.Delivery;
 import uk.co.idv.otp.entities.delivery.DeliveryRequest;
-import uk.co.idv.otp.usecases.send.DeliverOtp;
-
-import java.time.Clock;
+import uk.co.idv.otp.usecases.send.deliver.DeliverOtpByMethod;
+import uk.co.idv.otp.usecases.send.deliver.DeliveryFactory;
 
 @Builder
 @Slf4j
-public class SnsDeliverOtp implements DeliverOtp {
+public class SnsDeliverOtp implements DeliverOtpByMethod {
 
     private final AmazonSNS client;
-    private final Clock clock;
+    private final DeliveryFactory deliveryFactory;
 
     @Builder.Default
-    private final DeliveryRequestConverter converter = new DeliveryRequestConverter();
+    private final SnsDeliveryRequestConverter converter = new SnsDeliveryRequestConverter();
+
+    @Override
+    public String getDeliveryMethodName() {
+        return "sms";
+    }
 
     @Override
     public Delivery deliver(DeliveryRequest deliveryRequest) {
@@ -27,16 +31,9 @@ public class SnsDeliverOtp implements DeliverOtp {
         log.debug("sending publish request {}", publishRequest);
         PublishResult result = client.publish(publishRequest);
         log.info("message {} sent", result.getMessageId());
-        return toDelivery(deliveryRequest)
+        return deliveryFactory.toDelivery(deliveryRequest)
                 .messageId(result.getMessageId())
                 .build();
-    }
-
-    private Delivery.DeliveryBuilder toDelivery(DeliveryRequest request) {
-        return Delivery.builder()
-                .method(request.getMethod())
-                .message(request.getMessage())
-                .sent(clock.instant());
     }
 
 }

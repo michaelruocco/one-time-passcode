@@ -16,11 +16,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class DeliveryRequestConverterTest {
+class SnsDeliveryRequestConverterTest {
 
     private final MessageAttributeBuilder attributeBuilder = mock(MessageAttributeBuilder.class);
 
-    private final DeliveryRequestConverter converter = new DeliveryRequestConverter(attributeBuilder);
+    private final SnsDeliveryRequestConverter converter = new SnsDeliveryRequestConverter(attributeBuilder);
 
     @Test
     void shouldPopulateMessageTextOnPublishRequest() {

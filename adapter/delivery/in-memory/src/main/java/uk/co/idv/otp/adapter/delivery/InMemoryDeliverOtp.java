@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.otp.entities.delivery.Delivery;
 import uk.co.idv.otp.entities.delivery.DeliveryRequest;
-import uk.co.idv.otp.usecases.send.DeliverOtp;
+import uk.co.idv.otp.usecases.send.deliver.DeliverOtp;
 import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
 
 import java.time.Clock;

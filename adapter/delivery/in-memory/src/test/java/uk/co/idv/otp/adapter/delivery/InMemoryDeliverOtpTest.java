@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.otp.entities.delivery.Delivery;
 import uk.co.idv.otp.entities.delivery.DeliveryRequest;
 import uk.co.idv.otp.entities.delivery.DeliveryRequestMother;
-import uk.co.idv.otp.usecases.send.DeliverOtp;
+import uk.co.idv.otp.usecases.send.deliver.DeliverOtp;
 import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
 
 import java.time.Clock;

@@ -3,11 +3,11 @@ package uk.co.idv.otp.config.delivery;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
-import com.amazonaws.services.sns.AmazonSNS;
-import com.amazonaws.services.sns.AmazonSNSClientBuilder;
+import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
+import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.otp.adapter.delivery.SnsDeliverOtp;
+import uk.co.idv.otp.adapter.delivery.SesDeliverOtp;
 import uk.co.idv.otp.usecases.send.deliver.DeliverOtpByMethod;
 import uk.co.idv.otp.usecases.send.deliver.DeliveryFactory;
 
@@ -15,7 +15,7 @@ import java.time.Clock;
 
 @Slf4j
 @Builder
-public class SnsDeliveryConfig implements DeliveryConfig {
+public class SesDeliveryConfig implements DeliveryConfig {
 
     private final Clock clock;
     private final String endpointUri;
@@ -26,13 +26,13 @@ public class SnsDeliveryConfig implements DeliveryConfig {
 
     @Override
     public DeliverOtpByMethod deliverOtp() {
-        return SnsDeliverOtp.builder()
+        return SesDeliverOtp.builder()
                 .client(buildClient())
                 .deliveryFactory(new DeliveryFactory(clock))
                 .build();
     }
 
-    private AmazonSNS buildClient() {
+    private AmazonSimpleEmailService buildClient() {
         return build(getEndpointConfiguration());
     }
 
@@ -40,10 +40,10 @@ public class SnsDeliveryConfig implements DeliveryConfig {
         return new EndpointConfiguration(endpointUri, region);
     }
 
-    private AmazonSNS build(EndpointConfiguration endpointConfiguration) {
-        log.info("connecting to sns service endpoint {}", endpointConfiguration.getServiceEndpoint());
-        log.info("connecting to sns signing region {}", endpointConfiguration.getSigningRegion());
-        return AmazonSNSClientBuilder.standard()
+    private AmazonSimpleEmailService build(EndpointConfiguration endpointConfiguration) {
+        log.info("connecting to ses service endpoint {}", endpointConfiguration.getServiceEndpoint());
+        log.info("connecting to ses signing region {}", endpointConfiguration.getSigningRegion());
+        return AmazonSimpleEmailServiceClientBuilder.standard()
                 .withCredentials(credentialsProvider)
                 .withEndpointConfiguration(endpointConfiguration)
                 .build();

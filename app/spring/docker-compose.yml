@@ -21,12 +21,16 @@ services:
     depends_on:
       - elk
 
-  aws-sns:
+  aws-services:
     image: localstack/localstack:latest
-    container_name: aws-sns
+    container_name: aws-services
+    volumes:
+      - ./localstack:/docker-entrypoint-initaws.d
     environment:
+      - AWS_ACCESS_KEY_ID=abc
+      - AWS_SECRET_ACCESS_KEY=123
       - DEFAULT_REGION=eu-west-1
-      - SERVICES=sns
+      - SERVICES=sns,ses
 
   mongo:
     image: mongo
@@ -50,12 +54,13 @@ services:
       - CONTEXT_URI=http://host.docker.internal:8081
       - AWS_ACCESS_KEY=abc
       - AWS_SECRET_KEY=123
-      - AWS_SNS_ENDPOINT_URI=http://aws-sns:4566
-      #- AWS_SNS_ENDPOINT_URI=https://sns.eu-west-1.amazonaws.com
+      - SPRING_PROFILES_ACTIVE=simple-logging
+      - AWS_SNS_ENDPOINT_URI=http://aws-services:4566
+      - AWS_SES_ENDPOINT_URI=http://aws-services:4566
       - MONGO_CONNECTION_STRING=mongodb://idv:welcome01@otp-mongo:27017/idv-local
       - REQUEST_LOGGING_ENABLED=true
       - RESPONSE_LOGGING_ENABLED=true
     depends_on:
-      - aws-sns
+      - aws-services
       - mongo
       #- filebeat

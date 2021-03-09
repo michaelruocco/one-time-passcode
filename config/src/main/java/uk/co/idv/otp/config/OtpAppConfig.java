@@ -4,7 +4,7 @@ import lombok.Builder;
 import uk.co.idv.otp.usecases.OtpFacade;
 import uk.co.idv.otp.usecases.OtpVerificationRepository;
 import uk.co.idv.otp.usecases.passcode.PasscodeGenerator;
-import uk.co.idv.otp.usecases.send.DeliverOtp;
+import uk.co.idv.otp.usecases.send.deliver.DeliverOtp;
 import uk.co.idv.otp.usecases.get.GetOtp;
 import uk.co.idv.otp.usecases.send.OtpVerificationLoader;
 import uk.co.idv.otp.usecases.send.ResendOtp;

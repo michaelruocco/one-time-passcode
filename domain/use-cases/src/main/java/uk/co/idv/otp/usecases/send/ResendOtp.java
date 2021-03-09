@@ -10,6 +10,7 @@ import uk.co.idv.otp.entities.OtpVerification;
 import uk.co.idv.otp.usecases.OtpVerificationRepository;
 import uk.co.idv.otp.usecases.get.GetOtp;
 import uk.co.idv.otp.usecases.passcode.PasscodeGenerator;
+import uk.co.idv.otp.usecases.send.deliver.DeliverOtp;
 import uk.co.idv.otp.usecases.send.message.MessageGenerator;
 
 import java.util.UUID;

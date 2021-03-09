@@ -11,7 +11,7 @@ import uk.co.idv.otp.config.VerificationLoaderConfig;
 import uk.co.idv.otp.config.verificationloader.ContextVerificationLoaderConfig;
 import uk.co.idv.otp.usecases.OtpVerificationRepository;
 import uk.co.idv.otp.usecases.passcode.PasscodeGenerator;
-import uk.co.idv.otp.usecases.send.DeliverOtp;
+import uk.co.idv.otp.usecases.send.deliver.DeliverOtp;
 
 import java.time.Clock;
 

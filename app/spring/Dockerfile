@@ -7,7 +7,8 @@ ENV SERVER_PORT=80 \
     ENVIRONMENT=idv-local \
     CONTEXT_URI=http://localhost:8081 \
     AWS_REGION=eu-west-1 \
-    AWS_SNS_ENDPOINT_URI=http://aws-sns:4566 \
+    AWS_SNS_ENDPOINT_URI=http://aws-services:4566 \
+    AWS_SES_ENDPOINT_URI=http://aws-services:4566 \
     RESPONSE_FILTERING_ENABLED=false \
     REQUEST_LOGGING_ENABLED=false \
     RESPONSE_LOGGING_ENABLED=false
@@ -22,6 +23,7 @@ CMD java \
   -Dcontext.uri=${CONTEXT_URI} \
   -Daws.region=${AWS_REGION} \
   -Daws.sns.endpoint.uri=${AWS_SNS_ENDPOINT_URI} \
+  -Daws.ses.endpoint.uri=${AWS_SES_ENDPOINT_URI} \
   -Dspring.data.mongodb.uri=${MONGO_CONNECTION_STRING} \
   -Dresponse.filtering.enabled=${RESPONSE_FILTERING_ENABLED} \
   -Drequest.logging.enabled=${REQUEST_LOGGING_ENABLED} \

@@ -7,76 +7,62 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.otp.entities.delivery.Delivery;
 import uk.co.idv.otp.entities.delivery.DeliveryRequest;
 import uk.co.idv.otp.entities.delivery.DeliveryRequestMother;
-import uk.co.idv.otp.usecases.send.DeliverOtp;
-
-import java.time.Clock;
-import java.time.Instant;
-import java.time.ZoneId;
+import uk.co.idv.otp.usecases.send.deliver.DeliverOtpByMethod;
+import uk.co.idv.otp.usecases.send.deliver.DeliveryFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 class SnsDeliverOtpTest {
 
-    private static final Instant NOW = Instant.now();
-
-    private final DeliveryRequestConverter converter = mock(DeliveryRequestConverter.class);
+    private final SnsDeliveryRequestConverter converter = mock(SnsDeliveryRequestConverter.class);
     private final AmazonSNS client = mock(AmazonSNS.class);
-    private final Clock clock = Clock.fixed(NOW, ZoneId.systemDefault());
+    private final DeliveryFactory deliveryFactory = mock(DeliveryFactory.class);
 
-    private final DeliverOtp deliverOtp = SnsDeliverOtp.builder()
+    private final DeliverOtpByMethod deliverOtp = SnsDeliverOtp.builder()
             .converter(converter)
             .client(client)
-            .clock(clock)
+            .deliveryFactory(deliveryFactory)
             .build();
+
+    @Test
+    void shouldReturnDeliveryMethodName() {
+        assertThat(deliverOtp.getDeliveryMethodName()).isEqualTo("sms");
+    }
 
     @Test
     void shouldPopulateDeliveryMethodOnDelivery() {
         DeliveryRequest deliveryRequest = DeliveryRequestMother.build();
-        givenDeliveryPublished(deliveryRequest);
+        PublishResult result = givenDeliveryPublished(deliveryRequest);
+        Delivery.DeliveryBuilder builder = givenConvertsToDeliveryBuilder(deliveryRequest, result);
+        Delivery expectedDelivery = givenBuildsDelivery(builder);
 
         Delivery delivery = deliverOtp.deliver(deliveryRequest);
 
-        assertThat(delivery.getMethod()).isEqualTo(deliveryRequest.getMethod());
-    }
-
-    @Test
-    void shouldPopulateMessageOnDelivery() {
-        DeliveryRequest deliveryRequest = DeliveryRequestMother.build();
-        givenDeliveryPublished(deliveryRequest);
-
-        Delivery delivery = deliverOtp.deliver(deliveryRequest);
-
-        assertThat(delivery.getMessage()).isEqualTo(deliveryRequest.getMessage());
+        assertThat(delivery).isEqualTo(expectedDelivery);
     }
 
     @Test
     void shouldPopulateMessageIdOnDelivery() {
         DeliveryRequest deliveryRequest = DeliveryRequestMother.build();
-        String expectedMessageId = givenDeliveryPublished(deliveryRequest);
+        PublishResult result = givenDeliveryPublished(deliveryRequest);
+        Delivery.DeliveryBuilder builder = givenConvertsToDeliveryBuilder(deliveryRequest, result);
+        Delivery expectedDelivery = givenBuildsDelivery(builder);
 
         Delivery delivery = deliverOtp.deliver(deliveryRequest);
 
-        assertThat(delivery.getMessageId()).isEqualTo(expectedMessageId);
+        verify(builder).messageId(result.getMessageId());
+        assertThat(delivery).isEqualTo(expectedDelivery);
     }
 
-    @Test
-    void shouldPopulateSentTimeOnDelivery() {
-        DeliveryRequest deliveryRequest = DeliveryRequestMother.build();
-        givenDeliveryPublished(deliveryRequest);
-
-        Delivery delivery = deliverOtp.deliver(deliveryRequest);
-
-        assertThat(delivery.getSent()).isEqualTo(NOW);
-    }
-
-    private String givenDeliveryPublished(DeliveryRequest deliveryRequest) {
+    private PublishResult givenDeliveryPublished(DeliveryRequest deliveryRequest) {
         PublishRequest publishRequest = givenConvertsToPublishRequest(deliveryRequest);
         String messageId = "message-id";
         PublishResult publishResult = givenPublishResultWithMessageId(messageId);
         given(client.publish(publishRequest)).willReturn(publishResult);
-        return messageId;
+        return publishResult;
     }
 
     private PublishRequest givenConvertsToPublishRequest(DeliveryRequest deliveryRequest) {
@@ -89,6 +75,19 @@ class SnsDeliverOtpTest {
         PublishResult result = mock(PublishResult.class);
         given(result.getMessageId()).willReturn(messageId);
         return result;
+    }
+
+    private Delivery.DeliveryBuilder givenConvertsToDeliveryBuilder(DeliveryRequest request, PublishResult result) {
+        Delivery.DeliveryBuilder builder = mock(Delivery.DeliveryBuilder.class);
+        given(deliveryFactory.toDelivery(request)).willReturn(builder);
+        given(builder.messageId(result.getMessageId())).willReturn(builder);
+        return builder;
+    }
+
+    private Delivery givenBuildsDelivery(Delivery.DeliveryBuilder builder) {
+        Delivery delivery = mock(Delivery.class);
+        given(builder.build()).willReturn(delivery);
+        return delivery;
     }
 
 }
