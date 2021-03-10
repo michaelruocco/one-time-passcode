@@ -7,6 +7,7 @@ import uk.co.idv.otp.app.plain.Application;
 import uk.co.idv.otp.app.plain.config.AppAdapter;
 import uk.co.idv.otp.app.plain.config.DefaultAppAdapter;
 import uk.co.idv.otp.config.OtpAppConfig;
+import uk.co.idv.otp.config.DefaultOtpAppConfig;
 import uk.co.idv.otp.config.VerificationLoaderConfig;
 import uk.co.idv.otp.config.verificationloader.ContextVerificationLoaderConfig;
 import uk.co.idv.otp.usecases.OtpVerificationRepository;
@@ -36,7 +37,7 @@ public class SpringCommonDomainConfig {
                                   DeliverOtp deliverOtp,
                                   OtpVerificationRepository repository,
                                   PasscodeGenerator passcodeGenerator) {
-        return OtpAppConfig.builder()
+        return DefaultOtpAppConfig.builder()
                 .clock(appAdapter.getClock())
                 .verificationLoader(verificationLoaderConfig.verificationLoader())
                 .verificationUpdater(verificationLoaderConfig.verificationUpdater())

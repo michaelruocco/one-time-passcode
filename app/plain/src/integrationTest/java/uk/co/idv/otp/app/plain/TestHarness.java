@@ -7,6 +7,7 @@ import uk.co.idv.otp.adapter.verification.StubVerificationClient;
 import uk.co.idv.otp.app.plain.config.AppAdapter;
 import uk.co.idv.otp.app.plain.config.DefaultAppAdapter;
 import uk.co.idv.otp.config.OtpAppConfig;
+import uk.co.idv.otp.config.DefaultOtpAppConfig;
 import uk.co.idv.otp.config.RepositoryConfig;
 import uk.co.idv.otp.config.VerificationLoaderConfig;
 import uk.co.idv.otp.config.repository.InMemoryRepositoryConfig;
@@ -37,7 +38,7 @@ public class TestHarness {
 
     private final RepositoryConfig repositoryConfig = new InMemoryRepositoryConfig();
 
-    private final OtpAppConfig otpConfig = OtpAppConfig.builder()
+    private final OtpAppConfig otpConfig = DefaultOtpAppConfig.builder()
             .clock(appAdapter.getClock())
             .repository(repositoryConfig.verificationRepository())
             .deliverOtp(deliverOtp)
