@@ -1,7 +1,7 @@
 package uk.co.idv.otp.usecases.send.message;
 
 import uk.co.idv.activity.entities.Activity;
-import uk.co.idv.activity.entities.OnlinePurchase;
+import uk.co.idv.activity.entities.onlinepurchase.OnlinePurchase;
 import uk.co.idv.otp.entities.send.message.GenerateMessageRequest;
 import uk.co.idv.otp.entities.send.message.Message;
 import uk.co.idv.otp.entities.passcode.Passcode;
@@ -35,7 +35,7 @@ public class OnlinePurchaseMessageGenerator implements ActivityMessageGenerator 
                 passcode.getValue(),
                 onlinePurchase.getCost().toString(),
                 onlinePurchase.getMerchantName(),
-                onlinePurchase.getLast4DigitsOfCardNumber()
+                onlinePurchase.getLast4CardNumberDigits()
         );
     }
 

@@ -1,9 +1,13 @@
 spring:
   application:
-    name: one-time-passcode
+    name: idv-one-time-passcode
   main:
     banner-mode: off
 
+info:
+  app:
+    name: ${spring.application.name}
+    
 management:
   endpoint:
     health:

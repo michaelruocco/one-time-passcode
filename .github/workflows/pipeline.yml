@@ -67,3 +67,41 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_TOKEN }}
           coverage-reports: ./build/reports/jacoco/report.xml
+
+      - name: Publish snapshot
+        if: github.ref != 'refs/heads/master'
+        env:
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          OSSRH_PGP_SECRET_KEY: ${{ secrets.OSSRH_PGP_SECRET_KEY }}
+          OSSRH_PGP_SECRET_KEY_PASSWORD: ${{ secrets.OSSRH_PGP_SECRET_KEY_PASSWORD }}
+        run: ./gradlew publish
+
+      - name: Release
+        if: github.ref == 'refs/heads/master'
+        env:
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          OSSRH_PGP_SECRET_KEY: ${{ secrets.OSSRH_PGP_SECRET_KEY }}
+          OSSRH_PGP_SECRET_KEY_PASSWORD: ${{ secrets.OSSRH_PGP_SECRET_KEY_PASSWORD }}
+        run: |
+          ./gradlew release -Prelease.customUsername=${{ github.actor }} -Prelease.customPassword=${{ github.token }}
+          ./gradlew publish closeAndReleaseRepository
+
+      - name: Build Image
+        run: ./gradlew buildImage
+
+      - name: Push Image
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: ./gradlew pushImage
+
+      - name: Print New Version
+        run: ./gradlew currentVersion
+
+      - name: Test Postman Collection
+        run: |
+          ./gradlew composeUp
+          ./gradlew postman
+          ./gradlew composeDown

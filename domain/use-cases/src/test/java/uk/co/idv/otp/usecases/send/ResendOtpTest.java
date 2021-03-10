@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import uk.co.idv.otp.entities.OtpVerification;
 import uk.co.idv.otp.entities.OtpVerificationMother;
+import uk.co.idv.otp.entities.delivery.DefaultDeliveryRequest;
 import uk.co.idv.otp.entities.delivery.Delivery;
-import uk.co.idv.otp.entities.delivery.DeliveryRequest;
 import uk.co.idv.otp.entities.passcode.Passcode;
 import uk.co.idv.otp.entities.passcode.PasscodeMother;
 import uk.co.idv.otp.entities.send.ResendOtpRequest;
@@ -14,6 +14,7 @@ import uk.co.idv.otp.entities.send.message.Message;
 import uk.co.idv.otp.usecases.OtpVerificationRepository;
 import uk.co.idv.otp.usecases.get.GetOtp;
 import uk.co.idv.otp.usecases.passcode.PasscodeGenerator;
+import uk.co.idv.otp.usecases.send.deliver.DeliverOtp;
 import uk.co.idv.otp.usecases.send.message.MessageGenerator;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -75,9 +76,9 @@ class ResendOtpTest {
 
         resendOtp.resend(request);
 
-        ArgumentCaptor<DeliveryRequest> captor = ArgumentCaptor.forClass(DeliveryRequest.class);
+        ArgumentCaptor<DefaultDeliveryRequest> captor = ArgumentCaptor.forClass(DefaultDeliveryRequest.class);
         verify(deliverOtp).deliver(captor.capture());
-        DeliveryRequest deliveryRequest = captor.getValue();
+        DefaultDeliveryRequest deliveryRequest = captor.getValue();
         assertThat(deliveryRequest.getMessage()).isEqualTo(message);
     }
 
@@ -90,9 +91,9 @@ class ResendOtpTest {
 
         resendOtp.resend(request);
 
-        ArgumentCaptor<DeliveryRequest> captor = ArgumentCaptor.forClass(DeliveryRequest.class);
+        ArgumentCaptor<DefaultDeliveryRequest> captor = ArgumentCaptor.forClass(DefaultDeliveryRequest.class);
         verify(deliverOtp).deliver(captor.capture());
-        DeliveryRequest deliveryRequest = captor.getValue();
+        DefaultDeliveryRequest deliveryRequest = captor.getValue();
         assertThat(deliveryRequest.getMethod()).isEqualTo(verification.getDeliveryMethod());
     }
 
@@ -104,7 +105,7 @@ class ResendOtpTest {
 
     private Delivery givenOtpDelivered() {
         Delivery delivery = mock(Delivery.class);
-        given(deliverOtp.deliver(any(DeliveryRequest.class))).willReturn(delivery);
+        given(deliverOtp.deliver(any(DefaultDeliveryRequest.class))).willReturn(delivery);
         return delivery;
     }
 

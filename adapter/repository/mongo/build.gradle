@@ -1,7 +1,6 @@
 dependencies {
     api project(":use-cases")
     implementation "org.mongodb:mongo-java-driver:${mongoVersion}"
-    //implementation "com.github.michaelruocco.idv:common-use-cases:${contextVersion}"
     implementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
     implementation "com.github.michaelruocco:duration-logger:0.1.0"
 

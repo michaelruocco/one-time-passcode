@@ -25,11 +25,11 @@ class KarateIntegrationTest {
     public static final LocalMongo MONGO = new LocalMongo();
 
     @Container
-    public static final LocalSns SNS = new LocalSns();
+    public static final LocalAwsServices AWS_SERVICES = new LocalAwsServices();
 
     @BeforeAll
     static void setUp() {
-        setUpSns();
+        setUpAwsServices();
         setUpMongo();
         setUpApp();
     }
@@ -53,8 +53,8 @@ class KarateIntegrationTest {
         };
     }
 
-    private static void setUpSns() {
-        SNS.waitForStartupToComplete();
+    private static void setUpAwsServices() {
+        AWS_SERVICES.waitForStartupToComplete();
     }
 
     private static void setUpMongo() {
@@ -73,7 +73,8 @@ class KarateIntegrationTest {
         System.setProperty("server.port", Integer.toString(serverPort));
         System.setProperty("aws.accessKeyId", "abc");
         System.setProperty("aws.secretKey", "123");
-        System.setProperty("aws.sns.endpoint.uri", SNS.getEndpointUri());
+        System.setProperty("aws.sns.endpoint.uri", AWS_SERVICES.getEndpointUri());
+        System.setProperty("aws.ses.endpoint.uri", AWS_SERVICES.getEndpointUri());
         System.setProperty("spring.data.mongodb.uri", MONGO.getConnectionString());
         System.setProperty("response.filtering.enabled", "true");
         System.setProperty("spring.profiles.active", "simple-logging,test");

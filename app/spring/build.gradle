@@ -10,13 +10,13 @@ plugins {
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
     id "com.bmuschko.docker-remote-api" version "6.7.0"
     id "com.avast.gradle.docker-compose" version "0.14.0"
-    id "maven-publish"
+    id "com.moowork.node" version "1.3.1"
+    id "com.github.michaelruocco.gradle-postman-runner" version "0.1.2"
 }
 
 ext {
     karateVersion = "0.9.6"
     logbackJsonVersion = "0.1.5"
-    artifactName = "${rootProject.name}-${project.name}"
 }
 
 testSets {
@@ -25,6 +25,10 @@ testSets {
 
 configurations {
     runtimeOnly.exclude module: "slf4j-simple"
+    [apiElements, runtimeElements].each {
+        it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
+        it.outgoing.artifact(bootJar)
+    }
 }
 
 dependencies {
@@ -32,10 +36,9 @@ dependencies {
     implementation project(":use-cases")
     implementation project(":config")
     implementation project(":passcode-generator")
-    implementation project(":in-memory-delivery")
     implementation project(":in-memory-repository")
     implementation project(":mongo-repository")
-    implementation project(":sns-delivery")
+    implementation project(":delivery-config")
     implementation project(":json")
     implementation testFixtures(project(":context-verification-loader"))
     implementation "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
@@ -79,26 +82,6 @@ bootRun {
     systemProperty "response.filtering.enabled", System.properties.getOrDefault("response.filtering.enabled", "true")
 }
 
-apply from: rootProject.file('publish.gradle')
-
-publishing {
-    publications {
-        lib(MavenPublication) { publication ->
-            artifact bootJar
-            artifact sourcesJar
-            artifact javadocJar
-            artifactId "${artifactName}"
-            pom.withXml {
-                def root = asNode()
-                root.appendNode("description", "One time passcode spring application")
-                root.appendNode("name", "${artifactName}")
-                root.appendNode("url", "https://github.com/michaelruocco/one-time-passcode")
-                root.children().last() + project.pomConfig
-            }
-        }
-    }
-}
-
 docker {
     registryCredentials {
         username.set(System.getenv("DOCKER_USERNAME"))
@@ -111,7 +94,8 @@ import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
 
 task buildImage(type: DockerBuildImage) {
     inputDir.set(file("."))
-    images.add("michaelruocco/${artifactName}:latest")
+    images.add("michaelruocco/${project.name}:${version}")
+    buildArgs = ["VERSION": version]
 }
 
 task pushImage(type: DockerPushImage) {
@@ -119,5 +103,14 @@ task pushImage(type: DockerPushImage) {
 }
 
 dockerCompose {
-    startedServices = ['one-time-passcode-app']
+    startedServices = ['idv-one-time-passcode-app']
+    environment.put 'APP_VERSION', version
 }
+
+postman {
+    collections = fileTree(dir: "postman", include: "*_collection.json")
+    environment = file("postman/idv-local.postman_environment.json")
+    stopOnError = true
+}
+
+apply from: rootProject.file("publish.gradle")

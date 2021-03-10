@@ -4,8 +4,8 @@ import com.amazonaws.services.sns.model.MessageAttributeValue;
 
 public class IdvSenderIdMessageAttributeValue extends MessageAttributeValue {
 
-    public IdvSenderIdMessageAttributeValue() {
-        withStringValue("IDV");
+    public IdvSenderIdMessageAttributeValue(String senderId) {
+        withStringValue(senderId);
         withDataType("String");
     }
 

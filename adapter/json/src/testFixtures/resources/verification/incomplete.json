@@ -12,7 +12,10 @@
       "amount": 10.99,
       "currency": "GBP"
     },
-    "last4DigitsOfCardNumber": "1111"
+    "card": {
+      "number": "4929111111111111",
+      "expiry": "2025-12"
+    }
   },
   "deliveryMethod": {
     "id": "c9959188-969e-42f3-8178-42ef824c81d3",

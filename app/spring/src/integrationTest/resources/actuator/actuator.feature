@@ -3,6 +3,17 @@ Feature: Actuator Requests
   Background:
     * url baseUrl + "/actuator"
 
+  Scenario: Get info - Returns app information
+    Given path "/info"
+    When method GET
+    Then status 200
+    And match response.app ==
+      """
+      {
+        "name": "idv-one-time-passcode"
+      }
+      """
+
   Scenario: Get info - Returns build information
     Given path "/info"
     When method GET
@@ -10,11 +21,11 @@ Feature: Actuator Requests
     And match response.build ==
       """
       {
-        "artifact": "one-time-passcode-spring-app",
-        "name": "spring-app",
+        "artifact": "idv-one-time-passcode-spring-app",
+        "name": "idv-one-time-passcode-spring-app",
         "time": "#notnull",
         "version": "#notnull",
-        "group": "com.github.michaelruocco"
+        "group": "com.github.michaelruocco.idv"
       }
       """
 

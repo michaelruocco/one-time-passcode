@@ -10,7 +10,9 @@ import static org.assertj.core.api.Assertions.entry;
 
 class MessageAttributeBuilderTest {
 
-    private final MessageAttributeBuilder builder = new MessageAttributeBuilder();
+    private static final String SENDER_ID = "sender-id";
+
+    private final MessageAttributeBuilder builder = new MessageAttributeBuilder(SENDER_ID);
 
     @Test
     void shouldReturnSenderIdMessageAttribute() {
@@ -18,7 +20,7 @@ class MessageAttributeBuilderTest {
 
         assertThat(values).contains(entry(
                 "AWS.SNS.SMS.SenderID",
-                new IdvSenderIdMessageAttributeValue()
+                new IdvSenderIdMessageAttributeValue(SENDER_ID)
         ));
     }
 
