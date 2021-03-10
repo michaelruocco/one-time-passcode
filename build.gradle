@@ -67,7 +67,7 @@ subprojects {
         contextVersion = "0.1.5-update-dependencies-SNAPSHOT"
         logbackVersion = "1.2.3"
         mongoVersion = "3.12.8"
-        awsSdkVersion = "1.11.969"
+        awsSdkVersion = "1.11.971"
         jsonAdapterVersion = "1.0.0"
         randomValueSuppliersVersion = "0.1.0"
 
