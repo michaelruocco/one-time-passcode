@@ -10,6 +10,7 @@ import uk.co.idv.otp.config.delivery.SnsDeliveryConfig;
 import uk.co.idv.otp.usecases.send.deliver.CompositeDeliverOtp;
 import uk.co.idv.otp.usecases.send.deliver.DeliverOtp;
 import uk.co.idv.otp.usecases.send.deliver.DeliverOtpByMethod;
+import uk.co.idv.otp.usecases.send.deliver.DeliveryFactory;
 
 @Configuration
 public class SpringDeliverOtpConfig {
@@ -18,8 +19,9 @@ public class SpringDeliverOtpConfig {
     @Bean
     public DeliverOtp deliverOtp(AppAdapter appAdapter) {
         return new CompositeDeliverOtp(
-                snsDeliverOtp(appAdapter),
-                sesDeliverOtp(appAdapter)
+                new DeliveryFactory(appAdapter.getClock()),
+                snsDeliverOtp(),
+                sesDeliverOtp()
         );
     }
 
@@ -32,20 +34,18 @@ public class SpringDeliverOtpConfig {
                 .build();
     }
 
-    private static DeliverOtpByMethod snsDeliverOtp(AppAdapter appAdapter) {
+    private static DeliverOtpByMethod snsDeliverOtp() {
         return SnsDeliveryConfig.builder()
                 .senderId(loadSnsSenderId())
-                .clock(appAdapter.getClock())
                 .endpointUri(loadSnsEndpointUri())
                 .region(loadAwsRegion())
                 .build()
                 .deliverOtp();
     }
 
-    private static DeliverOtpByMethod sesDeliverOtp(AppAdapter appAdapter) {
+    private static DeliverOtpByMethod sesDeliverOtp() {
         return SesDeliveryConfig.builder()
                 .sourceEmailAddress(loadSesSourceEmailAddress())
-                .clock(appAdapter.getClock())
                 .endpointUri(loadSesEndpointUri())
                 .region(loadAwsRegion())
                 .build()

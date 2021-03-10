@@ -2,7 +2,9 @@ package uk.co.idv.otp.usecases.send.deliver;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.otp.entities.delivery.Delivery;
+import uk.co.idv.otp.entities.delivery.DeliveryMother;
 import uk.co.idv.otp.entities.delivery.DeliveryRequest;
+import uk.co.idv.otp.entities.delivery.DeliveryRequestMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -11,16 +13,17 @@ import static org.mockito.Mockito.mock;
 
 class CompositeDeliverOtpTest {
 
-    private static final String METHOD_TYPE = "method-type";
+    private final DeliveryFactory factory = mock(DeliveryFactory.class);
+    private final DeliverOtpByMethod deliverByMethod = mock(DeliverOtpByMethod.class);
+    private final DeliveryRequest request = DeliveryRequestMother.build();
 
-    private final DeliverOtpByMethod deliverByMethod = deliverOtpByMethod();
-
-    private final DeliverOtp composite = new CompositeDeliverOtp(deliverByMethod);
 
     @Test
-    void shouldReturnDeliveryFromSupportedDeliverOtp() {
-        DeliveryRequest request = deliveryRequestByMethod(METHOD_TYPE);
-        Delivery expectedDelivery = givenDeliveryReturnedFor(deliverByMethod, request);
+    void shouldReturnDeliveryWithMessageIdFromSupportedDeliverOtp() {
+        givenDeliverByMethodTypeSupported(request.getDeliveryMethodType());
+        String messageId = givenMessageIdReturnedFor(deliverByMethod, request);
+        Delivery expectedDelivery = givenConvertedToDelivery(messageId);
+        DeliverOtp composite = new CompositeDeliverOtp(factory, deliverByMethod);
 
         Delivery delivery = composite.deliver(request);
 
@@ -29,31 +32,32 @@ class CompositeDeliverOtpTest {
 
     @Test
     void shouldThrowExceptionIfDeliveryMethodTypeNotSupported() {
-        String methodType = "unsupported-type";
-        DeliveryRequest request = deliveryRequestByMethod(methodType);
+        givenDeliverByMethodTypeSupported("other-type");
+        DeliverOtp composite = new CompositeDeliverOtp(factory, deliverByMethod);
 
         Throwable error = catchThrowable(() -> composite.deliver(request));
 
         assertThat(error)
                 .isInstanceOf(DeliveryMethodNotSupportedException.class)
-                .hasMessage(methodType);
+                .hasMessage(request.getDeliveryMethodType());
     }
 
-    private static DeliverOtpByMethod deliverOtpByMethod() {
-        DeliverOtpByMethod deliverOtp = mock(DeliverOtpByMethod.class);
-        given(deliverOtp.getDeliveryMethodName()).willReturn(METHOD_TYPE);
-        return deliverOtp;
+    private void givenDeliverByMethodTypeSupported(String methodType) {
+        given(deliverByMethod.getDeliveryMethodName()).willReturn(methodType);
     }
 
-    private static DeliveryRequest deliveryRequestByMethod(String methodType) {
-        DeliveryRequest request = mock(DeliveryRequest.class);
-        given(request.getDeliveryMethodType()).willReturn(methodType);
-        return request;
+    private static String givenMessageIdReturnedFor(DeliverOtpByMethod deliverOtp, DeliveryRequest request) {
+        String messageId = "message-id";
+        given(deliverOtp.deliver(request)).willReturn(messageId);
+        return messageId;
     }
 
-    private static Delivery givenDeliveryReturnedFor(DeliverOtpByMethod deliverOtp, DeliveryRequest request) {
-        Delivery delivery = mock(Delivery.class);
-        given(deliverOtp.deliver(request)).willReturn(delivery);
+    private Delivery givenConvertedToDelivery(String messageId) {
+        Delivery.DeliveryBuilder builder = mock(Delivery.DeliveryBuilder.class);
+        given(factory.toDelivery(request)).willReturn(builder);
+        given(builder.messageId(messageId)).willReturn(builder);
+        Delivery delivery = DeliveryMother.build();
+        given(builder.build()).willReturn(delivery);
         return delivery;
     }
 

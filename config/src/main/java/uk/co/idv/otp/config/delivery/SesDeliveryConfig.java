@@ -10,15 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.otp.adapter.delivery.SesDeliverOtp;
 import uk.co.idv.otp.adapter.delivery.SesDeliveryRequestConverter;
 import uk.co.idv.otp.usecases.send.deliver.DeliverOtpByMethod;
-import uk.co.idv.otp.usecases.send.deliver.DeliveryFactory;
-
-import java.time.Clock;
 
 @Slf4j
 @Builder
-public class SesDeliveryConfig implements DeliveryConfig {
+public class SesDeliveryConfig {
 
-    private final Clock clock;
     private final String endpointUri;
     private final String region;
     private final String sourceEmailAddress;
@@ -26,12 +22,10 @@ public class SesDeliveryConfig implements DeliveryConfig {
     @Builder.Default
     private final AWSCredentialsProvider credentialsProvider = new DefaultAWSCredentialsProviderChain();
 
-    @Override
     public DeliverOtpByMethod deliverOtp() {
         return SesDeliverOtp.builder()
                 .requestConverter(new SesDeliveryRequestConverter(sourceEmailAddress))
                 .client(buildClient())
-                .deliveryFactory(new DeliveryFactory(clock))
                 .build();
     }
 

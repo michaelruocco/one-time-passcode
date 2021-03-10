@@ -9,10 +9,6 @@ public interface DeliveryRequestMother {
         return builder().build();
     }
 
-    static DeliveryRequest withEmailDeliveryMethod() {
-        return builder().build();
-    }
-
     static DeliveryRequest.DeliveryRequestBuilder builder() {
         return DeliveryRequest.builder()
                 .method(DeliveryMethodMother.build())

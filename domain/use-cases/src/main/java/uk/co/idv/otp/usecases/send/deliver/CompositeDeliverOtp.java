@@ -12,13 +12,15 @@ import java.util.stream.Collectors;
 
 public class CompositeDeliverOtp implements DeliverOtp {
 
-    private final Map<String, DeliverOtp> deliverOtps;
+    private final Map<String, DeliverOtpByMethod> deliverOtps;
+    private final DeliveryFactory deliveryFactory;
 
-    public CompositeDeliverOtp(DeliverOtpByMethod... deliverOtps) {
-        this(Arrays.asList(deliverOtps));
+    public CompositeDeliverOtp(DeliveryFactory deliveryFactory, DeliverOtpByMethod... deliverOtps) {
+        this(deliveryFactory, Arrays.asList(deliverOtps));
     }
 
-    public CompositeDeliverOtp(Collection<DeliverOtpByMethod> deliverOtps) {
+    public CompositeDeliverOtp(DeliveryFactory deliveryFactory, Collection<DeliverOtpByMethod> deliverOtps) {
+        this.deliveryFactory = deliveryFactory;
         this.deliverOtps = toMap(deliverOtps);
     }
 
@@ -27,14 +29,21 @@ public class CompositeDeliverOtp implements DeliverOtp {
         String deliveryMethodType = request.getDeliveryMethodType();
         return findDeliverOtp(deliveryMethodType)
                 .map(deliverOtp -> deliverOtp.deliver(request))
+                .map(messageId -> toDelivery(request, messageId))
                 .orElseThrow(() -> new DeliveryMethodNotSupportedException(deliveryMethodType));
     }
 
-    private Optional<DeliverOtp> findDeliverOtp(String deliveryMethod) {
+    private Optional<DeliverOtpByMethod> findDeliverOtp(String deliveryMethod) {
         return Optional.ofNullable(deliverOtps.get(deliveryMethod));
     }
 
-    private static Map<String, DeliverOtp> toMap(Collection<DeliverOtpByMethod> deliverOtps) {
+    private Delivery toDelivery(DeliveryRequest request, String messageId) {
+        return deliveryFactory.toDelivery(request)
+                .messageId(messageId)
+                .build();
+    }
+
+    private static Map<String, DeliverOtpByMethod> toMap(Collection<DeliverOtpByMethod> deliverOtps) {
         return deliverOtps.stream()
                 .collect(Collectors.toMap(DeliverOtpByMethod::getDeliveryMethodName, Function.identity()));
     }

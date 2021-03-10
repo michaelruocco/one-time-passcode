@@ -10,15 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.otp.adapter.delivery.SnsDeliverOtp;
 import uk.co.idv.otp.adapter.delivery.SnsDeliveryRequestConverter;
 import uk.co.idv.otp.usecases.send.deliver.DeliverOtpByMethod;
-import uk.co.idv.otp.usecases.send.deliver.DeliveryFactory;
-
-import java.time.Clock;
 
 @Slf4j
 @Builder
-public class SnsDeliveryConfig implements DeliveryConfig {
+public class SnsDeliveryConfig {
 
-    private final Clock clock;
     private final String endpointUri;
     private final String region;
     private final String senderId;
@@ -26,11 +22,9 @@ public class SnsDeliveryConfig implements DeliveryConfig {
     @Builder.Default
     private final AWSCredentialsProvider credentialsProvider = new DefaultAWSCredentialsProviderChain();
 
-    @Override
     public DeliverOtpByMethod deliverOtp() {
         return SnsDeliverOtp.builder()
                 .client(buildClient())
-                .deliveryFactory(new DeliveryFactory(clock))
                 .converter(SnsDeliveryRequestConverter.build(senderId))
                 .build();
     }
