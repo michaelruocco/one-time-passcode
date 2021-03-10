@@ -34,6 +34,7 @@ public class SpringDeliverOtpConfig {
 
     private static DeliverOtpByMethod snsDeliverOtp(AppAdapter appAdapter) {
         return SnsDeliveryConfig.builder()
+                .senderId(loadSnsSenderId())
                 .clock(appAdapter.getClock())
                 .endpointUri(loadSnsEndpointUri())
                 .region(loadAwsRegion())
@@ -43,6 +44,7 @@ public class SpringDeliverOtpConfig {
 
     private static DeliverOtpByMethod sesDeliverOtp(AppAdapter appAdapter) {
         return SesDeliveryConfig.builder()
+                .sourceEmailAddress(loadSesSourceEmailAddress())
                 .clock(appAdapter.getClock())
                 .endpointUri(loadSesEndpointUri())
                 .region(loadAwsRegion())
@@ -58,8 +60,16 @@ public class SpringDeliverOtpConfig {
         return System.getProperty("aws.sns.endpoint.uri");
     }
 
+    private static String loadSnsSenderId() {
+        return System.getProperty("aws.sns.sender.id", "IDV Demo");
+    }
+
     private static String loadSesEndpointUri() {
         return System.getProperty("aws.ses.endpoint.uri");
+    }
+
+    private static String loadSesSourceEmailAddress() {
+        return System.getProperty("aws.ses.source.email.address", "idv.demo.mail@gmail.com");
     }
 
 }

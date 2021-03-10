@@ -33,7 +33,10 @@ Feature: Verification Requests
             "amount": 10.99,
             "currency": "GBP"
           },
-          "last4DigitsOfCardNumber": "1111",
+          "card": {
+            "number": "4929111111111111",
+            "expiry": "2025-12"
+          },
           "timestamp": "2020-06-06T12:36:15.179Z"
         },
         "deliveryMethod": {

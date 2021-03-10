@@ -16,9 +16,7 @@ public class SnsDeliverOtp implements DeliverOtpByMethod {
 
     private final AmazonSNS client;
     private final DeliveryFactory deliveryFactory;
-
-    @Builder.Default
-    private final SnsDeliveryRequestConverter converter = new SnsDeliveryRequestConverter();
+    private final SnsDeliveryRequestConverter converter;
 
     @Override
     public String getDeliveryMethodName() {

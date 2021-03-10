@@ -7,7 +7,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class IdvSenderIdMessageAttributeValueTest {
 
-    private final MessageAttributeValue value = new IdvSenderIdMessageAttributeValue();
+    private static final String SENDER_ID = "sender-id";
+
+    private final MessageAttributeValue value = new IdvSenderIdMessageAttributeValue(SENDER_ID);
 
     @Test
     void shouldReturnDataType() {
@@ -16,7 +18,7 @@ class IdvSenderIdMessageAttributeValueTest {
 
     @Test
     void shouldReturnValue() {
-        assertThat(value.getStringValue()).isEqualTo("IDV");
+        assertThat(value.getStringValue()).isEqualTo(SENDER_ID);
     }
 
 }

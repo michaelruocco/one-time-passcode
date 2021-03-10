@@ -64,7 +64,7 @@ subprojects {
 
         lombokVersion = "1.18.18"
         slf4jVersion = "1.7.30"
-        contextVersion = "0.1.4"
+        contextVersion = "0.1.5-update-dependencies-SNAPSHOT"
         logbackVersion = "1.2.3"
         mongoVersion = "3.12.8"
         awsSdkVersion = "1.11.969"

@@ -16,17 +16,17 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class SesDeliveryRequestConverter {
 
     private static final String TITLE = "IDV Demo - OTP";
-    //TODO make this come from system property
-    private static final String SOURCE = "michael.ruocco@hotmail.com";
 
-    private static final String HTML_TEMPLATE = "<h1>%s</h1><p>%s</p>";
+    private static final String HTML_TEMPLATE = "<p>%s</p>";
     private static final Content SUBJECT = buildSubject();
+
+    private final String sourceEmailAddress;
 
     public SendEmailRequest toSendEmailRequest(DeliveryRequest request) {
         return new SendEmailRequest()
                 .withDestination(toDestination(request.getMethod()))
                 .withMessage(toMessage(request.getMessageText()))
-                .withSource(SOURCE);
+                .withSource(sourceEmailAddress);
     }
 
     private static Destination toDestination(DeliveryMethod method) {
@@ -46,7 +46,7 @@ public class SesDeliveryRequestConverter {
     }
 
     private static String toHtml(String messageText) {
-        return String.format(HTML_TEMPLATE, TITLE, messageText);
+        return String.format(HTML_TEMPLATE, messageText);
     }
 
     private static Content buildSubject() {
