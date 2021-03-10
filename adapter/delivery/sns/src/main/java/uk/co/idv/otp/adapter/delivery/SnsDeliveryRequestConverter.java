@@ -10,6 +10,10 @@ public class SnsDeliveryRequestConverter {
 
     private final MessageAttributeBuilder attributeBuilder;
 
+    public SnsDeliveryRequestConverter(String senderId) {
+        this(new MessageAttributeBuilder(senderId));
+    }
+
     public PublishRequest toPublishRequest(DeliveryRequest request) {
         return new PublishRequest()
                 .withMessage(request.getMessageText())

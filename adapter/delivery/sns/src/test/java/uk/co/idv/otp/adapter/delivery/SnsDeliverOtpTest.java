@@ -17,10 +17,7 @@ class SnsDeliverOtpTest {
     private final SnsDeliveryRequestConverter converter = mock(SnsDeliveryRequestConverter.class);
     private final AmazonSNS client = mock(AmazonSNS.class);
 
-    private final DeliverOtpByMethod deliverOtp = SnsDeliverOtp.builder()
-            .converter(converter)
-            .client(client)
-            .build();
+    private final DeliverOtpByMethod deliverOtp = new SnsDeliverOtp(client, converter);
 
     @Test
     void shouldReturnDeliveryMethodName() {

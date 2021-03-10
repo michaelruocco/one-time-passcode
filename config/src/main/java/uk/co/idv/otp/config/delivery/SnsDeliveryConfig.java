@@ -8,7 +8,6 @@ import com.amazonaws.services.sns.AmazonSNSClientBuilder;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.otp.adapter.delivery.SnsDeliverOtp;
-import uk.co.idv.otp.adapter.delivery.SnsDeliveryRequestConverter;
 import uk.co.idv.otp.usecases.send.deliver.DeliverOtpByMethod;
 
 @Slf4j
@@ -23,10 +22,7 @@ public class SnsDeliveryConfig {
     private final AWSCredentialsProvider credentialsProvider = new DefaultAWSCredentialsProviderChain();
 
     public DeliverOtpByMethod deliverOtp() {
-        return SnsDeliverOtp.builder()
-                .client(buildClient())
-                .converter(SnsDeliveryRequestConverter.build(senderId))
-                .build();
+        return new SnsDeliverOtp(buildClient(), senderId);
     }
 
     private AmazonSNS buildClient() {
