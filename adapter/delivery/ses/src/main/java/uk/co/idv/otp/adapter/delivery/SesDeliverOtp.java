@@ -12,7 +12,6 @@ import uk.co.idv.otp.usecases.send.deliver.DeliveryFactory;
 
 @Builder
 @Slf4j
-//TODO unit test
 public class SesDeliverOtp implements DeliverOtpByMethod {
 
     private final SesDeliveryRequestConverter requestConverter;

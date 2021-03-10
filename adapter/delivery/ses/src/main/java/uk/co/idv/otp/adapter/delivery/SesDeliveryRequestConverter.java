@@ -6,13 +6,11 @@ import com.amazonaws.services.simpleemail.model.Destination;
 import com.amazonaws.services.simpleemail.model.Message;
 import com.amazonaws.services.simpleemail.model.SendEmailRequest;
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.otp.entities.delivery.DeliveryRequest;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 @RequiredArgsConstructor
-//TODO unit test
 public class SesDeliveryRequestConverter {
 
     private static final String TITLE = "IDV Demo - OTP";
@@ -20,17 +18,17 @@ public class SesDeliveryRequestConverter {
     private static final String HTML_TEMPLATE = "<p>%s</p>";
     private static final Content SUBJECT = buildSubject();
 
-    private final String sourceEmailAddress;
+    private final String sourceEmail;
 
     public SendEmailRequest toSendEmailRequest(DeliveryRequest request) {
         return new SendEmailRequest()
-                .withDestination(toDestination(request.getMethod()))
+                .withDestination(toDestination(request.getDeliveryMethodValue()))
                 .withMessage(toMessage(request.getMessageText()))
-                .withSource(sourceEmailAddress);
+                .withSource(sourceEmail);
     }
 
-    private static Destination toDestination(DeliveryMethod method) {
-        return new Destination().withToAddresses(method.getValue());
+    private static Destination toDestination(String address) {
+        return new Destination().withToAddresses(address);
     }
 
     private static Message toMessage(String messageText) {
@@ -41,8 +39,8 @@ public class SesDeliveryRequestConverter {
 
     private static Body toBody(String messageText) {
         return new Body()
-                .withHtml(buildUtf8Content().withData(toHtml(messageText)))
-                .withText(buildUtf8Content().withData(messageText));
+                .withHtml(utf8Content().withData(toHtml(messageText)))
+                .withText(utf8Content().withData(messageText));
     }
 
     private static String toHtml(String messageText) {
@@ -50,10 +48,10 @@ public class SesDeliveryRequestConverter {
     }
 
     private static Content buildSubject() {
-        return buildUtf8Content().withData(TITLE);
+        return utf8Content().withData(TITLE);
     }
 
-    private static Content buildUtf8Content() {
+    private static Content utf8Content() {
         return new Content().withCharset(UTF_8.name());
     }
 
