@@ -21,8 +21,4 @@ public class SnsDeliveryRequestConverter {
                 .withMessageAttributes(attributeBuilder.build());
     }
 
-    public static SnsDeliveryRequestConverter build(String senderId) {
-        return new SnsDeliveryRequestConverter(new MessageAttributeBuilder(senderId));
-    }
-
 }
