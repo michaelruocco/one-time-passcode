@@ -13,10 +13,8 @@
 
 ## Todo
 
-*   Add sending OTP via EMAIL as well as SMS
 *   Secure sensitive data flag is true from context
 *   Add json error handling
-*   Add pipeline running postman collection
 
 ## Useful Commands
 
