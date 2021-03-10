@@ -31,7 +31,7 @@ include ':json'
 project(':json').projectDir = file('adapter/json')
 
 include ':config'
-project(':config').projectDir = file('config')
+project(':config').projectDir = file('domain/config')
 
 include ':plain-app'
 project(':plain-app').projectDir = file('app/plain')
