@@ -1,7 +1,7 @@
 package uk.co.idv.otp.usecases.send.deliver;
 
+import uk.co.idv.otp.entities.delivery.DefaultDeliveryRequest;
 import uk.co.idv.otp.entities.delivery.Delivery;
-import uk.co.idv.otp.entities.delivery.DeliveryRequest;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -25,7 +25,7 @@ public class CompositeDeliverOtp implements DeliverOtp {
     }
 
     @Override
-    public Delivery deliver(DeliveryRequest request) {
+    public Delivery deliver(DefaultDeliveryRequest request) {
         String deliveryMethodType = request.getDeliveryMethodType();
         return findDeliverOtp(deliveryMethodType)
                 .map(deliverOtp -> deliverOtp.deliver(request))
@@ -37,7 +37,7 @@ public class CompositeDeliverOtp implements DeliverOtp {
         return Optional.ofNullable(deliverOtps.get(deliveryMethod));
     }
 
-    private Delivery toDelivery(DeliveryRequest request, String messageId) {
+    private Delivery toDelivery(DefaultDeliveryRequest request, String messageId) {
         return deliveryFactory.toDelivery(request)
                 .messageId(messageId)
                 .build();

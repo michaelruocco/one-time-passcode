@@ -1,6 +1,7 @@
 package uk.co.idv.otp.usecases.send.deliver;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.otp.entities.delivery.DefaultDeliveryRequest;
 import uk.co.idv.otp.entities.delivery.Delivery;
 import uk.co.idv.otp.entities.delivery.DeliveryMother;
 import uk.co.idv.otp.entities.delivery.DeliveryRequest;
@@ -15,7 +16,7 @@ class CompositeDeliverOtpTest {
 
     private final DeliveryFactory factory = mock(DeliveryFactory.class);
     private final DeliverOtpByMethod deliverByMethod = mock(DeliverOtpByMethod.class);
-    private final DeliveryRequest request = DeliveryRequestMother.build();
+    private final DefaultDeliveryRequest request = DeliveryRequestMother.build();
 
 
     @Test

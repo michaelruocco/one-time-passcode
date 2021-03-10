@@ -1,7 +1,7 @@
 package uk.co.idv.otp.usecases.send;
 
 import lombok.Builder;
-import uk.co.idv.otp.entities.delivery.DeliveryRequest;
+import uk.co.idv.otp.entities.delivery.DefaultDeliveryRequest;
 import uk.co.idv.otp.entities.send.message.GenerateMessageRequest;
 import uk.co.idv.otp.entities.send.message.Message;
 import uk.co.idv.otp.entities.send.SendOtpRequest;
@@ -30,7 +30,7 @@ public class SendOtp {
     }
 
     private Delivery deliver(OtpVerification verification) {
-        DeliveryRequest request = DeliveryRequest.builder()
+        DefaultDeliveryRequest request = DefaultDeliveryRequest.builder()
                 .method(verification.getDeliveryMethod())
                 .message(generateMessage(verification))
                 .build();

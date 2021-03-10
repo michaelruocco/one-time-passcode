@@ -1,8 +1,8 @@
 package uk.co.idv.otp.usecases.send.deliver;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.otp.entities.delivery.DefaultDeliveryRequest;
 import uk.co.idv.otp.entities.delivery.Delivery;
-import uk.co.idv.otp.entities.delivery.DeliveryRequest;
 import uk.co.idv.otp.entities.delivery.DeliveryRequestMother;
 
 import java.time.Clock;
@@ -20,7 +20,7 @@ class DeliveryFactoryTest {
 
     @Test
     void shouldPopulateMethodOnDeliveryBuilder() {
-        DeliveryRequest request = DeliveryRequestMother.build();
+        DefaultDeliveryRequest request = DeliveryRequestMother.build();
 
         Delivery delivery = factory.toDelivery(request).build();
 
@@ -29,7 +29,7 @@ class DeliveryFactoryTest {
 
     @Test
     void shouldPopulateMessageOnDeliveryBuilder() {
-        DeliveryRequest request = DeliveryRequestMother.build();
+        DefaultDeliveryRequest request = DeliveryRequestMother.build();
 
         Delivery delivery = factory.toDelivery(request).build();
 

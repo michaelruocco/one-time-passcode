@@ -6,6 +6,7 @@ import com.amazonaws.services.simpleemail.model.Destination;
 import com.amazonaws.services.simpleemail.model.Message;
 import com.amazonaws.services.simpleemail.model.SendEmailRequest;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.otp.entities.delivery.DefaultDeliveryRequest;
 import uk.co.idv.otp.entities.delivery.DeliveryRequest;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -21,7 +22,7 @@ class SesDeliveryRequestConverterTest {
 
     @Test
     void shouldPopulateSourceOnSendEmailRequest() {
-        DeliveryRequest deliveryRequest = mock(DeliveryRequest.class);
+        DeliveryRequest deliveryRequest = mock(DefaultDeliveryRequest.class);
 
         SendEmailRequest sendRequest = converter.toSendEmailRequest(deliveryRequest);
 
@@ -41,7 +42,7 @@ class SesDeliveryRequestConverterTest {
 
     @Test
     void shouldPopulateMessageSubjectOnSendEmailRequest() {
-        DeliveryRequest deliveryRequest = mock(DeliveryRequest.class);
+        DeliveryRequest deliveryRequest = mock(DefaultDeliveryRequest.class);
 
         SendEmailRequest sendRequest = converter.toSendEmailRequest(deliveryRequest);
 
@@ -72,13 +73,13 @@ class SesDeliveryRequestConverterTest {
     }
 
     private DeliveryRequest deliveryRequestWithDestination(String destinationEmail) {
-        DeliveryRequest request = mock(DeliveryRequest.class);
+        DeliveryRequest request = mock(DefaultDeliveryRequest.class);
         given(request.getDeliveryMethodValue()).willReturn(destinationEmail);
         return request;
     }
 
     private DeliveryRequest deliveryRequestWithMessageText(String messageText) {
-        DeliveryRequest request = mock(DeliveryRequest.class);
+        DeliveryRequest request = mock(DefaultDeliveryRequest.class);
         given(request.getMessageText()).willReturn(messageText);
         return request;
     }

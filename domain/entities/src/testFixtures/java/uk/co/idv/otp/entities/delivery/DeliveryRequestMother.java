@@ -5,12 +5,12 @@ import uk.co.idv.otp.entities.send.message.MessageMother;
 
 public interface DeliveryRequestMother {
 
-    static DeliveryRequest build() {
+    static DefaultDeliveryRequest build() {
         return builder().build();
     }
 
-    static DeliveryRequest.DeliveryRequestBuilder builder() {
-        return DeliveryRequest.builder()
+    static DefaultDeliveryRequest.DefaultDeliveryRequestBuilder builder() {
+        return DefaultDeliveryRequest.builder()
                 .method(DeliveryMethodMother.build())
                 .message(MessageMother.build());
     }

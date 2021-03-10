@@ -5,6 +5,7 @@ import com.amazonaws.services.sns.model.PublishRequest;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.otp.adapter.delivery.attributes.MessageAttributeBuilder;
+import uk.co.idv.otp.entities.delivery.DefaultDeliveryRequest;
 import uk.co.idv.otp.entities.delivery.DeliveryRequest;
 import uk.co.idv.otp.entities.delivery.DeliveryRequestMother;
 import uk.co.idv.otp.entities.send.message.Message;
@@ -24,7 +25,7 @@ class SnsDeliveryRequestConverterTest {
 
     @Test
     void shouldPopulateMessageTextOnPublishRequest() {
-        DeliveryRequest deliveryRequest = DeliveryRequestMother.build();
+        DefaultDeliveryRequest deliveryRequest = DeliveryRequestMother.build();
 
         PublishRequest request = converter.toPublishRequest(deliveryRequest);
 
@@ -34,7 +35,7 @@ class SnsDeliveryRequestConverterTest {
 
     @Test
     void shouldPopulatePhoneNumberOnPublishRequest() {
-        DeliveryRequest deliveryRequest = DeliveryRequestMother.build();
+        DefaultDeliveryRequest deliveryRequest = DeliveryRequestMother.build();
 
         PublishRequest request = converter.toPublishRequest(deliveryRequest);
 

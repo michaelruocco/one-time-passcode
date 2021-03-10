@@ -2,8 +2,8 @@ package uk.co.idv.otp.adapter.delivery;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.otp.entities.delivery.DefaultDeliveryRequest;
 import uk.co.idv.otp.entities.delivery.Delivery;
-import uk.co.idv.otp.entities.delivery.DeliveryRequest;
 import uk.co.idv.otp.entities.delivery.DeliveryRequestMother;
 import uk.co.idv.otp.usecases.send.deliver.DeliverOtp;
 import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
@@ -37,7 +37,7 @@ class InMemoryDeliverOtpTest {
 
     @Test
     void shouldReturnDeliveryWithDeliveryMethod() {
-        DeliveryRequest request = DeliveryRequestMother.build();
+        DefaultDeliveryRequest request = DeliveryRequestMother.build();
 
         Delivery delivery = deliverOtp.deliver(request);
 
@@ -46,7 +46,7 @@ class InMemoryDeliverOtpTest {
 
     @Test
     void shouldReturnDeliveryWithMessage() {
-        DeliveryRequest request = DeliveryRequestMother.build();
+        DefaultDeliveryRequest request = DeliveryRequestMother.build();
 
         Delivery delivery = deliverOtp.deliver(request);
 
@@ -55,7 +55,7 @@ class InMemoryDeliverOtpTest {
 
     @Test
     void shouldReturnDeliveryWithGeneratedMessageIdAsString() {
-        DeliveryRequest request = DeliveryRequestMother.build();
+        DefaultDeliveryRequest request = DeliveryRequestMother.build();
 
         Delivery delivery = deliverOtp.deliver(request);
 
@@ -64,7 +64,7 @@ class InMemoryDeliverOtpTest {
 
     @Test
     void shouldReturnDeliveryWithSentTimestamp() {
-        DeliveryRequest request = DeliveryRequestMother.build();
+        DefaultDeliveryRequest request = DeliveryRequestMother.build();
 
         Delivery delivery = deliverOtp.deliver(request);
 
