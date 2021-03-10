@@ -10,7 +10,8 @@ plugins {
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
     id "com.bmuschko.docker-remote-api" version "6.7.0"
     id "com.avast.gradle.docker-compose" version "0.14.0"
-    id "maven-publish"
+    id "com.moowork.node" version "1.3.1"
+    id "com.github.michaelruocco.gradle-postman-runner" version "0.1.2"
 }
 
 ext {
@@ -105,6 +106,12 @@ task pushImage(type: DockerPushImage) {
 dockerCompose {
     startedServices = ['idv-one-time-passcode-app']
     environment.put 'APP_VERSION', version
+}
+
+postman {
+    collections = fileTree(dir: "postman", include: "*_collection.json")
+    environment = file("postman/idv-local.postman_environment.json")
+    stopOnError = true
 }
 
 apply from: rootProject.file("publish.gradle")

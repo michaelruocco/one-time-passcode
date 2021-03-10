@@ -99,3 +99,9 @@ jobs:
 
       - name: Print New Version
         run: ./gradlew currentVersion
+
+      - name: Test Postman Collection
+        run: |
+          ./gradlew composeUp
+          ./gradlew postman
+          ./gradlew composeDown
