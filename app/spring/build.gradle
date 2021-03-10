@@ -36,10 +36,9 @@ dependencies {
     implementation project(":use-cases")
     implementation project(":config")
     implementation project(":passcode-generator")
-    implementation project(":in-memory-delivery")
     implementation project(":in-memory-repository")
     implementation project(":mongo-repository")
-    implementation project(":sns-delivery")
+    implementation project(":delivery-config")
     implementation project(":json")
     implementation testFixtures(project(":context-verification-loader"))
     implementation "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"

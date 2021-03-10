@@ -1,4 +1,4 @@
-package uk.co.idv.otp.config.delivery;
+package uk.co.idv.otp.adapter.config;
 
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;

@@ -24,6 +24,9 @@ project(':sns-delivery').projectDir = file('adapter/delivery/sns')
 include ':ses-delivery'
 project(':ses-delivery').projectDir = file('adapter/delivery/ses')
 
+include ':delivery-config'
+project(':delivery-config').projectDir = file('adapter/delivery/config')
+
 include ':context-verification-loader'
 project(':context-verification-loader').projectDir = file('adapter/verification-loader/context')
 
