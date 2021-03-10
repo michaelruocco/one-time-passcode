@@ -10,7 +10,6 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-//TODO unit test
 public class CompositeDeliverOtp implements DeliverOtp {
 
     private final Map<String, DeliverOtp> deliverOtps;

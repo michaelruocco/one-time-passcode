@@ -23,6 +23,28 @@ class DeliveryRequestTest {
     }
 
     @Test
+    void shouldReturnTypeFromMethod() {
+        DeliveryMethod method = DeliveryMethodMother.build();
+
+        DeliveryRequest request = DeliveryRequest.builder()
+                .method(method)
+                .build();
+
+        assertThat(request.getDeliveryMethodType()).isEqualTo(method.getType());
+    }
+
+    @Test
+    void shouldReturnValueFromMethod() {
+        DeliveryMethod method = DeliveryMethodMother.build();
+
+        DeliveryRequest request = DeliveryRequest.builder()
+                .method(method)
+                .build();
+
+        assertThat(request.getDeliveryMethodValue()).isEqualTo(method.getValue());
+    }
+
+    @Test
     void shouldReturnMessage() {
         Message message = MessageMother.build();
 
@@ -31,6 +53,17 @@ class DeliveryRequestTest {
                 .build();
 
         assertThat(request.getMessage()).isEqualTo(message);
+    }
+
+    @Test
+    void shouldReturnMessageText() {
+        Message message = MessageMother.build();
+
+        DeliveryRequest request = DeliveryRequest.builder()
+                .message(message)
+                .build();
+
+        assertThat(request.getMessageText()).isEqualTo(message.getText());
     }
 
 }

@@ -7,7 +7,6 @@ import uk.co.idv.otp.entities.send.message.Message;
 
 @Builder
 @Data
-//TODO unit test
 public class DeliveryRequest {
 
     private final DeliveryMethod method;
