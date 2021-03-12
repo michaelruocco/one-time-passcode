@@ -2,7 +2,6 @@ package uk.co.idv.otp.entities;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.With;
 import uk.co.idv.activity.entities.Activity;
 import uk.co.idv.method.entities.otp.OtpConfig;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
@@ -31,11 +30,11 @@ public class OtpVerification implements GeneratePasscodeRequest {
     private final OtpConfig config;
     private final Deliveries deliveries;
     private final boolean protectSensitiveData;
-    private final boolean successful;
     private final AttemptedPasscodes attemptedPasscodes;
-    @With
     private final boolean complete;
-    //TODO add context complete once added to verification returned from context
+    private final boolean successful;
+    private final boolean contextComplete;
+    private final boolean contextSuccessful;
 
     @Override
     public int getPasscodeLength() {

@@ -173,19 +173,6 @@ class OtpVerificationTest {
     }
 
     @Test
-    void shouldReturnVerificationWithCompleteUpdated() {
-        OtpVerification verification = OtpVerificationMother.incomplete();
-
-        OtpVerification updated = verification.withComplete(true);
-
-        assertThat(updated)
-                .usingRecursiveComparison()
-                .ignoringFields("complete")
-                .isEqualTo(verification);
-        assertThat(updated.isComplete()).isTrue();
-    }
-
-    @Test
     void shouldReturnPasscodeLengthFromConfig() {
         OtpConfig config = OtpConfigMother.build();
         OtpVerification verification = OtpVerificationMother.withConfig(config);
