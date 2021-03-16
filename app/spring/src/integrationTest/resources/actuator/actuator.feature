@@ -36,7 +36,7 @@ Feature: Actuator Requests
     * def systemProperties = response.systemProperties
     And match systemProperties contains { "server.port": "#present" }
     And match systemProperties contains { "environment": "idv-local" }
-    And match systemProperties contains { "spring.data.mongodb.uri": "#present" }
+    And match systemProperties contains { "spring.data.mongodb.uri": "hidden" }
     And match systemProperties contains { "aws.sns.endpoint.uri": "#present" }
 
   Scenario: Get health - Returns successfully
