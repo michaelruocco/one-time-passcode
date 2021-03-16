@@ -17,6 +17,9 @@ plugins {
 ext {
     karateVersion = "0.9.6"
     logbackJsonVersion = "0.1.5"
+
+    imageName = "michaelruocco/${project.name}"
+    isSnapshot = "${version}".contains("SNAPSHOT")
 }
 
 testSets {
@@ -94,7 +97,10 @@ import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
 
 task buildImage(type: DockerBuildImage) {
     inputDir.set(file("."))
-    images.add("michaelruocco/${project.name}:${version}")
+    images.add("${imageName}:${version}")
+    if (!isSnapshot) {
+        images.add("${imageName}:latest")
+    }
     buildArgs = ["VERSION": version]
 }
 
