@@ -14,7 +14,7 @@ ENV SERVER_PORT=80 \
     RESPONSE_FILTERING_ENABLED=false \
     REQUEST_LOGGING_ENABLED=false \
     RESPONSE_LOGGING_ENABLED=false \
-    SERVER_SERVLET_CONTEXT_PATH=/ \
+    SERVER_SERVLET_CONTEXT_PATH=/
 
 COPY build/libs/idv-one-time-passcode-spring-app-${VERSION}.jar /opt/app.jar
 
