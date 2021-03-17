@@ -13,7 +13,8 @@ ENV SERVER_PORT=80 \
     AWS_SES_SOURCE_EMAIL_ADDRESS=idv.demo.mail@gmail.com \
     RESPONSE_FILTERING_ENABLED=false \
     REQUEST_LOGGING_ENABLED=false \
-    RESPONSE_LOGGING_ENABLED=false
+    RESPONSE_LOGGING_ENABLED=false \
+    SERVER_SERVLET_CONTEXT_PATH=/ \
 
 COPY build/libs/idv-one-time-passcode-spring-app-${VERSION}.jar /opt/app.jar
 
@@ -32,4 +33,5 @@ CMD java \
   -Dresponse.filtering.enabled=${RESPONSE_FILTERING_ENABLED} \
   -Drequest.logging.enabled=${REQUEST_LOGGING_ENABLED} \
   -Dresponse.logging.enabled=${RESPONSE_LOGGING_ENABLED} \
+  -Dserver.servlet.contextPath=${SERVER_SERVLET_CONTEXT_PATH} \
   -jar /opt/app.jar
