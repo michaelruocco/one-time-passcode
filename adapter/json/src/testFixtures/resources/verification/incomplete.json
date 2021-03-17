@@ -63,5 +63,7 @@
   },
   "protectSensitiveData": false,
   "successful": false,
-  "complete": false
+  "complete": false,
+  "contextComplete": false,
+  "contextSuccessful": false
 }

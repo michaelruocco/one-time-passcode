@@ -25,6 +25,9 @@ Feature: Verification Requests
         "created": "#notnull",
         "expiry": "#notnull",
         "complete": false,
+        "successful": false,
+        "contextComplete": false,
+        "contextSuccessful": false,
         "activity": {
           "name": "online-purchase",
           "merchantName": "Amazon",
@@ -82,7 +85,6 @@ Feature: Verification Requests
               "sent": "#notnull"
             }
           ]
-        },
-        "successful": false
+        }
       }
       """

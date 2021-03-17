@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.adapter.verification.client.VerificationClient;
 import uk.co.idv.context.adapter.verification.client.request.ClientCompleteVerificationRequest;
 import uk.co.idv.context.adapter.verification.client.request.ClientCompleteVerificationRequestMother;
-import uk.co.idv.method.entities.verification.Verification;
-import uk.co.idv.method.entities.verification.VerificationMother;
+import uk.co.idv.method.entities.verification.CompleteVerificationResult;
+import uk.co.idv.method.entities.verification.CompleteVerificationResultMother;
 import uk.co.idv.otp.entities.OtpVerification;
 import uk.co.idv.otp.entities.OtpVerificationMother;
 import uk.co.idv.otp.usecases.verify.OtpVerificationUpdater;
@@ -28,15 +28,17 @@ class ContextOtpVerificationUpdaterTest {
     void shouldCompleteOtpVerification() {
         OtpVerification otpVerification = OtpVerificationMother.incomplete();
         ClientCompleteVerificationRequest completeRequest = givenConvertedToCompleteVerificationRequest(otpVerification);
-        Verification verification = givenVerificationCompleted(completeRequest);
+        CompleteVerificationResult result = givenVerificationCompleted(completeRequest);
 
         OtpVerification updated = updater.update(otpVerification);
 
         assertThat(updated)
                 .usingRecursiveComparison()
-                .ignoringFields("complete")
+                .ignoringFields("complete", "contextComplete", "contextSuccessful")
                 .isEqualTo(otpVerification);
-        assertThat(updated.isComplete()).isEqualTo(verification.isComplete());
+        assertThat(updated.isComplete()).isEqualTo(result.isVerificationComplete());
+        assertThat(updated.isContextComplete()).isEqualTo(result.isContextComplete());
+        assertThat(updated.isContextSuccessful()).isEqualTo(result.isContextSuccessful());
     }
 
     private ClientCompleteVerificationRequest givenConvertedToCompleteVerificationRequest(OtpVerification verification) {
@@ -45,10 +47,10 @@ class ContextOtpVerificationUpdaterTest {
         return completeRequest;
     }
 
-    private Verification givenVerificationCompleted(ClientCompleteVerificationRequest request) {
-        Verification verification = VerificationMother.successful();
-        given(verificationClient.completeVerification(request)).willReturn(verification);
-        return verification;
+    private CompleteVerificationResult givenVerificationCompleted(ClientCompleteVerificationRequest request) {
+        CompleteVerificationResult result = CompleteVerificationResultMother.successful();
+        given(verificationClient.completeVerification(request)).willReturn(result);
+        return result;
     }
 
 }

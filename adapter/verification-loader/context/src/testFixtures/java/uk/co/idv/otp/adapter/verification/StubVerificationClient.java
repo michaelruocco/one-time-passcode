@@ -4,8 +4,9 @@ import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.adapter.verification.client.VerificationClient;
 import uk.co.idv.context.adapter.verification.client.request.ClientCompleteVerificationRequest;
 import uk.co.idv.context.adapter.verification.client.request.ClientCreateVerificationRequest;
+import uk.co.idv.method.entities.verification.CompleteVerificationResult;
+import uk.co.idv.method.entities.verification.CompleteVerificationResultMother;
 import uk.co.idv.method.entities.verification.Verification;
-import uk.co.idv.method.entities.verification.VerificationMother;
 
 import java.time.Clock;
 import java.util.UUID;
@@ -27,8 +28,8 @@ public class StubVerificationClient implements VerificationClient {
     }
 
     @Override
-    public Verification completeVerification(ClientCompleteVerificationRequest request) {
-        return VerificationMother.successful();
+    public CompleteVerificationResult completeVerification(ClientCompleteVerificationRequest request) {
+        return CompleteVerificationResultMother.successful();
     }
 
 }
