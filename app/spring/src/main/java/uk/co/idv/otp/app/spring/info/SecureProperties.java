@@ -1,4 +1,4 @@
-package uk.co.idv.otp.app.spring.config.properties;
+package uk.co.idv.otp.app.spring.info;
 
 import java.util.Collection;
 import java.util.Collections;

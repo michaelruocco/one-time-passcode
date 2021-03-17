@@ -1,4 +1,4 @@
-package uk.co.idv.otp.app.spring.config.properties;
+package uk.co.idv.otp.app.spring.info;
 
 import org.junit.jupiter.api.Test;
 

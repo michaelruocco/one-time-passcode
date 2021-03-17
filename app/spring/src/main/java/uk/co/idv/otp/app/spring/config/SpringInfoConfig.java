@@ -2,7 +2,7 @@ package uk.co.idv.otp.app.spring.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import uk.co.idv.otp.app.spring.config.properties.SecureProperties;
+import uk.co.idv.otp.app.spring.info.SecureProperties;
 import uk.co.idv.otp.app.spring.info.SystemPropertyInfoContributor;
 
 @Configuration

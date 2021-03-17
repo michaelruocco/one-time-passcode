@@ -2,7 +2,6 @@ package uk.co.idv.otp.app.spring.info;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.actuate.info.Info;
-import uk.co.idv.otp.app.spring.config.properties.SecureProperties;
 
 import java.util.Properties;
 
