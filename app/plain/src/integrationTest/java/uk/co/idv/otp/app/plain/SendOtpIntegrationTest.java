@@ -70,7 +70,7 @@ class SendOtpIntegrationTest {
     }
 
     @Test
-    void shouldThrowExceptionIfContextIsExpiry() {
+    void shouldThrowExceptionIfContextIsExpired() {
         String id = ContextExpiredScenario.ID;
         SendOtpRequest request = SendOtpRequest.builder()
                 .contextId(UUID.fromString(id))

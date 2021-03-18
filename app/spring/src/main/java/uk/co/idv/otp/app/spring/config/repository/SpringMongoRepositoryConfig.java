@@ -18,6 +18,8 @@ import uk.co.mruoc.json.JsonConverter;
 @Profile("!stubbed")
 public class SpringMongoRepositoryConfig {
 
+    private final ConnectionString connectionString = loadConnectionString();
+
     @Bean
     public OtpVerificationRepository verificationRepository(JsonConverter jsonConverter, MongoDatabase database) {
         return MongoRepositoryConfig.builder()
@@ -28,8 +30,8 @@ public class SpringMongoRepositoryConfig {
     }
 
     @Bean
-    public Mongobee verificationMongobee(){
-        Mongobee runner = new Mongobee(loadConnectionString());
+    public Mongobee verificationMongobee() {
+        Mongobee runner = new Mongobee(connectionString.getConnectionString());
         runner.setChangeLogsScanPackage(MongoOtpVerificationChangeLog.class.getPackageName());
         return runner;
     }
@@ -37,23 +39,18 @@ public class SpringMongoRepositoryConfig {
     @Bean
     public MongoClient mongoClient() {
         MongoClientSettings settings = MongoClientSettings.builder()
-                .applyConnectionString(new ConnectionString(loadConnectionString()))
+                .applyConnectionString(connectionString)
                 .build();
         return MongoClients.create(settings);
     }
 
     @Bean
     public MongoDatabase mongoDatabase(MongoClient client) {
-        return client.getDatabase(extractDatabaseName(loadConnectionString()));
+        return client.getDatabase(connectionString.getDatabase());
     }
 
-    private static String extractDatabaseName(String connectionString) {
-        String[] tokens = connectionString.split("/");
-        return tokens[tokens.length - 1];
-    }
-
-    private static String loadConnectionString() {
-        return System.getProperty("spring.data.mongodb.uri");
+    private static ConnectionString loadConnectionString() {
+        return new ConnectionString(System.getProperty("spring.data.mongodb.uri"));
     }
 
 }
