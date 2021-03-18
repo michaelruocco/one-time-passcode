@@ -57,7 +57,6 @@ services:
       - SPRING_PROFILES_ACTIVE=simple-logging,stubbed-context
       - AWS_SNS_ENDPOINT_URI=http://aws-services:4566
       - AWS_SES_ENDPOINT_URI=http://aws-services:4566
-      #- AWS_SES_ENDPOINT_URI=https://email.eu-west-1.amazonaws.com
       - MONGO_CONNECTION_STRING=mongodb://idv:welcome01@otp-mongo:27017/idv-local
       - REQUEST_LOGGING_ENABLED=true
       - RESPONSE_LOGGING_ENABLED=true
