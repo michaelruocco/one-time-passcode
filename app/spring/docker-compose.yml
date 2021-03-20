@@ -51,7 +51,6 @@ services:
       - 8082:80
     environment:
       - SERVER_PORT=80
-      - CONTEXT_URI=http://host.docker.internal:8081
       - AWS_ACCESS_KEY=abc
       - AWS_SECRET_KEY=123
       - SPRING_PROFILES_ACTIVE=simple-logging,stubbed-context
