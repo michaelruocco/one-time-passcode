@@ -13,6 +13,8 @@
 
 ## Todo
 
+*   Add plain app integration test for verifying otp getting complete otp
+*   Add karate test for verifying otp and getting complete otp
 *   Secure sensitive data flag is true from context
 *   Add json error handling
 

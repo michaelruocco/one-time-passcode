@@ -168,7 +168,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"contextId\": \"{{contextId}}\",\n    \"deliveryMethodId\": \"c9959188-969e-42f3-8178-42ef824c81d3\"\n}"
+					"raw": "{\n    \"contextId\": \"5a3d206f-d6b8-4f2b-bf13-55fbb05679f1\",\n    \"deliveryMethodId\": \"c9959188-969e-42f3-8178-42ef824c81d3\"\n}"
 				},
 				"url": {
 					"raw": "{{otp-host}}/v1/otp-verifications",
