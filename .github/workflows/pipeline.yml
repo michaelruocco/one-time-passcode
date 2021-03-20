@@ -108,5 +108,8 @@ jobs:
 
       - name: Trigger Platform Pipeline
         if: github.ref == 'refs/heads/master'
+        env:
+          IDV_PLATFORM_USER: ${{ secrets.IDV_PLATFORM_USER }}
+          IDV_PLATFORM_TOKEN: ${{ secrets.IDV_PLATFORM_TOKEN }}
         run: |
-          curl -XPOST -u "${{ github.actor }}:${{ github.token }}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/michaelruocco/idv-platform/actions/workflows/pipeline.yml/dispatches --data '{"ref": "master"}'
+          curl -XPOST -u "${{ secrets.IDV_PLATFORM_USER }}:${{ secrets.IDV_PLATFORM_TOKEN }}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/michaelruocco/idv-platform/actions/workflows/pipeline.yml/dispatches --data '{"ref": "master"}'
