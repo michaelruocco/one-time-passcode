@@ -105,8 +105,8 @@ jobs:
           ./gradlew composeUp
           ./gradlew postman
           ./gradlew composeDown
-          
+
       - name: Trigger Platform Pipeline
         if: github.ref == 'refs/heads/master'
         run: |
-          curl -XPOST -u "${{ github.actor }}:{{ github.token }}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/michaelruocco/idv-platform/actions/workflows/pipeline.yml/dispatches --data '{"ref": "master"}'
+          curl -XPOST -u "${{ github.actor }}:${{ github.token }}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/michaelruocco/idv-platform/actions/workflows/pipeline.yml/dispatches --data '{"ref": "master"}'
