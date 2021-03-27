@@ -97,8 +97,13 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: ./gradlew pushImage
 
+      - name: Store New Version
+        id: version
+        run: |
+          echo "::set-output name=VERSION::$(./gradlew cV -q -Prelease.quiet)"
+
       - name: Print New Version
-        run: ./gradlew currentVersion
+        run: echo "${{ steps.version.outputs.VERSION }}"
 
       - name: Test Postman Collection
         run: |
@@ -112,4 +117,4 @@ jobs:
           IDV_PLATFORM_USER: ${{ secrets.IDV_PLATFORM_USER }}
           IDV_PLATFORM_TOKEN: ${{ secrets.IDV_PLATFORM_TOKEN }}
         run: |
-          curl -XPOST -u "${{ secrets.IDV_PLATFORM_USER }}:${{ secrets.IDV_PLATFORM_TOKEN }}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/michaelruocco/idv-platform/actions/workflows/pipeline.yml/dispatches --data '{"ref": "master"}'
+          curl -XPOST -u "${{ secrets.IDV_PLATFORM_USER }}:${{ secrets.IDV_PLATFORM_TOKEN }}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/michaelruocco/idv-platform/actions/workflows/update-service-pipeline.yml/dispatches --data '{"ref": "master", "inputs": { "serviceName": "idv-one-time-passcode", "serviceVersion": "${{ steps.version.outputs.VERSION }}" } }'
