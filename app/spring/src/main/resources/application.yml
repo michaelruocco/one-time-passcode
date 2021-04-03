@@ -3,6 +3,11 @@ spring:
     name: idv-one-time-passcode
   main:
     banner-mode: off
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://michaelruocco.eu.auth0.com/
 
 info:
   app:
@@ -12,3 +17,7 @@ management:
   endpoint:
     health:
       show-details: always
+
+auth0:
+  audience: https://idv-demo-api
+

@@ -7,7 +7,11 @@ import static org.awaitility.Awaitility.await;
 public class AppRunner {
 
     public static void startApp() {
-        SpringApplication.main(new String[0]);
+        try {
+            SpringApplication.main(new String[0]);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void waitForAppStartupToComplete(int port) {

@@ -2,6 +2,7 @@ Feature: Verification Requests
 
   Background:
     * url baseUrl + "/v1/otp-verifications"
+    Given header Authorization = "Bearer " + authToken
 
   Scenario: Create verification and send otp
     * def channelId = "test-channel"
