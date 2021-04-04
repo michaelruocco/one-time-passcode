@@ -34,4 +34,5 @@ CMD java \
   -Drequest.logging.enabled=${REQUEST_LOGGING_ENABLED} \
   -Dresponse.logging.enabled=${RESPONSE_LOGGING_ENABLED} \
   -Dserver.servlet.contextPath=${SERVER_SERVLET_CONTEXT_PATH} \
+  -Dspring.security.oauth2.resourceserver.jwt.jwks-override-uri=${JWKS_OVERRIDE_URI} \
   -jar /opt/app.jar

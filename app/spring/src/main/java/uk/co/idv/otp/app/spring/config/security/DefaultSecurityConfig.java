@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -36,10 +37,12 @@ public class DefaultSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.oauth2ResourceServer().jwt();
-        http.authorizeRequests()
-                .mvcMatchers("/v1/actuator").permitAll()
-                .mvcMatchers("/v1/otp-verifications").permitAll()
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .mvcMatchers("/actuator/**").permitAll()
+                .mvcMatchers("/v1/**").authenticated()
                 .and().cors()
                 .and().oauth2ResourceServer().jwt();
     }

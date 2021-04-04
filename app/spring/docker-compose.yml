@@ -45,6 +45,11 @@ services:
   auth-server:
     image: michaelruocco/fake-jwt-auth-server:latest
     container_name: auth-server
+    ports:
+      - 8099:80
+    environment:
+      - ISSUER=https://michaelruocco.eu.auth0.com/
+      - AUDIENCE=https://idv-demo-api
 
   idv-one-time-passcode-app:
     image: michaelruocco/idv-one-time-passcode-spring-app:${APP_VERSION}
@@ -63,6 +68,7 @@ services:
       - MONGO_CONNECTION_STRING=mongodb://idv:welcome01@otp-mongo:27017/idv-local
       - REQUEST_LOGGING_ENABLED=true
       - RESPONSE_LOGGING_ENABLED=true
+      - JWKS_OVERRIDE_URI=http://auth-server:80/.well-known/jwks.json
     depends_on:
       - aws-services
       - mongo
