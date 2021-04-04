@@ -81,12 +81,15 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
+									""
 								],
 								"type": "text/javascript"
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
 					"request": {
 						"method": "POST",
 						"header": [
@@ -147,7 +150,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -171,11 +174,6 @@
 								"value": "{{channelId}}"
 							},
 							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
 								"key": "Authorization",
 								"value": "{{token}}-invalid",
 								"type": "text"
@@ -186,14 +184,14 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{otp-host}}/v1/otp-verifications/{{otpVerificationId}}",
+							"raw": "{{otp-host}}/v1/otp-verifications/passcodes",
 							"host": [
 								"{{otp-host}}"
 							],
 							"path": [
 								"v1",
 								"otp-verifications",
-								"{{otpVerificationId}}"
+								"passcodes"
 							]
 						}
 					},
