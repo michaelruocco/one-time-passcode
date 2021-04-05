@@ -14,7 +14,10 @@ ENV SERVER_PORT=80 \
     RESPONSE_FILTERING_ENABLED=false \
     REQUEST_LOGGING_ENABLED=false \
     RESPONSE_LOGGING_ENABLED=false \
-    SERVER_SERVLET_CONTEXT_PATH=/
+    SERVER_SERVLET_CONTEXT_PATH=/ \
+    JWT_AUDIENCE=https://idv-demo-api \
+    JWT_ISSUER=https://michaelruocco.eu.auth0.com/ \
+    JWK_SET_URI=https://michaelruocco.eu.auth0.com/.well-known/jwks.json
 
 COPY build/libs/idv-one-time-passcode-spring-app-${VERSION}.jar /opt/app.jar
 
@@ -34,5 +37,7 @@ CMD java \
   -Drequest.logging.enabled=${REQUEST_LOGGING_ENABLED} \
   -Dresponse.logging.enabled=${RESPONSE_LOGGING_ENABLED} \
   -Dserver.servlet.contextPath=${SERVER_SERVLET_CONTEXT_PATH} \
-  -Dspring.security.oauth2.resourceserver.jwt.jwks-override-uri=${JWKS_OVERRIDE_URI} \
+  -Dspring.security.oauth2.resourceserver.jwt.audience=${JWT_AUDIENCE} \
+  -Dspring.security.oauth2.resourceserver.jwt.issuer=${JWT_ISSUER} \
+  -Dspring.security.oauth2.resourceserver.jwk-set-uri=${JWK_SET_URI} \
   -jar /opt/app.jar

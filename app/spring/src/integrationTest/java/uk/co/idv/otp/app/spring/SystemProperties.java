@@ -16,7 +16,7 @@ class SystemProperties {
     private static final String AWS_SES_ENDPOINT_URI = "aws.ses.endpoint.uri";
 
     private static final String MONGO_URI = "spring.data.mongodb.uri";
-    private static final String JWK_SET_OVERRIDE_URI = "spring.security.oauth2.resourceserver.jwt.jwks-override-uri";
+    private static final String JWK_SET_OVERRIDE_URI = "spring.security.oauth2.resourceserver.jwk-set-uri";
 
     private static final String AWS_ACCESS_KEY_ID = "aws.accessKeyId";
     private static final String AWS_SECRET_KEY = "aws.secretKey";

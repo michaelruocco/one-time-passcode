@@ -6,18 +6,16 @@ spring:
   security:
     oauth2:
       resourceserver:
+        jwk-set-uri: https://michaelruocco.eu.auth0.com/.well-known/jwks.json
         jwt:
-          issuer-uri: https://michaelruocco.eu.auth0.com/
+          audience: https://idv-demo-api
+          issuer: https://michaelruocco.eu.auth0.com/
 
 info:
   app:
     name: ${spring.application.name}
-    
+
 management:
   endpoint:
     health:
       show-details: always
-
-auth0:
-  audience: https://idv-demo-api
-
