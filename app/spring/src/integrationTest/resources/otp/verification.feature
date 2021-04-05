@@ -2,7 +2,22 @@ Feature: Verification Requests
 
   Background:
     * url baseUrl + "/v1/otp-verifications"
-    Given header Authorization = "Bearer " + authToken
+    Given header authorization = "Bearer " + authToken
+
+  Scenario: Should return 401 unauthorized response if bearer token is not valid
+    * def channelId = "test-channel"
+    Given header correlation-id = "dfc73919-ee54-4444-809e-7aa3793f6b1d"
+    And header channel-id = channelId
+    And header authorization = "Bearer an.invalid.token"
+    And request
+      """
+      {
+        "contextId": "2a3559bd-0071-4bbf-8901-42b9f17dd93f",
+        "deliveryMethodId": "c9959188-969e-42f3-8178-42ef824c81d3"
+      }
+      """
+    When method POST
+    Then status 401
 
   Scenario: Create verification and send otp
     * def channelId = "test-channel"

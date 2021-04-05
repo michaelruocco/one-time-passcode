@@ -40,14 +40,14 @@ public class DefaultSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    @Profile("insecure")
+    @Profile("stubbed")
     public JwtDecoder stubbedJwtDecoder(Clock clock) {
         log.warn("using fake jwt decoder, this should only be enabled for local demo or testing purposes");
         return new FakeJwtDecoder(clock);
     }
 
     @Bean
-    @Profile("!insecure")
+    @Profile("!stubbed")
     public JwtDecoder jwtDecoder() {
         log.warn("using jwt decoder with jwk set uri {}", jwkSetUri);
         NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();

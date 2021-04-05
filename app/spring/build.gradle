@@ -79,7 +79,7 @@ springBoot {
 
 bootRun {
     systemProperties = System.getProperties()
-    systemProperty "spring.profiles.active", System.properties.getOrDefault("spring.profiles.active", "stubbed,simple-logging,insecure")
+    systemProperty "spring.profiles.active", System.properties.getOrDefault("spring.profiles.active", "stubbed,simple-logging")
     systemProperty "server.port", System.properties.getOrDefault("server.port", "8082")
     systemProperty "request.logging.enabled", System.properties.getOrDefault("request.logging.enabled", "true")
     systemProperty "response.logging.enabled", System.properties.getOrDefault("response.logging.enabled", "true")
