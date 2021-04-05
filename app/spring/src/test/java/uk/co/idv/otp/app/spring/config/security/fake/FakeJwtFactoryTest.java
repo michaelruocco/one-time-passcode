@@ -24,7 +24,7 @@ class FakeJwtFactoryTest {
 
         Jwt jwt = factory.toJwt(token);
 
-        assertThat(jwt.getClaims()).hasSize(1);
+        assertThat(jwt.getClaims()).hasSize(3);
     }
 
     @Test

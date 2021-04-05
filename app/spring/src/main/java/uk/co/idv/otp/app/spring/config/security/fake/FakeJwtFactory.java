@@ -11,14 +11,19 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class FakeJwtFactory {
 
+    private static final Map<String, Object> HEADERS = Map.of("fake-decoder-header", "fake-decoder-header-value");
+    private static final Map<String, Object> CLAIMS = Map.of("fake-decoder-claim", "fake-decoder-claim-value");
+
     private final Clock clock;
 
     public Jwt toJwt(String token) {
         Instant now = clock.instant();
-        Instant expiresAt = now.plus(8, ChronoUnit.HOURS);
-        Map<String, Object> headers = Map.of("fake-decoder-header", "fake-decoder-header-value");
-        Map<String, Object> claims = Map.of("fake-decoder-claim", "fake-decoder-claim-value");
-        return new Jwt(token, now, expiresAt, headers, claims);
+        return Jwt.withTokenValue(token)
+                .issuedAt(now)
+                .expiresAt(now.plus(8, ChronoUnit.HOURS))
+                .headers(h -> h.putAll(HEADERS))
+                .claims(c -> c.putAll(CLAIMS))
+                .build();
     }
 
 }
