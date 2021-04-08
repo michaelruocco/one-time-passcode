@@ -69,6 +69,7 @@ services:
       - REQUEST_LOGGING_ENABLED=true
       - RESPONSE_LOGGING_ENABLED=true
       - JWK_SET_URI=http://auth-server:80/.well-known/jwks.json
+      - JWT_SUBJECTS=test-client-id
     depends_on:
       - aws-services
       - mongo

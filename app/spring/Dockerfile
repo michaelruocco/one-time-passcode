@@ -17,6 +17,7 @@ ENV SERVER_PORT=80 \
     SERVER_SERVLET_CONTEXT_PATH=/ \
     JWT_AUDIENCE=https://idv-demo-api \
     JWT_ISSUER=https://michaelruocco.eu.auth0.com/ \
+    JWT_SUBJECTS=dummy-subject \
     JWK_SET_URI=https://michaelruocco.eu.auth0.com/.well-known/jwks.json
 
 COPY build/libs/idv-one-time-passcode-spring-app-${VERSION}.jar /opt/app.jar
@@ -39,5 +40,6 @@ CMD java \
   -Dserver.servlet.contextPath=${SERVER_SERVLET_CONTEXT_PATH} \
   -Dspring.security.oauth2.resourceserver.jwt.audience=${JWT_AUDIENCE} \
   -Dspring.security.oauth2.resourceserver.jwt.issuer=${JWT_ISSUER} \
+  -Dspring.security.oauth2.resourceserver.jwt.subjects=${JWT_SUBJECTS} \
   -Dspring.security.oauth2.resourceserver.jwk-set-uri=${JWK_SET_URI} \
   -jar /opt/app.jar

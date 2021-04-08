@@ -16,7 +16,8 @@ class SystemProperties {
     private static final String AWS_SES_ENDPOINT_URI = "aws.ses.endpoint.uri";
 
     private static final String MONGO_URI = "spring.data.mongodb.uri";
-    private static final String JWK_SET_OVERRIDE_URI = "spring.security.oauth2.resourceserver.jwk-set-uri";
+    private static final String JWK_SET_URI = "spring.security.oauth2.resourceserver.jwk-set-uri";
+    private static final String JWT_SUBJECTS = "spring.security.oauth2.resourceserver.jwt.subjects";
 
     private static final String AWS_ACCESS_KEY_ID = "aws.accessKeyId";
     private static final String AWS_SECRET_KEY = "aws.secretKey";
@@ -42,8 +43,8 @@ class SystemProperties {
         System.setProperty(MONGO_URI, mongoUri);
     }
 
-    public static void setJwkSetOverrideUri(String jwkSetOverrideUri) {
-        System.setProperty(JWK_SET_OVERRIDE_URI, jwkSetOverrideUri);
+    public static void setJwkSetUri(String jwkSetUri) {
+        System.setProperty(JWK_SET_URI, jwkSetUri);
     }
 
     public static void setDefaultProperties() {
@@ -54,6 +55,7 @@ class SystemProperties {
         System.setProperty(RESPONSE_LOGGING_ENABLED, "true");
         System.setProperty(RESPONSE_FILTERING_ENABLED, "true");
         System.setProperty(SPRING_PROFILES_ACTIVE, "simple-logging,test");
+        System.setProperty(JWT_SUBJECTS, "test-client-id");
     }
 
     public static void clear() {
@@ -62,7 +64,8 @@ class SystemProperties {
         System.clearProperty(AWS_SNS_ENDPOINT_URI);
         System.clearProperty(AWS_SES_ENDPOINT_URI);
         System.clearProperty(MONGO_URI);
-        System.clearProperty(JWK_SET_OVERRIDE_URI);
+        System.clearProperty(JWK_SET_URI);
+        System.clearProperty(JWT_SUBJECTS);
         System.clearProperty(ENVIRONMENT);
         System.clearProperty(AWS_ACCESS_KEY_ID);
         System.clearProperty(AWS_SECRET_KEY);

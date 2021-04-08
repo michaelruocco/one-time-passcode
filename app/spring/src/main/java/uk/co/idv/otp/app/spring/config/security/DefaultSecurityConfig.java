@@ -17,6 +17,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import uk.co.idv.otp.app.spring.config.security.fake.FakeJwtDecoder;
 
 import java.time.Clock;
+import java.util.Collection;
 
 @Configuration
 @Slf4j
@@ -27,6 +28,9 @@ public class DefaultSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer}")
     private String issuer;
+
+    @Value("${spring.security.oauth2.resourceserver.jwt.subjects}")
+    private Collection<String> subjects;
 
     @Value("${spring.security.oauth2.resourceserver.jwk-set-uri}")
     private String jwkSetUri;
@@ -56,11 +60,13 @@ public class DefaultSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private OAuth2TokenValidator<Jwt> tokenValidator() {
+        log.info("setting up token validator for subjects {}", subjects);
+        OAuth2TokenValidator<Jwt> withSubjects = new SubjectValidator(subjects);
         log.info("setting up token validator for audience {}", audience);
         OAuth2TokenValidator<Jwt> withAudience = new AudienceValidator(audience);
         log.info("setting up token validator for issuer {}", issuer);
         OAuth2TokenValidator<Jwt> withIssuer = JwtValidators.createDefaultWithIssuer(issuer);
-        return new DelegatingOAuth2TokenValidator<>(withIssuer, withAudience);
+        return new DelegatingOAuth2TokenValidator<>(withIssuer, withAudience, withSubjects);
     }
 
 }

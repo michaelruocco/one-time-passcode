@@ -3,7 +3,7 @@ package uk.co.idv.otp.adapter.verification.updater;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.MDC;
-import uk.co.idv.context.adapter.verification.client.header.ContextRequestHeaders;
+import uk.co.idv.context.adapter.verification.client.header.IdvRequestHeaders;
 import uk.co.idv.context.adapter.verification.client.request.ClientCompleteVerificationRequest;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
 import uk.co.idv.otp.entities.OtpVerification;
@@ -62,7 +62,7 @@ class ClientCompleteVerificationRequestFactoryTest {
 
         ClientCompleteVerificationRequest request = factory.build(verification);
 
-        ContextRequestHeaders headers = request.getHeaders();
+        IdvRequestHeaders headers = request.getHeaders();
         assertThat(headers.getCorrelationId()).isEqualTo(CORRELATION_ID);
     }
 
@@ -72,7 +72,7 @@ class ClientCompleteVerificationRequestFactoryTest {
 
         ClientCompleteVerificationRequest request = factory.build(verification);
 
-        ContextRequestHeaders headers = request.getHeaders();
+        IdvRequestHeaders headers = request.getHeaders();
         assertThat(headers.getChannelId()).isEqualTo(CHANNEL_ID);
     }
 

@@ -82,10 +82,10 @@ class KarateIntegrationTest {
 
     private static void setSystemProperties(int serverPort) {
         SystemProperties.setServerPort(serverPort);
-        SystemProperties.setAuthToken(AUTH_SERVER.loadAuthToken("karate-test-client-id"));
+        SystemProperties.setAuthToken(AUTH_SERVER.loadAuthToken("test-client-id"));
         SystemProperties.setAwsServiceEndpointUri(AWS_SERVICES.getEndpointUri());
         SystemProperties.setMongoUri(MONGO.getConnectionString());
-        SystemProperties.setJwkSetOverrideUri(AUTH_SERVER.getJwkSetEndpointUri());
+        SystemProperties.setJwkSetUri(AUTH_SERVER.getJwkSetEndpointUri());
         SystemProperties.setDefaultProperties();
     }
 
