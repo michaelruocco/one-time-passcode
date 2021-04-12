@@ -59,7 +59,8 @@ dependencies {
     runtimeOnly "ch.qos.logback.contrib:logback-json-classic:${logbackJsonVersion}"
     runtimeOnly "ch.qos.logback.contrib:logback-jackson:${logbackJsonVersion}"
     runtimeOnly "net.logstash.logback:logstash-logback-encoder:6.6"
-
+    runtimeOnly "org.awaitility:awaitility"
+    
     testImplementation testFixtures(project(":entities"))
 
     integrationTestImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
