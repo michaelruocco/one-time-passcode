@@ -1,25 +1,26 @@
 package uk.co.idv.otp.adapter.verification.loader;
 
+import uk.co.idv.context.adapter.verification.client.request.ClientCreateVerificationRequest;
+import uk.co.idv.context.adapter.verification.client.stub.create.CreateVerificationScenario;
 import uk.co.idv.method.entities.method.MethodsMother;
 import uk.co.idv.method.entities.verification.Verification;
 import uk.co.idv.method.entities.verification.VerificationMother;
-import uk.co.idv.otp.adapter.verification.Scenario;
 
 import java.util.UUID;
 
-public class OtpMethodNotFoundScenario implements Scenario {
+public class OtpMethodNotFoundScenario implements CreateVerificationScenario {
 
-    public static final String ID = "9a54c8f7-7a2f-4b68-91df-35689a7c5848";
+    public static final UUID ID = UUID.fromString("9a54c8f7-7a2f-4b68-91df-35689a7c5848");
 
     @Override
-    public boolean shouldExecute(UUID contextId) {
-        return ID.equals(contextId.toString());
+    public boolean shouldExecute(ClientCreateVerificationRequest request) {
+        return ID.equals(request.getContextId());
     }
 
     @Override
-    public Verification apply(UUID contextId) {
+    public Verification apply(ClientCreateVerificationRequest request) {
         return VerificationMother.builder()
-                .contextId(contextId)
+                .contextId(request.getContextId())
                 .methods(MethodsMother.empty())
                 .build();
     }

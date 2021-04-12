@@ -18,6 +18,7 @@ plugins {
     id "com.vanniktech.dependency.graph.generator" version "0.5.0"
     id "nebula.lint" version "16.22.0"
     id "io.codearte.nexus-staging" version "0.30.0"
+    id "com.adarshr.test-logger" version "3.0.0"
 }
 
 scmVersion {
@@ -58,13 +59,14 @@ allprojects {
 subprojects {
     apply plugin: "java-library"
     apply plugin: "com.diffplug.spotless"
+    apply plugin: 'com.adarshr.test-logger'
 
     ext {
         testSetsPluginVersion = "3.0.1"
 
         lombokVersion = "1.18.20"
         slf4jVersion = "1.7.30"
-        contextVersion = "0.1.13"
+        contextVersion = "0.1.14"
         logbackVersion = "1.2.3"
         mongoVersion = "3.12.8"
         awsSdkVersion = "1.11.995"
@@ -117,14 +119,16 @@ subprojects {
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
     }
 
+    javadoc.options.addStringOption('Xdoclint:none', '-quiet')
+
     tasks.withType(Test) {
         useJUnitPlatform()
         systemProperty "org.slf4j.simpleLogger.defaultLogLevel", "debug"
-        testLogging {
-            events "failed"
-            exceptionFormat "full"
-            showStandardStreams true
-        }
+    }
+
+    testlogger {
+        theme 'mocha'
+        showStandardStreams true
     }
 
     spotless {

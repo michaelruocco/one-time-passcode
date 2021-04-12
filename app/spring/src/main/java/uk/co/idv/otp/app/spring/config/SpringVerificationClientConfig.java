@@ -9,7 +9,7 @@ import uk.co.idv.context.adapter.verification.client.RestVerificationClient;
 import uk.co.idv.context.adapter.verification.client.RestVerificationClientConfig;
 import uk.co.idv.context.adapter.verification.client.VerificationClient;
 import uk.co.idv.context.adapter.verification.client.VerificationClientConfig;
-import uk.co.idv.otp.adapter.verification.StubVerificationClient;
+import uk.co.idv.otp.adapter.verification.loader.OtpStubVerificationClientFactory;
 import uk.co.idv.otp.app.plain.config.AppAdapter;
 
 @Slf4j
@@ -25,7 +25,9 @@ public class SpringVerificationClientConfig {
     @Profile("test | stubbed | stubbed-context")
     @Bean
     public VerificationClient stubVerificationClient(AppAdapter appAdapter) {
-        return new StubVerificationClient(appAdapter.getClock());
+        return OtpStubVerificationClientFactory.builder()
+                .clock(appAdapter.getClock())
+                .buildClient();
     }
 
     private static VerificationClientConfig toContextClientConfig(ObjectMapper mapper) {

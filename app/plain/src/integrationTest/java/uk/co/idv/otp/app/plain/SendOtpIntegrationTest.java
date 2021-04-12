@@ -10,8 +10,6 @@ import uk.co.idv.method.adapter.json.error.contextnotfound.ContextNotFoundError;
 import uk.co.idv.method.entities.otp.OtpConfigMother;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethodMother;
 import uk.co.idv.method.entities.otp.delivery.query.DeliveryMethodNotFoundException;
-import uk.co.idv.otp.adapter.verification.ContextExpiredScenario;
-import uk.co.idv.otp.adapter.verification.loader.ContextNotFoundScenario;
 import uk.co.idv.otp.adapter.verification.loader.DeliveryMethodNotEligibleScenario;
 import uk.co.idv.otp.adapter.verification.loader.DeliveryMethodNotFoundScenario;
 import uk.co.idv.otp.adapter.verification.loader.OtpMethodNotFoundScenario;
@@ -30,6 +28,7 @@ import uk.co.idv.otp.usecases.send.DeliveryMethodNotEligibleException;
 import uk.co.idv.otp.usecases.send.OtpNotNextEligibleMethodException;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -53,9 +52,9 @@ class SendOtpIntegrationTest {
 
     @Test
     void shouldThrowExceptionIfContextIsNotFound() {
-        String id = ContextNotFoundScenario.ID;
+        String notFoundId = "9ed739ec-a252-4a3f-840c-4e2bdccf56e6";
         SendOtpRequest request = SendOtpRequest.builder()
-                .contextId(UUID.fromString(id))
+                .contextId(UUID.fromString(notFoundId))
                 .deliveryMethodId(UUID.randomUUID())
                 .build();
 
@@ -66,14 +65,15 @@ class SendOtpIntegrationTest {
 
         assertThat(error.getError())
                 .usingRecursiveComparison()
-                .isEqualTo(new ContextNotFoundError(id));
+                .isEqualTo(new ContextNotFoundError(notFoundId));
     }
 
     @Test
     void shouldThrowExceptionIfContextIsExpired() {
-        String id = ContextExpiredScenario.ID;
+        String expiredId = "2b1f8ba4-00e7-4ad9-819f-5249af834f2e";
+        Instant expectedExpiry = Instant.parse("2021-01-04T23:24:07.385Z");
         SendOtpRequest request = SendOtpRequest.builder()
-                .contextId(UUID.fromString(id))
+                .contextId(UUID.fromString(expiredId))
                 .deliveryMethodId(UUID.randomUUID())
                 .build();
 
@@ -84,12 +84,12 @@ class SendOtpIntegrationTest {
 
         assertThat(error.getError())
                 .usingRecursiveComparison()
-                .isEqualTo(new ContextExpiredError(UUID.fromString(id), ContextExpiredScenario.EXPIRY));
+                .isEqualTo(new ContextExpiredError(UUID.fromString(expiredId), expectedExpiry));
     }
 
     @Test
     void shouldThrowExceptionIfOtpNotNextEligibleMethod() {
-        String id = OtpMethodNotFoundScenario.ID;
+        String id = OtpMethodNotFoundScenario.ID.toString();
         SendOtpRequest request = SendOtpRequest.builder()
                 .contextId(UUID.fromString(id))
                 .deliveryMethodId(UUID.randomUUID())
@@ -104,7 +104,7 @@ class SendOtpIntegrationTest {
 
     @Test
     void shouldThrowExceptionIfDeliveryMethodNotFound() {
-        String id = DeliveryMethodNotFoundScenario.ID;
+        String id = DeliveryMethodNotFoundScenario.ID.toString();
         UUID deliveryMethodId = UUID.randomUUID();
         SendOtpRequest request = SendOtpRequest.builder()
                 .contextId(UUID.fromString(id))
@@ -120,7 +120,7 @@ class SendOtpIntegrationTest {
 
     @Test
     void shouldThrowExceptionIfDeliveryMethodNotEligible() {
-        String id = DeliveryMethodNotEligibleScenario.ID;
+        String id = DeliveryMethodNotEligibleScenario.ID.toString();
         UUID deliveryMethodId = UUID.fromString("c9959188-969e-42f3-8178-42ef824c81d3");
         SendOtpRequest request = SendOtpRequest.builder()
                 .contextId(UUID.fromString(id))

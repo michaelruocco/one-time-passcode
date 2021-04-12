@@ -22,7 +22,7 @@ public class FilterConfig {
     @Bean
     public FilterRegistrationBean<HeaderMdcPopulatorFilter> headerMdcPopulator() {
         FilterRegistrationBean<HeaderMdcPopulatorFilter> bean = new FilterRegistrationBean<>();
-        bean.setFilter(new HeaderMdcPopulatorFilter("correlation-id", "channel-id"));
+        bean.setFilter(new HeaderMdcPopulatorFilter("correlation-id", "channel-id", "authorization"));
         bean.setOrder(1);
         bean.addUrlPatterns(getDefaultUrlPatterns());
         bean.setName("headerMdcPopulator");
