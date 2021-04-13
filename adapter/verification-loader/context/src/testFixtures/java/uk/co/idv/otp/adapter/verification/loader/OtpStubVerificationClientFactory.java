@@ -6,6 +6,8 @@ import uk.co.idv.context.adapter.verification.client.VerificationClient;
 import uk.co.idv.context.adapter.verification.client.header.DefaultIdvHeaderValidator;
 import uk.co.idv.context.adapter.verification.client.header.IdvHeaderValidator;
 import uk.co.idv.context.adapter.verification.client.stub.StubVerificationClient;
+import uk.co.idv.context.adapter.verification.client.stub.complete.CompleteVerificationScenario;
+import uk.co.idv.context.adapter.verification.client.stub.complete.CompleteVerificationSuccessScenario;
 import uk.co.idv.context.adapter.verification.client.stub.create.CreateVerificationExpiredScenario;
 import uk.co.idv.context.adapter.verification.client.stub.create.CreateVerificationNotFoundScenario;
 import uk.co.idv.context.adapter.verification.client.stub.create.CreateVerificationNotNextMethodScenario;
@@ -33,6 +35,7 @@ public class OtpStubVerificationClientFactory {
                 .headerValidator(headerValidator)
                 .defaultCreateScenario(defaultCreateScenario())
                 .createScenarios(buildSpecificCreateScenarios())
+                .defaultCompleteScenario(defaultCompleteScenario())
                 .build();
     }
 
@@ -54,6 +57,10 @@ public class OtpStubVerificationClientFactory {
                 new DeliveryMethodNotFoundScenario(),
                 new DeliveryMethodNotEligibleScenario()
         );
+    }
+
+    private static CompleteVerificationScenario defaultCompleteScenario() {
+        return CompleteVerificationSuccessScenario.builder().build();
     }
 
     public static class OtpStubVerificationClientFactoryBuilder {
