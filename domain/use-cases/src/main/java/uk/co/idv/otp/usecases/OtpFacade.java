@@ -11,6 +11,7 @@ import uk.co.idv.otp.usecases.send.SendOtp;
 import uk.co.idv.otp.usecases.verify.VerifyOtp;
 
 import java.util.UUID;
+import java.util.function.UnaryOperator;
 
 @Builder
 public class OtpFacade {
@@ -19,21 +20,29 @@ public class OtpFacade {
     private final GetOtp getOtp;
     private final ResendOtp resendOtp;
     private final VerifyOtp verifyOtp;
+    private final UnaryOperator<OtpVerification> protector;
 
     public OtpVerification send(SendOtpRequest request) {
-        return sendOtp.send(request);
+        return protectIfRequired(sendOtp.send(request));
     }
 
     public OtpVerification getOtp(UUID id) {
-        return getOtp.get(id);
+        return protectIfRequired(getOtp.get(id));
     }
 
     public OtpVerification resend(ResendOtpRequest request) {
-        return resendOtp.resend(request);
+        return protectIfRequired(resendOtp.resend(request));
     }
 
     public OtpVerification verify(VerifyOtpRequest request) {
-        return verifyOtp.verify(request);
+        return protectIfRequired(verifyOtp.verify(request));
+    }
+
+    private OtpVerification protectIfRequired(OtpVerification verification) {
+        if (verification.isProtectSensitiveData()) {
+            return protector.apply(verification);
+        }
+        return verification;
     }
 
 }

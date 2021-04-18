@@ -1,6 +1,7 @@
 dependencies {
     implementation project(":use-cases")
     implementation project(":passcode-generator")
+    implementation project(":data-protector")
     implementation project(":context-verification-loader")
     implementation project(":in-memory-repository")
     implementation project(":mongo-repository")

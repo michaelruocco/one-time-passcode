@@ -13,6 +13,7 @@ import uk.co.idv.context.adapter.verification.client.stub.create.CreateVerificat
 import uk.co.idv.context.adapter.verification.client.stub.create.CreateVerificationNotNextMethodScenario;
 import uk.co.idv.context.adapter.verification.client.stub.create.CreateVerificationScenario;
 import uk.co.idv.context.adapter.verification.client.stub.create.CreateVerificationSuccessScenario;
+import uk.co.idv.context.adapter.verification.client.stub.create.VerificationFactory;
 import uk.co.idv.method.entities.method.MethodsMother;
 import uk.co.idv.method.entities.otp.Otp;
 import uk.co.idv.method.entities.otp.OtpMother;
@@ -40,11 +41,18 @@ public class OtpStubVerificationClientFactory {
     }
 
     private CreateVerificationScenario defaultCreateScenario() {
-        Otp otp = OtpMother.withDeliveryMethod(DeliveryMethodMother.eligible());
         return CreateVerificationSuccessScenario.builder()
+                .verificationFactory(stubVerificationFactory())
+                .build();
+    }
+
+    private VerificationFactory stubVerificationFactory() {
+        Otp otp = OtpMother.withDeliveryMethod(DeliveryMethodMother.eligible());
+        return VerificationFactory.builder()
                 .clock(clock)
                 .methods(MethodsMother.with(otp))
                 .activity(OnlinePurchaseMother.build())
+                .protectSensitiveData(true)
                 .build();
     }
 

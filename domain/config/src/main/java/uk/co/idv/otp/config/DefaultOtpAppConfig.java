@@ -1,6 +1,8 @@
 package uk.co.idv.otp.config;
 
 import lombok.Builder;
+import uk.co.idv.otp.adapter.protect.OtpVerificationProtector;
+import uk.co.idv.otp.entities.OtpVerification;
 import uk.co.idv.otp.usecases.OtpFacade;
 import uk.co.idv.otp.usecases.OtpVerificationRepository;
 import uk.co.idv.otp.usecases.passcode.PasscodeGenerator;
@@ -15,6 +17,7 @@ import uk.co.idv.otp.usecases.verify.OtpVerificationUpdater;
 import uk.co.idv.otp.usecases.verify.VerifyOtp;
 
 import java.time.Clock;
+import java.util.function.UnaryOperator;
 
 @Builder
 public class DefaultOtpAppConfig implements OtpAppConfig {
@@ -26,6 +29,9 @@ public class DefaultOtpAppConfig implements OtpAppConfig {
     private final OtpVerificationRepository repository;
     private final PasscodeGenerator passcodeGenerator;
 
+    @Builder.Default
+    private final UnaryOperator<OtpVerification> protector = OtpVerificationProtector.builder().build();
+
     @Override
     public OtpFacade facade() {
         return OtpFacade.builder()
@@ -33,6 +39,7 @@ public class DefaultOtpAppConfig implements OtpAppConfig {
                 .getOtp(getOtp())
                 .resendOtp(resendOtp())
                 .verifyOtp(verifyOtp())
+                .protector(protector)
                 .build();
     }
 

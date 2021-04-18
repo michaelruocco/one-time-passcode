@@ -11,12 +11,12 @@ buildscript {
 plugins {
     id "idea"
     id "java-library"
-    id "com.diffplug.spotless" version "5.11.1"
+    id "com.diffplug.spotless" version "5.12.1"
     id "com.github.ben-manes.versions" version "0.38.0"
-    id "pl.allegro.tech.build.axion-release" version "1.13.1"
+    id "pl.allegro.tech.build.axion-release" version "1.13.2"
     id "org.sonarqube" version "3.1.1"
     id "com.vanniktech.dependency.graph.generator" version "0.5.0"
-    id "nebula.lint" version "16.22.0"
+    id "nebula.lint" version "16.23.0"
     id "io.codearte.nexus-staging" version "0.30.0"
     id "com.adarshr.test-logger" version "3.0.0"
 }
@@ -66,10 +66,10 @@ subprojects {
 
         lombokVersion = "1.18.20"
         slf4jVersion = "1.7.30"
-        contextVersion = "0.1.15"
+        contextVersion = "0.1.16"
         logbackVersion = "1.2.3"
         mongoVersion = "3.12.8"
-        awsSdkVersion = "1.11.995"
+        awsSdkVersion = "1.11.1000"
         jsonAdapterVersion = "1.0.0"
         randomValueSuppliersVersion = "0.1.0"
 

@@ -33,6 +33,9 @@ project(':context-verification-loader').projectDir = file('adapter/verification-
 include ':json'
 project(':json').projectDir = file('adapter/json')
 
+include ':data-protector'
+project(':data-protector').projectDir = file('adapter/data-protector')
+
 include ':config'
 project(':config').projectDir = file('domain/config')
 

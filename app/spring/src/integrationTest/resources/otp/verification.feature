@@ -61,7 +61,7 @@ Feature: Verification Requests
         "deliveryMethod": {
           "id":"c9959188-969e-42f3-8178-42ef824c81d3",
           "type":"sms",
-          "value":"+4407808247743",
+          "value":"***********743",
           "lastUpdated": "2020-09-29T06:49:59.960Z",
           "eligibility": {
             "eligible": true
@@ -87,7 +87,7 @@ Feature: Verification Requests
                 },
                 "id": "#uuid",
                 "type": "sms",
-                "value": "+4407808247743"
+                "value": "***********743"
               },
               "messageId": "#uuid",
               "message": {
