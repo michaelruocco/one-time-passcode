@@ -3,11 +3,19 @@ spring:
     name: idv-one-time-passcode
   main:
     banner-mode: off
+  security:
+    oauth2:
+      resourceserver:
+        jwk-set-uri: https://michaelruocco.eu.auth0.com/.well-known/jwks.json
+        jwt:
+          audience: https://idv-demo-api
+          issuer: https://michaelruocco.eu.auth0.com/
+          subjects: test-client-id
 
 info:
   app:
     name: ${spring.application.name}
-    
+
 management:
   endpoint:
     health:

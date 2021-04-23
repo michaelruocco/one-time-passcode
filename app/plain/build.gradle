@@ -29,4 +29,5 @@ dependencies {
     integrationTestImplementation "com.github.michaelruocco:testing-clocks:${testingClocksVersion}"
     integrationTestImplementation "com.github.michaelruocco.idv:verification-client:${contextVersion}:test-fixtures"
     integrationTestImplementation "com.github.michaelruocco:random-value-suppliers:${randomValueSuppliersVersion}"
+    integrationTestImplementation "org.awaitility:awaitility:4.0.3"
 }

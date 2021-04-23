@@ -3,6 +3,7 @@ package uk.co.idv.otp.app.spring;
 import com.intuit.karate.Results;
 import com.intuit.karate.Runner;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
@@ -17,8 +18,6 @@ import static uk.co.idv.otp.app.spring.AppRunner.waitForAppStartupToComplete;
 @Slf4j
 class KarateIntegrationTest {
 
-    private static final String ENVIRONMENT = "idv-local";
-
     private static final int THREAD_COUNT = 4;
 
     @Container
@@ -27,11 +26,20 @@ class KarateIntegrationTest {
     @Container
     public static final LocalAwsServices AWS_SERVICES = new LocalAwsServices();
 
+    @Container
+    public static final LocalAuthServer AUTH_SERVER = new LocalAuthServer();
+
     @BeforeAll
     static void setUp() {
         setUpAwsServices();
         setUpMongo();
+        setUpAuthServer();
         setUpApp();
+    }
+
+    @AfterAll
+    static void tearDown() {
+        SystemProperties.clear();
     }
 
     @Test
@@ -61,23 +69,24 @@ class KarateIntegrationTest {
         MONGO.waitForStartupToComplete();
     }
 
+    private static void setUpAuthServer() {
+        AUTH_SERVER.waitForStartupToComplete();
+    }
+
     private static void setUpApp() {
         int port = findAvailableTcpPort();
-        setApplicationProperties(port);
+        setSystemProperties(port);
         startApp();
         waitForAppStartupToComplete(port);
     }
 
-    private static void setApplicationProperties(int serverPort) {
-        System.setProperty("environment", ENVIRONMENT);
-        System.setProperty("server.port", Integer.toString(serverPort));
-        System.setProperty("aws.accessKeyId", "abc");
-        System.setProperty("aws.secretKey", "123");
-        System.setProperty("aws.sns.endpoint.uri", AWS_SERVICES.getEndpointUri());
-        System.setProperty("aws.ses.endpoint.uri", AWS_SERVICES.getEndpointUri());
-        System.setProperty("spring.data.mongodb.uri", MONGO.getConnectionString());
-        System.setProperty("response.filtering.enabled", "true");
-        System.setProperty("spring.profiles.active", "simple-logging,test");
+    private static void setSystemProperties(int serverPort) {
+        SystemProperties.setServerPort(serverPort);
+        SystemProperties.setAuthToken(AUTH_SERVER.loadAuthToken("test-client-id"));
+        SystemProperties.setAwsServiceEndpointUri(AWS_SERVICES.getEndpointUri());
+        SystemProperties.setMongoUri(MONGO.getConnectionString());
+        SystemProperties.setJwkSetUri(AUTH_SERVER.getJwkSetEndpointUri());
+        SystemProperties.setDefaultProperties();
     }
 
 }

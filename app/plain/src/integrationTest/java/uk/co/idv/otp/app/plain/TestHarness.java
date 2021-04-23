@@ -1,9 +1,11 @@
 package uk.co.idv.otp.app.plain;
 
 import org.slf4j.MDC;
+import uk.co.idv.context.adapter.verification.client.VerificationClient;
+import uk.co.idv.context.adapter.verification.client.header.NoopIdvHeaderValidator;
 import uk.co.idv.otp.adapter.delivery.InMemoryDeliverOtp;
 import uk.co.idv.otp.adapter.passcode.generator.IncrementingPasscodeGenerator;
-import uk.co.idv.otp.adapter.verification.StubVerificationClient;
+import uk.co.idv.otp.adapter.verification.loader.OtpStubVerificationClientFactory;
 import uk.co.idv.otp.app.plain.config.AppAdapter;
 import uk.co.idv.otp.app.plain.config.DefaultAppAdapter;
 import uk.co.idv.otp.config.OtpAppConfig;
@@ -34,7 +36,11 @@ public class TestHarness {
             .uuidGenerator(appAdapter.getUuidGenerator())
             .build();
 
-    private final VerificationLoaderConfig loaderConfig = new ContextVerificationLoaderConfig(new StubVerificationClient(appAdapter.getClock()));
+    private final VerificationClient client = OtpStubVerificationClientFactory.builder()
+            .clock(appAdapter.getClock())
+            .headerValidator(new NoopIdvHeaderValidator())
+            .buildClient();
+    private final VerificationLoaderConfig loaderConfig = new ContextVerificationLoaderConfig(client);
 
     private final RepositoryConfig repositoryConfig = new InMemoryRepositoryConfig();
 
