@@ -1,0 +1,69 @@
+{
+  "id": "624c63c6-a967-4b45-ab19-0237e1617122",
+  "contextId": "2948aadc-7f63-4b00-875b-77a4e6608e5c",
+  "created": "2020-09-14T20:03:01.999Z",
+  "expiry": "2020-09-14T20:08:01.999Z",
+  "activity": {
+    "name": "online-purchase",
+    "timestamp": "2020-06-06T12:36:15.179Z",
+    "merchantName": "Amazon",
+    "reference": "ABC123",
+    "cost": {
+      "amount": 10.99,
+      "currency": "GBP"
+    },
+    "card": {
+      "number": "4929111111111111",
+      "expiry": "2025-12"
+    }
+  },
+  "deliveryMethod": {
+    "id": "c9959188-969e-42f3-8178-42ef824c81d3",
+    "type": "sms",
+    "value": "***********743",
+    "lastUpdated": "2020-09-29T06:49:59.960Z",
+    "eligibility": {
+      "eligible": true
+    }
+  },
+  "config": {
+    "maxNumberOfAttempts": 3,
+    "duration": 300.0,
+    "passcodeConfig": {
+      "length": 8,
+      "duration": 120.0,
+      "maxNumberOfDeliveries": 2
+    }
+  },
+  "deliveries": {
+    "max": 2,
+    "values": [
+      {
+        "method": {
+          "id": "c9959188-969e-42f3-8178-42ef824c81d3",
+          "type": "sms",
+          "value": "***********743",
+          "lastUpdated": "2020-09-29T06:49:59.960Z",
+          "eligibility": {
+            "eligible": true
+          }
+        },
+        "message": {
+          "passcode": {
+            "value": "87654321",
+            "created": "2020-09-14T20:04:02.002Z",
+            "expiry": "2020-09-14T20:09:02.002Z"
+          },
+          "text": "Use one time code 87654321 to make a payment of GBP 10.99 to Amazon with card ending 1111. Never share this code with anyone."
+        },
+        "messageId": "ABC-123",
+        "sent": "2020-09-14T20:03:02.002Z"
+      }
+    ]
+  },
+  "protectSensitiveData": false,
+  "successful": false,
+  "complete": false,
+  "contextComplete": false,
+  "contextSuccessful": false
+}

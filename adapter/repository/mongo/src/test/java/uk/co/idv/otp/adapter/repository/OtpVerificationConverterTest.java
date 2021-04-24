@@ -17,7 +17,7 @@ import static org.mockito.Mockito.mock;
 
 class OtpVerificationConverterTest {
 
-    private static final String JSON = OtpVerificationJsonMother.incomplete();
+    private static final String JSON = OtpVerificationJsonMother.incompleteSms();
 
     private final JsonConverter jsonConverter = mock(JsonConverter.class);
 

@@ -1,11 +1,13 @@
 package uk.co.idv.otp.app.spring.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.HandlerExceptionResolver;
+import uk.co.idv.otp.app.spring.filters.logging.OtpVerificationResponseLoggingFilter;
 import uk.co.idv.otp.app.spring.filters.validation.DefaultHeaderValidationFilter;
 import uk.co.mruoc.spring.filter.logging.mdc.ClearMdcFilter;
 import uk.co.mruoc.spring.filter.logging.mdc.HeaderMdcPopulatorFilter;
@@ -61,9 +63,9 @@ public class FilterConfig {
     }
 
     @Bean
-    public FilterRegistrationBean<ResponseLoggingFilter> defaultResponseLoggingFilter() {
+    public FilterRegistrationBean<ResponseLoggingFilter> defaultResponseLoggingFilter(ObjectMapper mapper) {
         FilterRegistrationBean<ResponseLoggingFilter> bean = new FilterRegistrationBean<>();
-        bean.setFilter(new ResponseLoggingFilter());
+        bean.setFilter(new OtpVerificationResponseLoggingFilter(mapper));
         bean.setOrder(5);
         bean.addUrlPatterns(getDefaultUrlPatterns());
         bean.setName("defaultResponseLoggingFilter");

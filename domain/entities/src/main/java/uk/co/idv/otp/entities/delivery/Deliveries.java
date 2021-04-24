@@ -12,8 +12,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-@Builder
+@Builder(toBuilder = true)
 @Data
 public class Deliveries implements Iterable<Delivery> {
 
@@ -25,6 +26,10 @@ public class Deliveries implements Iterable<Delivery> {
     @Override
     public Iterator<Delivery> iterator() {
         return values.iterator();
+    }
+
+    public Stream<Delivery> stream() {
+        return values.stream();
     }
 
     public Delivery first() {

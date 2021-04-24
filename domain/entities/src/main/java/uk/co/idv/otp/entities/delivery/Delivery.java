@@ -9,7 +9,7 @@ import uk.co.idv.otp.entities.send.message.Message;
 import java.time.Instant;
 import java.util.Optional;
 
-@Builder
+@Builder(toBuilder = true)
 @Data
 public class Delivery {
 

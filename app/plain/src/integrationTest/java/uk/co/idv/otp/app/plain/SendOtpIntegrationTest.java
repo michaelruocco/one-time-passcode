@@ -8,6 +8,7 @@ import uk.co.idv.context.adapter.verification.client.exception.ApiErrorClientExc
 import uk.co.idv.method.adapter.json.error.contextexpired.ContextExpiredError;
 import uk.co.idv.method.adapter.json.error.contextnotfound.ContextNotFoundError;
 import uk.co.idv.method.entities.otp.OtpConfigMother;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethodMother;
 import uk.co.idv.method.entities.otp.delivery.query.DeliveryMethodNotFoundException;
 import uk.co.idv.otp.adapter.verification.loader.DeliveryMethodNotEligibleScenario;
@@ -153,7 +154,7 @@ class SendOtpIntegrationTest {
         assertThat(created.getCreated()).isEqualTo(harness.now());
         assertThat(created.getExpiry()).isEqualTo(harness.now().plus(Duration.ofMinutes(5)));
         assertThat(created.getActivity()).isEqualTo(OnlinePurchaseMother.build());
-        assertThat(created.getDeliveryMethod()).isEqualTo(DeliveryMethodMother.eligible());
+        assertThat(created.getDeliveryMethod()).isEqualTo(maskedPhoneNumber());
         assertThat(created.getConfig()).isEqualTo(OtpConfigMother.build());
         assertThat(created.isProtectSensitiveData()).isTrue();
     }
@@ -169,7 +170,7 @@ class SendOtpIntegrationTest {
         assertThat(created.isComplete()).isFalse();
         Deliveries deliveries = created.getDeliveries();
         assertThat(deliveries.getMax()).isEqualTo(2);
-        assertThat(deliveries.getValues()).containsExactly(firstExpectedDelivery());
+        assertThat(deliveries.getValues()).containsExactly(firstExpectedDelivery(maskedPhoneNumber()));
     }
 
     @Test
@@ -195,8 +196,8 @@ class SendOtpIntegrationTest {
                 .ignoringFields("deliveries")
                 .isEqualTo(initial);
         assertThat(updated.getDeliveries()).containsExactly(
-                firstExpectedDelivery(),
-                secondExpectedDelivery()
+                firstExpectedDelivery(maskedPhoneNumber()),
+                secondExpectedDelivery(maskedPhoneNumber())
         );
     }
 
@@ -222,16 +223,22 @@ class SendOtpIntegrationTest {
     }
 
     private Delivery firstExpectedDelivery() {
+        return firstExpectedDelivery(DeliveryMethodMother.eligible());
+    }
+
+    private Delivery firstExpectedDelivery(DeliveryMethod deliveryMethod) {
         return DeliveryMother.builder()
                 .sent(harness.now())
+                .method(deliveryMethod)
                 .message(toExpectedMessage(toPasscode("00000001")))
                 .messageId("76c9ec3b-b7aa-41ae-8066-796856e71e65")
                 .build();
     }
 
-    private Delivery secondExpectedDelivery() {
+    private Delivery secondExpectedDelivery(DeliveryMethod deliveryMethod) {
         return DeliveryMother.builder()
                 .sent(harness.now())
+                .method(deliveryMethod)
                 .message(toExpectedMessage(toPasscode("00000002")))
                 .messageId("85bbb05a-3cf8-45e5-bae8-430503164c3b")
                 .build();
@@ -246,6 +253,12 @@ class SendOtpIntegrationTest {
                 .created(harness.now())
                 .expiry(harness.now().plus(Duration.ofMinutes(2)))
                 .value(value)
+                .build();
+    }
+
+    private static DeliveryMethod maskedPhoneNumber() {
+        return DeliveryMethodMother.builder()
+                .value("***********743")
                 .build();
     }
 
