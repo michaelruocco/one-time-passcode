@@ -6,7 +6,6 @@ import uk.co.idv.method.entities.otp.OtpConfig;
 import uk.co.idv.otp.entities.OtpVerification;
 import uk.co.idv.otp.entities.delivery.Deliveries;
 import uk.co.idv.otp.entities.send.LoadOtpVerificationRequest;
-import uk.co.idv.otp.entities.send.OtpParams;
 
 @RequiredArgsConstructor
 public class VerificationConverter {
@@ -18,8 +17,8 @@ public class VerificationConverter {
     }
 
     public OtpVerification toOtpVerification(LoadOtpVerificationRequest request, Verification verification) {
-        OtpParams otpParams = otpParamsExtractor.extract(verification, request.getDeliveryMethodId());
-        OtpConfig otpConfig = otpParams.getOtpConfig();
+        var otpParams = otpParamsExtractor.extract(verification, request.getDeliveryMethodId());
+        var otpConfig = otpParams.getOtpConfig();
         return OtpVerification.builder()
                 .id(verification.getId())
                 .contextId(verification.getContextId())

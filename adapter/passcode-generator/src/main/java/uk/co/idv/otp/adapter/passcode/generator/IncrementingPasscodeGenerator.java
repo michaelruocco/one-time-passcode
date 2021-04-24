@@ -22,7 +22,7 @@ public class IncrementingPasscodeGenerator extends DefaultPasscodeGenerator {
         }
 
         private String generateValueAndIncrementCounter(int length) {
-            String value = Integer.toString(count.incrementAndGet());
+            var value = Integer.toString(count.incrementAndGet());
             return StringUtils.leftPad(value, length, "0");
         }
 

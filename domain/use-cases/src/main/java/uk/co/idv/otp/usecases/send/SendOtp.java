@@ -22,15 +22,15 @@ public class SendOtp {
     private final OtpVerificationRepository repository;
 
     public OtpVerification send(SendOtpRequest request) {
-        OtpVerification verification = verificationLoader.load(request);
-        Delivery delivery = deliver(verification);
-        OtpVerification updated = verification.add(delivery);
+        var verification = verificationLoader.load(request);
+        var delivery = deliver(verification);
+        var updated = verification.add(delivery);
         repository.save(updated);
         return updated;
     }
 
     private Delivery deliver(OtpVerification verification) {
-        DefaultDeliveryRequest request = DefaultDeliveryRequest.builder()
+        var request = DefaultDeliveryRequest.builder()
                 .method(verification.getDeliveryMethod())
                 .message(generateMessage(verification))
                 .build();
@@ -38,7 +38,7 @@ public class SendOtp {
     }
 
     private Message generateMessage(OtpVerification verification) {
-        GenerateMessageRequest messageRequest = GenerateMessageRequest.builder()
+        var messageRequest = GenerateMessageRequest.builder()
                 .passcode(passcodeGenerator.generate(verification))
                 .activity(verification.getActivity())
                 .build();

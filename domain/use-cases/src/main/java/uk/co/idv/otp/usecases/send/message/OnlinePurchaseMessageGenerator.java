@@ -1,6 +1,5 @@
 package uk.co.idv.otp.usecases.send.message;
 
-import uk.co.idv.activity.entities.Activity;
 import uk.co.idv.activity.entities.onlinepurchase.OnlinePurchase;
 import uk.co.idv.otp.entities.send.message.GenerateMessageRequest;
 import uk.co.idv.otp.entities.send.message.Message;
@@ -16,7 +15,7 @@ public class OnlinePurchaseMessageGenerator implements ActivityMessageGenerator 
 
     @Override
     public Optional<Message> apply(GenerateMessageRequest request) {
-        Activity activity = request.getActivity();
+        var activity = request.getActivity();
         if (activity instanceof OnlinePurchase) {
             return Optional.of(toMessage(request.getPasscode(), (OnlinePurchase) activity));
         }

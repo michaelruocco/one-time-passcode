@@ -22,7 +22,7 @@ public class InMemoryDeliverOtp implements DeliverOtp {
 
     @Override
     public Delivery deliver(DefaultDeliveryRequest request) {
-        Delivery delivery = toDelivery(request);
+        var delivery = toDelivery(request);
         log.info("in memory delivery {}", delivery);
         lastDelivery = delivery;
         return delivery;

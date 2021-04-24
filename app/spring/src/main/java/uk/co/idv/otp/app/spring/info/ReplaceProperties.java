@@ -14,7 +14,7 @@ public class ReplaceProperties implements UnaryOperator<Properties> {
 
     @Override
     public Properties apply(Properties properties) {
-        Properties secured = new Properties();
+        var secured = new Properties();
         secured.putAll(properties);
         propertyNames.stream()
                 .filter(secured::containsKey)

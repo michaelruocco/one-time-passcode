@@ -13,7 +13,7 @@ import java.util.UUID;
 public class OtpParamsExtractor {
 
     public OtpParams extract(Verification verification, UUID deliveryMethodId) {
-        Otp otp = findOtpWithEligibleDeliveryMethod(verification, deliveryMethodId);
+        var otp = findOtpWithEligibleDeliveryMethod(verification, deliveryMethodId);
         return OtpParams.builder()
                 .otpConfig(otp.getConfig())
                 .deliveryMethod(otp.getDeliveryMethod(deliveryMethodId))
@@ -24,7 +24,7 @@ public class OtpParamsExtractor {
         if (!verification.hasMethods()) {
             throw new OtpNotNextEligibleMethodException(verification.getContextId());
         }
-        Otp otp = verification.getMethods().stream()
+        var otp = verification.getMethods().stream()
                 .map(Otp.class::cast)
                 .filter(method -> method.containsDeliveryMethod(deliveryMethodId))
                 .findFirst()

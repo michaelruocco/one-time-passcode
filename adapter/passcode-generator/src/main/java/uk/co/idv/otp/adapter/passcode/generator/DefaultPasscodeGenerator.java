@@ -6,7 +6,6 @@ import uk.co.idv.otp.entities.passcode.Passcode;
 import uk.co.idv.otp.usecases.passcode.PasscodeGenerator;
 
 import java.time.Clock;
-import java.time.Instant;
 import java.util.function.IntFunction;
 
 @RequiredArgsConstructor
@@ -17,7 +16,7 @@ public class DefaultPasscodeGenerator implements PasscodeGenerator {
 
     @Override
     public Passcode generate(GeneratePasscodeRequest request) {
-        Instant created = clock.instant();
+        var created = clock.instant();
         return Passcode.builder()
                 .created(created)
                 .expiry(created.plus(request.getPasscodeDuration()))

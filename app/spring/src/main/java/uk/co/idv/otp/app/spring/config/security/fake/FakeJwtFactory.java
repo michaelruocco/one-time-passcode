@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.time.Clock;
-import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
 
@@ -17,7 +16,7 @@ public class FakeJwtFactory {
     private final Clock clock;
 
     public Jwt toJwt(String token) {
-        Instant now = clock.instant();
+        var now = clock.instant();
         return Jwt.withTokenValue(token)
                 .issuedAt(now)
                 .expiresAt(now.plus(8, ChronoUnit.HOURS))

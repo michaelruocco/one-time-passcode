@@ -19,10 +19,10 @@ public class VerifyOtp {
     private final OtpVerificationRepository repository;
 
     public OtpVerification verify(VerifyOtpRequest request) {
-        OtpVerification verification = getOtp.get(request.getId());
-        AttemptedPasscodes attemptedPasscodes = toAttemptedPasscodes(request.getPasscodes());
-        OtpVerification verified = verification.verify(attemptedPasscodes);
-        OtpVerification updated = updater.update(verified);
+        var verification = getOtp.get(request.getId());
+        var attemptedPasscodes = toAttemptedPasscodes(request.getPasscodes());
+        var verified = verification.verify(attemptedPasscodes);
+        var updated = updater.update(verified);
         repository.save(updated);
         return updated;
     }
