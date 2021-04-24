@@ -13,6 +13,8 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
     implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
     implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    implementation "com.jayway.jsonpath:json-path:2.5.0"
+    implementation "com.github.michaelruocco:json-masker:1.0.7"
     implementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
     implementation "com.github.michaelruocco.idv:otp-json:${contextVersion}"
     implementation "com.github.michaelruocco.idv:activity-json:${contextVersion}"

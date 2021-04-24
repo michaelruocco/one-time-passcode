@@ -14,8 +14,6 @@
 ## Todo
 
 *   Add masking sensitive values in logs
-*   Secure sensitive data flag is true from context
-    
 *   Don't allow resending passcode if passcode has been verified / verification complete
 *   Add plain app integration test for verifying otp getting complete otp
 *   Add karate test for verifying otp and getting complete otp

@@ -12,7 +12,7 @@ public class OtpVerificationArgumentsProvider implements ArgumentsProvider {
     @Override
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         return Stream.of(
-                Arguments.of(OtpVerificationJsonMother.incomplete(), OtpVerificationMother.incomplete())
+                Arguments.of(OtpVerificationJsonMother.incompleteSms(), OtpVerificationMother.incomplete())
         );
     }
 
