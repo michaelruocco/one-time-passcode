@@ -1,8 +1,6 @@
 package uk.co.idv.otp.adapter.delivery;
 
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
-import com.amazonaws.services.simpleemail.model.SendEmailRequest;
-import com.amazonaws.services.simpleemail.model.SendEmailResult;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.otp.entities.delivery.DeliveryRequest;
@@ -22,9 +20,9 @@ public class SesDeliverOtp implements DeliverOtpByMethod {
 
     @Override
     public String deliver(DeliveryRequest request) {
-        SendEmailRequest sendEmailRequest = requestConverter.toSendEmailRequest(request);
+        var sendEmailRequest = requestConverter.toSendEmailRequest(request);
         log.debug("sending email request {}", sendEmailRequest);
-        SendEmailResult result = client.sendEmail(sendEmailRequest);
+        var result = client.sendEmail(sendEmailRequest);
         return result.getMessageId();
     }
 

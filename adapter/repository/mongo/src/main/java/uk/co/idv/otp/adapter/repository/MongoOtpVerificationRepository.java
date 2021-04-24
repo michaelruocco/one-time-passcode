@@ -1,6 +1,5 @@
 package uk.co.idv.otp.adapter.repository;
 
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.ReplaceOptions;
 import lombok.Builder;
@@ -23,11 +22,11 @@ public class MongoOtpVerificationRepository implements OtpVerificationRepository
 
     @Override
     public void save(OtpVerification verification) {
-        Instant start = Instant.now();
+        var start = Instant.now();
         try {
-            Bson query = toFindByIdQuery(verification.getId());
-            ReplaceOptions options = new ReplaceOptions().upsert(true);
-            Document document = verificationConverter.toDocument(verification);
+            var query = toFindByIdQuery(verification.getId());
+            var options = new ReplaceOptions().upsert(true);
+            var document = verificationConverter.toDocument(verification);
             collection.replaceOne(query, document, options);
         } finally {
             logDuration("save-attempts", start);
@@ -36,10 +35,10 @@ public class MongoOtpVerificationRepository implements OtpVerificationRepository
 
     @Override
     public Optional<OtpVerification> load(UUID id) {
-        Instant start = Instant.now();
+        var start = Instant.now();
         try {
-            Bson query = toFindByIdQuery(id);
-            FindIterable<Document> documents = collection.find(query);
+            var query = toFindByIdQuery(id);
+            var documents = collection.find(query);
             return Optional.ofNullable(documents.first()).map(this::toVerification);
         } finally {
             logDuration("load-attempts-by-idv-id", start);

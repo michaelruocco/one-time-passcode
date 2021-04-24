@@ -8,7 +8,6 @@ import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.otp.entities.delivery.Deliveries;
 import uk.co.idv.otp.entities.delivery.Delivery;
 import uk.co.idv.otp.entities.passcode.GeneratePasscodeRequest;
-import uk.co.idv.otp.entities.passcode.Passcodes;
 import uk.co.idv.otp.entities.send.message.Message;
 import uk.co.idv.otp.entities.verify.AttemptedPasscodes;
 
@@ -47,7 +46,7 @@ public class OtpVerification implements GeneratePasscodeRequest {
     }
 
     public OtpVerification verify(AttemptedPasscodes attemptedPasscodes) {
-        Passcodes passcodes = deliveries.getValidPasscodes(attemptedPasscodes.getTimestamp());
+        var passcodes = deliveries.getValidPasscodes(attemptedPasscodes.getTimestamp());
         return toBuilder()
                 .attemptedPasscodes(attemptedPasscodes)
                 .successful(passcodes.anyValid(attemptedPasscodes.getValues()))

@@ -23,7 +23,7 @@ public class OtpVerificationConverter {
     }
 
     public Document toDocument(OtpVerification verification) {
-        Document document = Document.parse(converter.toJson(verification));
+        var document = Document.parse(converter.toJson(verification));
         document.put(ID_FIELD_NAME, verification.getId().toString());
         document.put(TTL_INDEX_NAME, new Date(verification.getExpiry().toEpochMilli()));
         return document;

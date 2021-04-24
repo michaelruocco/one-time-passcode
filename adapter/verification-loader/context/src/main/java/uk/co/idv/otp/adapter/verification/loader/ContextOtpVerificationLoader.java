@@ -2,8 +2,6 @@ package uk.co.idv.otp.adapter.verification.loader;
 
 import lombok.Builder;
 import uk.co.idv.context.adapter.verification.client.VerificationClient;
-import uk.co.idv.context.adapter.verification.client.request.ClientCreateVerificationRequest;
-import uk.co.idv.method.entities.verification.Verification;
 import uk.co.idv.otp.entities.send.LoadOtpVerificationRequest;
 import uk.co.idv.otp.entities.OtpVerification;
 import uk.co.idv.otp.usecases.send.OtpVerificationLoader;
@@ -18,8 +16,8 @@ public class ContextOtpVerificationLoader implements OtpVerificationLoader {
     private final ClientCreateVerificationRequestFactory factory = new ClientCreateVerificationRequestFactory();
 
     public OtpVerification load(LoadOtpVerificationRequest request) {
-        ClientCreateVerificationRequest clientRequest = factory.build(request.getContextId());
-        Verification verification = verificationClient.createVerification(clientRequest);
+        var clientRequest = factory.build(request.getContextId());
+        var verification = verificationClient.createVerification(clientRequest);
         return verificationConverter.toOtpVerification(request, verification);
     }
 

@@ -31,14 +31,14 @@ public class SpringMongoRepositoryConfig {
 
     @Bean
     public Mongobee verificationMongobee() {
-        Mongobee runner = new Mongobee(connectionString.getConnectionString());
+        var runner = new Mongobee(connectionString.getConnectionString());
         runner.setChangeLogsScanPackage(MongoOtpVerificationChangeLog.class.getPackageName());
         return runner;
     }
 
     @Bean
     public MongoClient mongoClient() {
-        MongoClientSettings settings = MongoClientSettings.builder()
+        var settings = MongoClientSettings.builder()
                 .applyConnectionString(connectionString)
                 .build();
         return MongoClients.create(settings);

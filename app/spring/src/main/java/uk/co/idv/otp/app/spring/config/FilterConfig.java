@@ -99,7 +99,7 @@ public class FilterConfig {
     }
 
     private static boolean loadBooleanSystemProperty(String key) {
-        boolean enabled = Boolean.parseBoolean(System.getProperty(key, "false"));
+        var enabled = Boolean.parseBoolean(System.getProperty(key, "false"));
         log.info("loaded {} value {}", key, enabled);
         return enabled;
     }

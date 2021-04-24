@@ -14,7 +14,7 @@ public class SystemPropertyInfoContributor implements InfoContributor {
 
     @Override
     public void contribute(Info.Builder builder) {
-        Properties secured = secureProperties.apply(System.getProperties());
+        var secured = secureProperties.apply(System.getProperties());
         builder.withDetail("systemProperties", secured);
     }
 
