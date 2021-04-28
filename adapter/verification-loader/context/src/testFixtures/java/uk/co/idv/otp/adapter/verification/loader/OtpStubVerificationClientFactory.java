@@ -2,7 +2,6 @@ package uk.co.idv.otp.adapter.verification.loader;
 
 import lombok.Builder;
 import uk.co.idv.activity.entities.OnlinePurchaseMother;
-import uk.co.idv.context.adapter.verification.client.VerificationClient;
 import uk.co.idv.context.adapter.verification.client.header.DefaultIdvHeaderValidator;
 import uk.co.idv.context.adapter.verification.client.header.IdvHeaderValidator;
 import uk.co.idv.context.adapter.verification.client.stub.StubVerificationClient;
@@ -31,7 +30,7 @@ public class OtpStubVerificationClientFactory {
     @Builder.Default
     private final IdvHeaderValidator headerValidator = new DefaultIdvHeaderValidator();
 
-    public VerificationClient build() {
+    public StubVerificationClient build() {
         return StubVerificationClient.builder()
                 .headerValidator(headerValidator)
                 .defaultCreateScenario(defaultCreateScenario())
@@ -73,7 +72,7 @@ public class OtpStubVerificationClientFactory {
 
     public static class OtpStubVerificationClientFactoryBuilder {
 
-        public VerificationClient buildClient() {
+        public StubVerificationClient buildClient() {
             return build().build();
         }
 

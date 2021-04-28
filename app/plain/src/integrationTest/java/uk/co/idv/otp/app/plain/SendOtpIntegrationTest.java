@@ -137,7 +137,7 @@ class SendOtpIntegrationTest {
 
     @Test
     void shouldSendOtpDelivery() {
-        SendOtpRequest request = buildSuccessfulSendOtpRequest();
+        SendOtpRequest request = harness.buildSuccessfulSendOtpRequest();
 
         application.sendOtp(request);
 
@@ -146,7 +146,7 @@ class SendOtpIntegrationTest {
 
     @Test
     void shouldPopulateVerificationWithValuesFromContext() {
-        SendOtpRequest request = buildSuccessfulSendOtpRequest();
+        SendOtpRequest request = harness.buildSuccessfulSendOtpRequest();
 
         OtpVerification created = application.sendOtp(request);
 
@@ -161,7 +161,7 @@ class SendOtpIntegrationTest {
 
     @Test
     void shouldPopulateOtpValuesOnVerification() {
-        SendOtpRequest request = buildSuccessfulSendOtpRequest();
+        SendOtpRequest request = harness.buildSuccessfulSendOtpRequest();
 
         OtpVerification created = application.sendOtp(request);
 
@@ -175,7 +175,7 @@ class SendOtpIntegrationTest {
 
     @Test
     void shouldSaveVerification() {
-        SendOtpRequest request = buildSuccessfulSendOtpRequest();
+        SendOtpRequest request = harness.buildSuccessfulSendOtpRequest();
         OtpVerification created = application.sendOtp(request);
 
         OtpVerification retrieved = application.getOtp(created.getId());
@@ -185,7 +185,7 @@ class SendOtpIntegrationTest {
 
     @Test
     void shouldResendPasscode() {
-        SendOtpRequest sendRequest = buildSuccessfulSendOtpRequest();
+        SendOtpRequest sendRequest = harness.buildSuccessfulSendOtpRequest();
         OtpVerification initial = application.sendOtp(sendRequest);
         ResendOtpRequest resendRequest = new ResendOtpRequest(initial.getId());
 
@@ -203,7 +203,7 @@ class SendOtpIntegrationTest {
 
     @Test
     void shouldThrowExceptionIfAttemptToResendAfterMaxNumberOfDeliveriesAlreadyPerformed() {
-        SendOtpRequest sendRequest = buildSuccessfulSendOtpRequest();
+        SendOtpRequest sendRequest = harness.buildSuccessfulSendOtpRequest();
         OtpVerification initial = application.sendOtp(sendRequest);
         ResendOtpRequest resendRequest = new ResendOtpRequest(initial.getId());
         application.resendOtp(resendRequest);
@@ -213,13 +213,6 @@ class SendOtpIntegrationTest {
         assertThat(error)
                 .isInstanceOf(NoDeliveriesRemainingException.class)
                 .hasMessage("2");
-    }
-
-    private static SendOtpRequest buildSuccessfulSendOtpRequest() {
-        return SendOtpRequest.builder()
-                .contextId(UUID.fromString("2a3559bd-0071-4bbf-8901-42b9f17dd93f"))
-                .deliveryMethodId(UUID.fromString("c9959188-969e-42f3-8178-42ef824c81d3"))
-                .build();
     }
 
     private Delivery firstExpectedDelivery() {
