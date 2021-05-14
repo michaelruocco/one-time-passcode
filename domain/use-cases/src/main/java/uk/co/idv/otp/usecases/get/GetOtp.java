@@ -13,6 +13,14 @@ public class GetOtp {
     private final Clock clock;
     private final OtpVerificationRepository repository;
 
+    public OtpVerification getIfIncomplete(UUID id) {
+        OtpVerification verification = get(id);
+        if (verification.isComplete()) {
+            throw new OtpVerificationAlreadyCompleteException(id);
+        }
+        return verification;
+    }
+
     public OtpVerification get(UUID id) {
         OtpVerification verification = repository.load(id).orElseThrow(() -> new OtpVerificationNotFoundException(id));
         if (verification.hasExpired(clock.instant())) {

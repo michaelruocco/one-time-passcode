@@ -70,4 +70,33 @@ class GetOtpTest {
         assertThat(error.getExpiry()).isEqualTo(expiry);
     }
 
+    @Test
+    void shouldReturnOtpVerificationIfFoundNotExpiredAndIncomplete() {
+        Instant expiry = NOW.plus(Duration.ofMillis(1));
+        OtpVerification expectedVerification = OtpVerificationMother.withExpiry(expiry);
+        UUID id = expectedVerification.getId();
+        given(repository.load(id)).willReturn(Optional.of(expectedVerification));
+
+        OtpVerification verification = getOtp.getIfIncomplete(id);
+
+        assertThat(verification).isEqualTo(expectedVerification);
+    }
+
+    @Test
+    void shouldReturnOtpVerificationIfFoundNotExpiredButComplete() {
+        Instant expiry = NOW.plus(Duration.ofMillis(1));
+        OtpVerification expectedVerification = OtpVerificationMother.builder()
+                .expiry(expiry)
+                .complete(true)
+                .build();
+        UUID id = expectedVerification.getId();
+        given(repository.load(id)).willReturn(Optional.of(expectedVerification));
+
+        Throwable error = catchThrowable(() -> getOtp.getIfIncomplete(id));
+
+        assertThat(error)
+                .isInstanceOf(OtpVerificationAlreadyCompleteException.class)
+                .hasMessage(expectedVerification.getId().toString());
+    }
+
 }

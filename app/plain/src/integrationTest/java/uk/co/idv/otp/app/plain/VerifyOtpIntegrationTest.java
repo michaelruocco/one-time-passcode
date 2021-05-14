@@ -5,7 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.adapter.verification.client.request.ClientCompleteVerificationRequest;
 import uk.co.idv.otp.entities.OtpVerification;
+import uk.co.idv.otp.entities.send.ResendOtpRequest;
 import uk.co.idv.otp.entities.verify.VerifyOtpRequest;
+import uk.co.idv.otp.usecases.get.OtpVerificationAlreadyCompleteException;
 import uk.co.idv.otp.usecases.get.OtpVerificationExpiredException;
 import uk.co.idv.otp.usecases.get.OtpVerificationNotFoundException;
 
@@ -14,6 +16,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 class VerifyOtpIntegrationTest {
@@ -73,6 +76,7 @@ class VerifyOtpIntegrationTest {
 
         OtpVerification completeVerification = application.verifyOtp(request);
 
+        assertThat(completeVerification.isComplete()).isTrue();
         assertThat(completeVerification.isSuccessful()).isFalse();
     }
 
@@ -96,6 +100,7 @@ class VerifyOtpIntegrationTest {
 
         OtpVerification completeVerification = application.verifyOtp(request);
 
+        assertThat(completeVerification.isComplete()).isTrue();
         assertThat(completeVerification.isSuccessful()).isTrue();
     }
 
@@ -110,6 +115,31 @@ class VerifyOtpIntegrationTest {
         assertThat(lastRequest.getContextId()).isEqualTo(completeVerification.getContextId());
         assertThat(lastRequest.getBody().getId()).isEqualTo(completeVerification.getId());
         assertThat(lastRequest.getBody().isSuccessful()).isTrue();
+    }
+
+    @Test
+    void shouldUpdateContextCompleteAndSuccessfulFromResponse() {
+        OtpVerification verification = harness.givenIncompleteVerification();
+        VerifyOtpRequest request = toVerifyOtpRequestWithCorrectPasscode(verification.getId());
+
+        OtpVerification completeVerification = application.verifyOtp(request);
+
+        assertThat(completeVerification.isContextComplete()).isTrue();
+        assertThat(completeVerification.isContextSuccessful()).isTrue();
+    }
+
+    @Test
+    void shouldNotResentOtpIfVerificationIsComplete() {
+        OtpVerification verification = harness.givenIncompleteVerification();
+        VerifyOtpRequest verifyRequest = toVerifyOtpRequestWithCorrectPasscode(verification.getId());
+        OtpVerification completeVerification = application.verifyOtp(verifyRequest);
+        ResendOtpRequest resendRequest = new ResendOtpRequest(completeVerification.getId());
+
+        Throwable error = catchThrowable(() -> application.resendOtp(resendRequest));
+
+        assertThat(error)
+                .isInstanceOf(OtpVerificationAlreadyCompleteException.class)
+                .hasMessage(completeVerification.getId().toString());
     }
 
     private VerifyOtpRequest toVerifyOtpRequestWithoutPasscode(UUID id) {

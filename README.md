@@ -13,10 +13,8 @@
 
 ## Todo
 
-*   Don't allow resending passcode if passcode has been verified / verification complete
-*   Add plain app integration test for verifying otp getting complete otp
 *   Add karate test for verifying otp and getting complete otp
-*   Add json error handling
+*   Add json error handling and update karate tests accordingly
 
 ## Useful Commands
 

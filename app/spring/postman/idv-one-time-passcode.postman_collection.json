@@ -1,10 +1,123 @@
 {
 	"info": {
-		"_postman_id": "9596fb54-aa0f-493c-a15b-81d31386d719",
+		"_postman_id": "8da40e1e-76d2-4643-9285-ca887cc7903b",
 		"name": "idv-one-time-passcode",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "support",
+			"item": [
+				{
+					"name": "get-info",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should return ok status\", function () {",
+									"    pm.response.to.have.status(200);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{otp-host}}/actuator/info",
+							"host": [
+								"{{otp-host}}"
+							],
+							"path": [
+								"actuator",
+								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-health",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should return ok status\", function () {",
+									"    pm.response.to.have.status(200);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{otp-host}}/actuator/health",
+							"host": [
+								"{{otp-host}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "authorization",
 			"item": [
@@ -333,119 +446,6 @@
 			]
 		},
 		{
-			"name": "support",
-			"item": [
-				{
-					"name": "get-info",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"should return ok status\", function () {",
-									"    pm.response.to.have.status(200);",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{otp-host}}/actuator/info",
-							"host": [
-								"{{otp-host}}"
-							],
-							"path": [
-								"actuator",
-								"info"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get-health",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"should return ok status\", function () {",
-									"    pm.response.to.have.status(200);",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{otp-host}}/actuator/health",
-							"host": [
-								"{{otp-host}}"
-							],
-							"path": [
-								"actuator",
-								"health"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "send-otp",
 			"event": [
 				{
@@ -593,72 +593,6 @@
 			"response": []
 		},
 		{
-			"name": "verify-otp",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"should return ok status\", function () {",
-							"    pm.response.to.have.status(200)",
-							"})"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PATCH",
-				"header": [
-					{
-						"key": "Correlation-Id",
-						"value": "{{$guid}}",
-						"type": "text"
-					},
-					{
-						"key": "Channel-Id",
-						"value": "{{channelId}}",
-						"type": "text"
-					},
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"id\": \"{{otpVerificationId}}\",\n    \"passcodes\": [\n        \"{{otpPasscode}}\"\n    ]\n}"
-				},
-				"url": {
-					"raw": "{{otp-host}}/v1/otp-verifications",
-					"host": [
-						"{{otp-host}}"
-					],
-					"path": [
-						"v1",
-						"otp-verifications"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "resend-otp",
 			"event": [
 				{
@@ -720,6 +654,72 @@
 						"v1",
 						"otp-verifications",
 						"passcodes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "verify-otp",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"should return ok status\", function () {",
+							"    pm.response.to.have.status(200)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Correlation-Id",
+						"value": "{{$guid}}",
+						"type": "text"
+					},
+					{
+						"key": "Channel-Id",
+						"value": "{{channelId}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"{{otpVerificationId}}\",\n    \"passcodes\": [\n        \"{{otpPasscode}}\"\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{otp-host}}/v1/otp-verifications",
+					"host": [
+						"{{otp-host}}"
+					],
+					"path": [
+						"v1",
+						"otp-verifications"
 					]
 				}
 			},
